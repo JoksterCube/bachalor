@@ -1,3 +1,6 @@
+## Installs are not needed
+*.iso
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
