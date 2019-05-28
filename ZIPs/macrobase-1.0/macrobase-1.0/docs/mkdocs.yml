@@ -1,0 +1,14 @@
+site_name: MacroBase Documentation
+docs_dir: source
+
+pages:
+  - Home: 'index.md'
+  - MacroBase SQL:
+    - 'Docs': 'sql/docs.md'
+    - 'Setup': 'sql/setup.md'
+    - 'Tutorial': 'sql/tutorial.md'
+  - MacroBase GUI:
+    - 'Tutorial': 'gui/tutorial.md'
+
+theme:
+  name: 'readthedocs'

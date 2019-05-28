@@ -1,0 +1,47 @@
+macrobase.query.name: streamingQuery
+macrobase.pipeline.class: macrobase.analysis.pipeline.BasicOneShotEWStreamingPipeline
+
+macrobase.loader.attributes: [device_id, firmware_version]
+macrobase.loader.metrics: [power_drain]
+macrobase.analysis.metrics.lowTransform: []
+
+macrobase.analysis.transformType: MAD_OR_MCD
+
+macrobase.loader.db.baseQuery: SELECT * FROM sensor_data_demo;
+
+macrobase.analysis.minSupport: 0.001
+macrobase.analysis.minOIRatio: 3.0
+
+macrobase.analysis.useZScore: false
+macrobase.analysis.zscore.threshold: 3.0
+
+macrobase.analysis.usePercentile: true
+macrobase.analysis.targetPercentile: 0.99
+
+macrobase.analysis.streaming.tupleBatchSize: 10000
+macrobase.analysis.streaming.inputReservoirSize: 10000
+macrobase.analysis.streaming.scoreReservoirSize: 10000
+
+macrobase.analysis.streaming.inlierItemSummarySize: 1000
+macrobase.analysis.streaming.outlierItemSummarySize: 10000
+
+macrobase.analysis.streaming.summaryUpdatePeriod: 100000
+macrobase.analysis.streaming.modelUpdatePeriod: 10000
+
+macrobase.analysis.streaming.useRealTimePeriod: false
+macrobase.analysis.streaming.useTupleCountPeriod: true
+
+macrobase.analysis.streaming.warmupCount: 1000
+macrobase.analysis.streaming.decayRate: .01
+
+macrobase.analysis.mcd.alpha: 0.5
+macrobase.analysis.mcd.stoppingDelta: 0.001
+
+macrobase.loader.loaderType: CACHING_POSTGRES_LOADER
+macrobase.loader.db.cacheDirectory: sql_cache
+
+logging:
+  level: INFO
+
+  loggers:
+    "macrobase": INFO

@@ -1,0 +1,12 @@
+synthetic_data: |
+  --normal 5,1,40000 
+  --normal 18,1.5,60000
+  --normal 12,1.1,1100
+macrobase:
+  macrobase.query.name: 1d_mcd_killer-kde
+  macrobase.loader.csv.file: zzz
+  macrobase.loader.targetHighMetrics: [XX]
+  macrobase.loader.targetLowMetrics: []
+  macrobase.loader.attributes: [XX]
+  macrobase.analysis.transformType: KDE
+  macrobase.loader.loaderType: CSV_LOADER

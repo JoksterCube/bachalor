@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>edu.stanford.futuredata</groupId>
+  <artifactId>macrobase</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>macrobase</name>
+  <url>https://github.com/stanford-futuredata/macrobase</url>
+  <description>MacroBase is an anomaly detection engine designed to prioritize human attention in large-scale datasets and data streams.</description>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Peter Bailis</name>
+      <email>pbailis@cs.stanford.edu</email>
+      <organization>Stanford</organization>
+      <organizationUrl>http://www.bailis.org</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/stanford-futuredata/macrobase.git</connection>
+    <developerConnection>scm:git:ssh://github.com/stanford-futuredata/macrobase.git</developerConnection>
+    <url>https://github.com/stanford-futuredata/macrobase</url>
+  </scm>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <dropwizard.version>0.9.1</dropwizard.version>
+    <protostuff.version>1.0.9</protostuff.version>
+  </properties>
+
+    <modules>
+      <module>assembly</module>
+      <module>legacy</module>
+      <module>frontend</module>
+      <!-- <module>contrib</module> -->
+      <module>sql</module>
+      <module>lib</module>
+      <module>core</module>
+    </modules>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.3</version>
+      <configuration>
+        <source>1.8</source>
+        <target>1.8</target>
+      </configuration>
+    </plugin>
+    <plugin>
+      <groupId>org.eluder.coveralls</groupId>
+      <artifactId>coveralls-maven-plugin</artifactId>
+      <version>3.2.0</version>
+      <configuration>
+        <repoToken>${env.coveralls_repo_token}</repoToken>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+</project>
