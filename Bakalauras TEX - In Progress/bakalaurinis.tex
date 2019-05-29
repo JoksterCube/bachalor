@@ -84,7 +84,10 @@ TODO: summary
 
 \subsectionnonum{Problematika}
 Informacijos rinkimas fizine forma, juos užrašant ant popieriaus lapo, pasak MIT Media Lab direktoriaus Joi Ito, dar visai neseniai buvo vienintelis būdas rinkti, klasifikuoti ir saugoti duomenis. Žmogus mintis ir idėjas užrašydamas ant popieriaus lapo – paversdavo žiniomis (angl. \textit{knowledge}). Tačiau laikai keičiasi, ir dabartinė didžiųjų duomenų situacija kinta. Dėl milžiniškų surenkamų duomenų kiekio, nėra trivialu atskirti naudingus ir nenaudingus duomenis, todėl, natūraliai, negalima visų surenkamų duomenų automatiškai priskirti prie ir vadinti žiniomis. Surinkti duomenys nėra žinios, kol jų nepradedama nagrinėti, analizuoti ir filtruoti, ir tik pradėjus šį procesą galima pastebėti, kad gaunama informacija yra įdomi ir netgi svarbi \cite{movie}.\par
-Duomenų, kuriais yra operuojama, juos yra renkama ir saugoma, kiekiai nuolatos didėja \cite{iot}. Iš tiesų, dėl daugelio priežasčių net greitis, kuriuo šie duomenys yra generuojami eksponentiškai kyla \cite{zettabytes}. Jau 2015–2016 metais didžiosios socialinių tinklų kompanijos Twitter, Facebook ir LinkedIn pranešė fiksuojančios iki 12 milijonų įvykių (angl. \textit{events}) per sekundę \cite{twitter, facebook, linkedin}. Šie duomenų kiekiai gerokai lenkia žmogaus gebėjimą juos apdoroti bei žymiai apsunkina darbą tiek analitikams, tiek analitiniams įrankiams. Keli iš geriausių (angl. \textit{best-of-class}) šių dienų taikomųjų programų operatorių praneša panaudojantys anekdotiškai mažą jų surenkamų duomenų kiekį – mažiau nei 6\% \cite{prioritizing_attention}.
+
+Duomenų, kuriais yra operuojama, juos yra renkama ir saugoma, kiekiai nuolatos didėja \cite{iot}. Iš tiesų, dėl daugelio priežasčių net greitis, kuriuo šie duomenys yra generuojami eksponentiškai kyla \cite{zettabytes}. Jau 2015–2016 metais didžiosios socialinių tinklų kompanijos Twitter, Facebook ir LinkedIn pranešė fiksuojančios iki 12 milijonų įvykių (angl. \textit{events}) per sekundę \cite{twitter, facebook, linkedin}. Šie duomenų kiekiai gerokai lenkia žmogaus gebėjimą juos apdoroti bei žymiai apsunkina darbą tiek analitikams, tiek analitiniams įrankiams. Keli iš geriausių (angl. \textit{best-of-class}) šių dienų taikomųjų programų operatorių praneša panaudojantys anekdotiškai mažą jų surenkamų duomenų kiekį – mažiau nei 6\% \cite{prioritizing_attention}.\par
+
+Renkant tokius didelius kiekius duomenų natūraliai, užfiksuojami įrašai, kurie yra nebūdingi įrašų rinkiniui bei išsiskiria. Duomenų vienetai nukrypę nuo kitų duomenų rinkinyje yra vadinami anomalijomis. Anomalijų aptikimas yra procesas, kurio metu yra aptinkama ir identifikuojama anomalija arba išskirtis (angl. \textit{outlier}) duomenų rinkinyje \cite{anomaly}. Šio darbo metu bus tiriamas anomalijų aptikimas remiantis belaidės interneto prieigos duomenų perdavimo spartos kontrolinių matavimų, atliktų 2014–2018 metais, rezultatais, kurie gauti naudojantis Lietuvos Respublikos ryšių reguliavimo tarnybos administruojama Interneto prieigos stebėsenos sistema (IPSS) \cite{ipss}.
 
 
 
@@ -102,28 +105,22 @@ Kiekvienas IPSS įrašų failas prasideda antraštės (angl. \textit{header}) ei
 
 \begin{itemize}
 	\item \textbf{Bendri visiems failams laukai:}
-		\subitem \textbf{Data ir laikas} – matavimo įrašo fiksavimo data ir laikas, užrašoma „yyyy-MM-dd hh:mm:ss“ formatu.
-		\subitem \textbf{Platuma} – matavimo įrašo fiksavimo koordinačių platuma užrašoma dešimtainiais laipsniais (angl. \textit{decimal degrees}).
-		\subitem \textbf{Ilguma} – matavimo įrašo fiksavimo koordinačių ilguma užrašoma dešimtainiais laipsniais (angl. \textit{decimal degrees}).
-		\subitem \textbf{Operatorius} – matavimo įrašo operatoriaus skaitinis kodas arba pavadinimas (vieno iš jau minėtų operatorių: „Bitė Lietuva“, „Telia Lietuva“, „TELE2“ ir LRTC).
-		\subitem \textbf{RSSI} – signalo stiprumo indikatorius (angl. \textit{received signal strength indicator}).
-		\subitem \textbf{Sparta kbit/s} – sveikuoju skaičiumi nurodomas užfiksuotas matavimo greitis kilobitais per sekundę.
-	\item \textbf{3G failui išskirtiniai laukai:}
-		\subitem \textbf{Celės id} – matavimą atlikusio įrenginio identifikacijos kodas.
-		\subitem \textbf{Ryšio tinklas} – nurodo matuojamo ryšio tinklą (visi įrašai šiame faile ryšio tinklo lauke turi reikšmę „3G“).
-		\subitem \textbf{3G ryšio technologija} – nurodo matavimo metu naudotą ryšio technologiją (vieną iš: „DC-HSPA+“, „HSDPA“, „HSPA“, „HSPA+“, „HSUPA“ arba „WCDMA“).
-	\item \textbf{LTE failui išskirtiniai laukai:}
-		\subitem \textbf{Celės id} – matavimą atlikusio įrenginio identifikacijos kodas.
-		\subitem \textbf{RSRP} – angl. \textit{reference signals received power} panašiai kaip RSSI signalo stiprumo identifikatorius LTE tinklams.
-		\subitem \textbf{RSRQ} – angl. \textit{reference signals received quality} signalo kokybės laukas (šiame dokumente šis laukas reikšmės neturi – „NULL“)).
-		\subitem \textbf{SINR} – signalo ir trukdžių bei triukšmo santykis (angl. \textit{signal-to-interference-plus-noise ratio}) (šiame dokumente šis laukas reikšmės neturi – „NULL“)).
-		\subitem \textbf{Ryšio tinklas} – nurodo matuojamo ryšio tinklą (visi įrašai šiame faile ryšio tinklo lauke turi reikšmę „LTE“).
-	\item \textbf{WiMAX failui išskirtiniai laukai:}
-		\subitem \textbf{Bazinės stoties id} – matavimą atlikusios stotelės MAC adresas.
-		\subitem \textbf{CINR} – trikdžių ir triukšmo santykis (angl. \textit{carrier to interference-plus-noise ratio}).
-		\subitem \textbf{Ryšio technologija} – nurodo matuojamo ryšio tinklą (visi įrašai šiame faile ryšio technologijos lauke turi reikšmę „WIMAX“).
+	\item \textbf{Data ir laikas} – matavimo įrašo fiksavimo data ir laikas, užrašoma „yyyy-MM-dd hh:mm:ss“ formatu.
+	\item \textbf{Platuma} – matavimo įrašo fiksavimo koordinačių platuma užrašoma dešimtainiais laipsniais (angl. \textit{decimal degrees}).
+	\item \textbf{Ilguma} – matavimo įrašo fiksavimo koordinačių ilguma užrašoma dešimtainiais laipsniais (angl. \textit{decimal degrees}).
+	\item \textbf{Operatorius} – matavimo įrašo operatoriaus skaitinis kodas arba pavadinimas (vieno iš jau minėtų operatorių: „Bitė Lietuva“, „Telia Lietuva“, „TELE2“ ir LRTC).
+	\item \textbf{Ryšio tinklas} – tinklo technologija (3G, LTE arba WiMAX).
+	\item \textbf{Celės id} – korinio tinklo ląstelės identifikacinis numeris atvaizduotas skaitine šešioliktaine forma.
+	\item \textbf{Bazinės stoties id} – bazinės stoties identifikacinis numeris atvaizduotas skaitine šešioliktaine forma, parametras pateikiamas tik LRTC WiMAX tinkle atliktuose matavimuose.
+	\item \textbf{3G ryšio technologija} – matavimų metu nustatytas duomenų perdavimo technologijos porūšis (WCDMA, HSPA+, DC-HSPA+).
+	\item \textbf{RSSI} – (angl. \textit{Received Signal Strength Indicator}) signalo lygis, dBm (apklausiant modemą gaunamos vertės nuo -51 dBm iki -113 dBm. Mažiausia signalo vertė -113 dBm reiškia labai silpną signalą, kuriam esant praktiškai nebegalima naudotis duomenų perdavimo paslauga).
+	\item \textbf{RSRP} – (angl. \textit{Reference Signal Received Power}) pilotinio signalo galia, dBm (apklausiant modemą gaunamos vertės nuo -140 dBm iki -44 dBm. Mažiausia signalo vertė -140 dBm reiškia labai silpną signalą, kuriam esant praktiškai nebegalima naudotis duomenų perdavimo paslauga). Parametras pateikiamas tik LTE tinkle atliktuose matavimuose.
+	\item \textbf{RSRQ} – (angl. \textit{Reference Signal Received Quality}) pilotinio signalo kokybė, dB (apklausiant modemą gaunamos vertės nuo -19,5 dB iki -3 dB. Mažiausia vertė -19,5 dB). Parametras pateikiamas tik LTE tinkle atliktuose matavimuose.
+	\item \textbf{SINR} – (angl. \textit{Signal to Interference and Noise Ratio})  signalo ir trukdžių plius triukšmo santykis, dB (apklausiant modemą gaunamos vertės nuo -20 dB iki 30 dB. Mažiausia vertė -20 dB). Parametras pateikiamas tik LTE tinkle atliktuose matavimuose.
+	\item \textbf{CINR} – (angl. \textit{Carrier to Interference and Noise Ratio}) nešlio ir trukdžių plius triukšmo santykis, dB, parametras pateikiamas tik LRTC WiMAX tinkle atliktuose matavimuose.
+	\item \textbf{Sparta kbit/s} – (angl. \textit{Download speed}) išmatuota duomenų gavimo spartos vertė, kbps.
 \end{itemize}
-IPSS matavimai atliekami automobilyje sumontuotos įrangos, todėl jie neapima viso Lietuvos ploto, tik pagrindinius kelius, geležinkelius ir miestus. Atliktų matavimų koordinates galima pamatyti \ref{img:3G-0}, \ref{img:LTE-0} ir \ref{img:WiMAX-0} pav.
+IPSS matavimai atliekami naudojant Ryšių reguliavimo tarnybos turimą įrangą, kuri yra sumontuota matavimams skirtame automobilyje. Matavimai atliekami automobiliui judant (angl. \textit{drive test}) miestų gatvėmis, automagistralėmis arba rajoniniais keliais pagal pasirinktus maršrutus. Atliktų matavimų koordinates galima pamatyti \ref{img:3G-0}, \ref{img:LTE-0} ir \ref{img:WiMAX-0} pav.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{img/3G-0}
