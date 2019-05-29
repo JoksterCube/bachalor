@@ -17,6 +17,33 @@
 \usepackage[backend=biber]{biblatex}
 \usepackage{enumitem}\setlist{nosep}
 \usepackage{listings}
+\usepackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
 
 % Titulinio aprašas
 \university{Vilniaus universitetas}
@@ -24,8 +51,8 @@
 \department{Programų sistemų katedra}
 %\papertype{Bakalauro darbas}
 \papertype{Bakalauro darbas}
-\title{Anomalijų aptikimas Interneto Prieigos Stebėsenos Sistemos įrašuose}
-\titleineng{Detection of anomalies in Internet Access Monitoring System data}
+\title{Anomalijų aptikimas interneto prieigos stebėsenos sistemos įrašuose}
+\titleineng{Detection of anomalies in internet access monitoring system data}
 \author{Jokūbas Rusakevičius}
 \supervisor{asist. dr. Vytautas Valaitis}
 \reviewer{j. asist. Linas Petkevičius}
@@ -40,58 +67,27 @@
 
 \setcounter{page}{2}
 
-%% Padėkų skyrius
-%\sectionnonumnocontent{}
-%\vspace{7cm}
-%\begin{center}
-%	Padėkos asmenims ir/ar organizacijoms
-%\end{center}
-
 \sectionnonumnocontent{Santrauka}
-Glaustai aprašomas darbo turinys: pristatoma nagrinėta problema ir padarytos
-išvados. Santraukos apimtis ne didesnė nei 0,5 puslapio. Santraukų gale
-nurodomi darbo raktiniai žodžiai. 
+TODO: Santrauka
 % Nurodomi iki 5 svarbiausių temos raktinių žodžių (terminų).
 % Vienas terminas gali susidėti iš kelių žodžių.
 \raktiniaizodziai{raktinis žodis 1, raktinis žodis 2, raktinis žodis 3, raktinis žodis 4, raktinis žodis 5}   
 
 \sectionnonumnocontent{Summary}
-Santrauka anglų kalba. Santraukos apimtis ne didesnė nei 0,5 puslapio.
+TODO: summary
 \keywords{keyword 1, keyword 2, keyword 3, keyword 4, keyword 5}
 
 \tableofcontents
 
 \sectionnonum{Įvadas}
-Įvade nurodomas darbo tikslas ir uždaviniai, kuriais bus įgyvendinamas tikslas,
-aprašomas temos aktualumas, apibrėžiamas tiriamasis objektas akcentuojant
-neapibrėžtumą, kuris bus išspręstas darbe, aptariamos teorinės darbo prielaidos
-bei metodika, apibūdinami su tema susiję literatūros ar kitokie šaltiniai,
-temos analizės tvarka, darbo atlikimo aplinkybės, pateikiama žinių apie
-naudojamus instrumentus (programas ir kt., jei darbe yra eksperimentinė dalis).
-Darbo įvadas neturi būti dėstymo santrauka. Įvado apimtis 2–4 puslapiai.
+Šis darbas yra Programų Sistemų studijų baigiamasis bakalauro darbas apie anomalijų aptikimą interneto prieigos stebėsenos sistemos įrašuose naudojant „MacroBase“ atviro kodo analitinį įrankį bei „SQL“ paketą.
 
 \subsectionnonum{Problematika}
-TODO
+Informacijos rinkimas fizine forma, juos užrašant ant popieriaus lapo, pasak MIT Media Lab direktoriaus Joi Ito, dar visai neseniai buvo vienintelis būdas rinkti, klasifikuoti ir saugoti duomenis. Žmogus mintis ir idėjas užrašydamas ant popieriaus lapo – paversdavo žiniomis (angl. \textit{knowledge}). Tačiau laikai keičiasi, ir dabartinė didžiųjų duomenų situacija kinta. Dėl milžiniškų surenkamų duomenų kiekio, nėra trivialu atskirti naudingus ir nenaudingus duomenis, todėl, natūraliai, negalima visų surenkamų duomenų automatiškai priskirti prie ir vadinti žiniomis. Surinkti duomenys nėra žinios, kol jų nepradedama nagrinėti, analizuoti ir filtruoti, ir tik pradėjus šį procesą galima pastebėti, kad gaunama informacija yra įdomi ir netgi svarbi \cite{movie}.\par
+Duomenų, kuriais yra operuojama, juos yra renkama ir saugoma, kiekiai nuolatos didėja \cite{iot}. Iš tiesų, dėl daugelio priežasčių net greitis, kuriuo šie duomenys yra generuojami eksponentiškai kyla \cite{zettabytes}. Jau 2015–2016 metais didžiosios socialinių tinklų kompanijos Twitter, Facebook ir LinkedIn pranešė fiksuojančios iki 12 milijonų įvykių (angl. \textit{events}) per sekundę \cite{twitter, facebook, linkedin}. Šie duomenų kiekiai gerokai lenkia žmogaus gebėjimą juos apdoroti bei žymiai apsunkina darbą tiek analitikams, tiek analitiniams įrankiams. Keli iš geriausių (angl. \textit{best-of-class}) šių dienų taikomųjų programų operatorių praneša panaudojantys anekdotiškai mažą jų surenkamų duomenų kiekį – mažiau nei 6\% \cite{prioritizing_attention}.
 
-\section{Medžiagos darbo tema dėstymo skyriai}
-Medžiagos darbo tema dėstymo skyriuose išsamiai pateikiamos nagrinėjamos temos
-detalės: pradiniai duomenys, jų analizės ir apdorojimo metodai, sprendimų
-įgyvendinimas, gautų rezultatų apibendrinimas.
 
-Medžiaga turi būti dėstoma aiškiai, pateikiant argumentus. Tekste dėstomas
-trečiuoju asmeniu, t.y. rašoma ne „aš manau“, bet „autorius mano“, „autoriaus
-nuomone“. Reikėtų vengti informacijos nesuteikiančių frazių, pvz., „...kaip jau
-buvo minėta...“, „...kaip visiems žinoma...“ ir pan., vengti grožinės
-literatūros ar publicistinio stiliaus, gausių metaforų ar panašių meninės
-išraiškos priemonių.
 
-Skyriai gali turėti poskyrius ir smulkesnes sudėtines dalis, kaip punktus ir
-papunkčius.
-
-\subsection{Poskyris}
-Citavimo pavyzdžiai: cituojamas vienas šaltinis \cite{PvzStraipsnLt}; cituojami
-keli šaltiniai \cite{PvzStraipsnEn, PvzKonfLt, PvzKonfEn, PvzKnygLt, PvzKnygEn,
-	PvzElPubLt, PvzElPubEn, PvzMagistrLt, PvzPhdEn}.
 
 \section{Duomenų analizės eksperimentas naudojant „MacroBase SQL“ modulį}
 
@@ -127,24 +123,23 @@ Kiekvienas IPSS įrašų failas prasideda antraštės (angl. \textit{header}) ei
 		\subitem \textbf{CINR} – trikdžių ir triukšmo santykis (angl. \textit{carrier to interference-plus-noise ratio}).
 		\subitem \textbf{Ryšio technologija} – nurodo matuojamo ryšio tinklą (visi įrašai šiame faile ryšio technologijos lauke turi reikšmę „WIMAX“).
 \end{itemize}
-
-
+IPSS matavimai atliekami automobilyje sumontuotos įrangos, todėl jie neapima viso Lietuvos ploto, tik pagrindinius kelius, geležinkelius ir miestus. Atliktų matavimų koordinates galima pamatyti \ref{img:3G-0}, \ref{img:LTE-0} ir \ref{img:WiMAX-0} pav.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{img/3G-0}
-	\caption{3G Matavimai 2014–2018 metais.}
+	\caption{3G Matavimai 2014–2018 metais}
 	\label{img:3G-0}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{img/LTE-0}
-	\caption{LTE Matavimai 2014–2018 metais.}
+	\caption{LTE Matavimai 2014–2018 metais}
 	\label{img:LTE-0}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{img/WiMAX-0}
-	\caption{WiMAX Matavimai 2015–2017 metais.}
+	\caption{WiMAX Matavimai 2015–2017 metais}
 	\label{img:WiMAX-0}
 \end{figure}
 Aiškiau išskirtus įrašų koordinačių duomenis galima rasti Priede \ref{coordpav}.
@@ -180,11 +175,101 @@ Atrinkus duomenis iš pradinių duomenų buvo sukurtas antras skriptas skirtas i
 Eksperimentui atlikti buvo nuskaityti ir apdoroti apie 300000 įrašų, vidutiniškai 100000 per failą.
 TODO: pridėti citatą
 \subsection{Eksperimento aplinkos paruošimas}
+Eksperimentas buvo atliekamas naudojant „Ubuntu (64-bit)“ operacinę sistemą įdiegtą virtualioje mašinoje „Oracle VM VirtualBox“. „MacroBase SQL“ įdiegtas ir paruoštas darbui naudojantis „MacroBase“ dokumentacija.
+
+\subsubsection{Virtuali mašina eksperimentui}
+„MacroBase“ pateikiami pavyzdžiai ir konfigūraciniai nurodymai yra pateikiami „Linux“ operacinėms sistemoms. Dėl šios priežasties, eksperimentui atlikti buvo pasirinkta atviro kodo nemokama operacinė sistema „Ubuntu“. Dėl paprastumo buvo nuspręsta naudoti virtualią mašiną operacinei sistemai įdiegti. Atviro kodo nemokama virtuali mašina „Oracle VM VirtualBox“ buvo pasirinkta šiai užduočiai. Galutinės eksperimentui naudotos sisteminės specifikacijos:
+\begin{itemize}
+	\item Reali mašina, kurioje atliekamas eksperimentas – nešiojamasis kompiuteris „Lenovo Y50-70“.
+		\subitem Realios mašinos Operacinė sistema \textbf{„Microsoft Windows 10 Pro“}, versija	10.0.17763.
+		\subitem Realios mašinos procesorius: \textbf{i7-4720HQ}
+		\subitem Realios mašinos operatyvioji atmintis: \textbf{8GB}
+	\item \textbf{„Oracle VM VirtualBOX“} virtuali mašina, versija  \textbf{6.0.8} r130520 (Qt5.6.2).
+		\subitem Virtualios mašinos operacinės sistemos „Ubuntu“ 64 bitų versiją \textbf{„Ubuntu (64-bit)“}, versija \textbf{18.04 LTS}.
+		\subitem Virtualiai mašinai suteiktas virtualus standusis diskas: \textbf{40GB}.
+		\subitem Virtualiai mašinai skirta operatyvioji atmintis: \textbf{4GB}.
+\end{itemize}
+
+\subsubsubsection{Virtualios mašinos paruošimas}
+Virtualios mašinos paruošimas eksperimentui:
+\begin{enumerate}
+	\item Iš „Oracle VM VirtualBox“ internetinės svetainės atsisiųstas naujausias „Windows 10“ operacinei sistemai skirtas diegimo failas (\url{https://www.virtualbox.org/wiki/Downloads}).
+	\item Sekant sąrankos vedlio nurodymus įdiegta „Oracle VM VirtualBox“ virtuali mašina.
+	\item Iš „Ubuntu“ internetinės svetainės atsisiųstas naujausias „Ubuntu (64-bit)“ operacinės sistemos ISO failas (\url{https://www.ubuntu.com/download/desktop}).
+	\item Atidarius „Oracle VM VirtualBox“ programinę įrangą pradėtas naujos virtualios mašinos pridėjimo procesas spaudžiant mygtuką su tekstu „New“.
+	\item Sekant naujos virtualios mašinos pridėjimo langus pasirinktos šios parinktys:
+		\subitem Operacinės sistemos tipas: „Linux“.
+		\subitem Versija: „Ubuntu (64-bit)“.
+		\subitem Operatyviosios atminties kiekis megabaitais: 4096MB.
+		\subitem Virtualus standusis diskas: 40GB.
+	\item „Oracle VM VirtualBox“ pagrindiniame lange pasirinkus naujai sukurtą vitualią mašiną spaustas mygtukas su tekstu „Start“.
+	\item Atidarytame virtualios mašinos lange pasirinktas anksčiau atsiųstas „Ubuntu (64-bit)“ ISO failas.
+	\item Pasirinkta „Install“ operacija ir sekant diegimo vedlį, įdiegta „Ubuntu (64-bit)“ operacinė sistema.	
+\end{enumerate}
+
+\subsubsection{„MacroBase“ analitinio įrankio paruošimas}
+„MacroBase SQL“ diegiamas pagal „MacroBase“ dokumentacijoje nurodytus žingsnius. Tačiau prieš pradedant diegimo procesą reikia įdiegti įrankius bei papildomus paketus, tam kad „MacroBase“ taisyklingai veiktų bei būtų galima atlikti diegimo procesą. Eksperimentui naudotos programinės įrangos specifikacijos:
+\begin{itemize}
+	\item „MacroBase“ versija v1.0.
+	\item Java JRE versija 1.8.0\_212.
+	\item Java JDK versija 1.8.0\_212.
+	\item „Apache Maven“ versija 3.6.0.
+\end{itemize}
+
+\subsubsubsection{„MacroBase SQL“ diegimui reikalingi papildomi paketai}
+Sėkmingam „MacroBase SQL“ diegimo procesui naujai paruoštoje „švarioje“ „Ubuntu“ operacinėje sistemoje, reikalingi papildomi pagalbiniai paketai. Šiuos paketus įdiegti buvo naudojamos šios terminalo komandos:
+\begin{enumerate}
+	\item Versijavimo kontrolės sistemos „Git“ diegimas:
+	\begin{verbatim}
+	sudo apt install git
+	\end{verbatim}
+	\item Java projektų valdymo ir diegimo priemonės „Apache Maven“ diegimas:
+	\begin{verbatim}
+	sudo apt install maven
+	\end{verbatim}
+	\item Java JRE diegimas:
+	\begin{verbatim}
+	sudo apt install openjdk-8-jre
+	\end{verbatim}
+	\item Java JDK diegimas:
+	\begin{verbatim}
+	sudo apt install openjdk-8-jdk
+	\end{verbatim}
+\end{enumerate}
+
+\subsubsubsection{„MacroBase SQL“ analitinio įrankio diegimas}
+Sekant „MacroBase“ dokumentacijoje nurodytus žingsnius įdiegtas „MacroBase SQL“ įrankis:
+\begin{enumerate}
+	\item Atidarytas „Ubuntu“ terminalas.
+	\item Klonuota projekto repozitorija:
+	\begin{verbatim}
+	git clone https://github.com/stanford-futuredata/macrobase.git
+	\end{verbatim}
+	\item Pereita į „MacroBase“ naujai sukurtą direktoriją:
+	\begin{verbatim}
+	cd macrobase
+	\end{verbatim}
+	\item Paleistas „MacroBase SQL“ kompiliavimo ir paruošimo BASH skriptas:
+	\begin{verbatim}
+	./build.sh sql
+	\end{verbatim}
+	\item Patikrinta ar diegimas atliktas teisingai ir „MacroBase SQL“ įrankis veikia korektiškai pasinaudojus demonstraciniais duomenimis:
+	\begin{verbatim}
+	bin/macrobase-sql -f sql/demo.sql
+	\end{verbatim}
+\end{enumerate}
 
 \subsection{Eksperimento vykdymo eiga}
+Šiame poskyryje aprašoma eksperimento vykdymo eiga naudojant IPSS pateiktus 2014-2018 metų duomenų rinkinius naudojantis „MacroBase SQL“ analitinį įrankį.
 
 \subsubsection{Konfiguracija}
+„MacroBase SQL“ paleidimui buvo naudojama komandinė eilutė, kuriai paduodami SQL formato failai. Šiuose failuose nurodomi tokia informacija:
+\begin{itemize}
+	\item 
+\end{itemize}
 
+\subsubsection{Eksperimento eiga}
+Šiame skyriuje aprašyta eksperimento eiga 
 
 
 
@@ -222,6 +307,10 @@ atitikti darbo tikslą.
 	\item API
 	\item HTTP
 	\item JSON
+	\item JRE
+	\item JDK
+	\item BASH
+	\item SQL
 \end{itemize}
 Sąvokų apibrėžimai ir santrumpų sąrašas sudaromas tada, kai darbo tekste
 vartojami specialūs paaiškinimo reikalaujantys terminai ir rečiau sutinkamos
@@ -234,85 +323,85 @@ santrumpos.
 % su priedais susiejamas nuorodomis.
 
 \section{IPSS matavimų koordinatės 2014–2018 metais} \label{coordpav}
-IPSS 3G ryšio technologijos matavimai 2014–2018 metais. Viso 136003 įrašai.
+IPSS \textbf{3G} ryšio technologijos matavimai 2014–2018 metais. Viso 136003 įrašai.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/3G-1}
-	\caption{3G Matavimai 2014 metais. Viso – 2245 matavimai.}
+	\caption{3G Matavimai 2014 metais. Viso – 2245 matavimai}
 	\label{img:3G-1}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/3G-2}
-	\caption{3G Matavimai 2015 metais. Viso – 19427 matavimai.}
+	\caption{3G Matavimai 2015 metais. Viso – 19427 matavimai}
 	\label{img:3G-2}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/3G-3}
-	\caption{3G Matavimai 2016 metais. Viso – 34769 matavimai.}
+	\caption{3G Matavimai 2016 metais. Viso – 34769 matavimai}
 	\label{img:3G-3}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/3G-4}
-	\caption{3G Matavimai 2017 metais. Viso – 38789 matavimai.}
+	\caption{3G Matavimai 2017 metais. Viso – 38789 matavimai}
 	\label{img:3G-4}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/3G-5}
-	\caption{3G Matavimai 2018 metais. Viso – 40773 matavimai.}
+	\caption{3G Matavimai 2018 metais. Viso – 40773 matavimai}
 	\label{img:3G-5}
 \end{figure}
-IPSS LTE ryšio technologijos matavimai 2014–2018 metais. Viso 157522 įrašai.
+IPSS \textbf{LTE} ryšio technologijos matavimai 2014–2018 metais. Viso 157522 įrašai.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/LTE-1}
-	\caption{LTE Matavimai 2014 metais. Viso – 232 matavimai.}
+	\caption{LTE Matavimai 2014 metais. Viso – 232 matavimai}
 	\label{img:LTE-1}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/LTE-2}
-	\caption{LTE Matavimai 2015 metais. Viso – 13962 matavimai.}
+	\caption{LTE Matavimai 2015 metais. Viso – 13962 matavimai}
 	\label{img:LTE-2}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/LTE-3}
-	\caption{LTE Matavimai 2016 metais. Viso – 40738 matavimai.}
+	\caption{LTE Matavimai 2016 metais. Viso – 40738 matavimai}
 	\label{img:LTE-3}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/LTE-4}
-	\caption{LTE Matavimai 2017 metais. Viso – 49672 matavimai.}
+	\caption{LTE Matavimai 2017 metais. Viso – 49672 matavimai}
 	\label{img:LTE-4}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/LTE-5}
-	\caption{LTE Matavimai 2018 metais. Viso – 52918 matavimai.}
+	\caption{LTE Matavimai 2018 metais. Viso – 52918 matavimai}
 	\label{img:LTE-5}
 \end{figure}
-IPSS WiMAX ryšio technologijos matavimai 2014–2018 metais. Viso 18166 įrašai.
+IPSS \textbf{WiMAX} ryšio technologijos matavimai 2014–2018 metais. Viso 18166 įrašai.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/WiMAX-1}
-	\caption{WiMAX Matavimai 2015 metais. Viso – 4307 matavimai.}
+	\caption{WiMAX Matavimai 2015 metais. Viso – 4307 matavimai}
 	\label{img:WiMAX-1}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/WiMAX-2}
-	\caption{WiMAX Matavimai 2016 metais. Viso – 7653 matavimai.}
+	\caption{WiMAX Matavimai 2016 metais. Viso – 7653 matavimai}
 	\label{img:WiMAX-2}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.33]{img/WiMAX-3}
-	\caption{WiMAX Matavimai 2017 metais. Viso – 6206 matavimai.}
+	\caption{WiMAX Matavimai 2017 metais. Viso – 6206 matavimai}
 	\label{img:WiMAX-3}
 \end{figure}
 
