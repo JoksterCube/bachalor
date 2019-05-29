@@ -83,12 +83,30 @@ TODO: summary
 Šis darbas yra Programų Sistemų studijų baigiamasis bakalauro darbas apie anomalijų aptikimą interneto prieigos stebėsenos sistemos įrašuose naudojant „MacroBase“ atviro kodo analitinį įrankį bei „SQL“ paketą.
 
 \subsectionnonum{Problematika}
-Informacijos rinkimas fizine forma, juos užrašant ant popieriaus lapo, pasak MIT Media Lab direktoriaus Joi Ito, dar visai neseniai buvo vienintelis būdas rinkti, klasifikuoti ir saugoti duomenis. Žmogus mintis ir idėjas užrašydamas ant popieriaus lapo – paversdavo žiniomis (angl. \textit{knowledge}). Tačiau laikai keičiasi, ir dabartinė didžiųjų duomenų situacija kinta. Dėl milžiniškų surenkamų duomenų kiekio, nėra trivialu atskirti naudingus ir nenaudingus duomenis, todėl, natūraliai, negalima visų surenkamų duomenų automatiškai priskirti prie ir vadinti žiniomis. Surinkti duomenys nėra žinios, kol jų nepradedama nagrinėti, analizuoti ir filtruoti, ir tik pradėjus šį procesą galima pastebėti, kad gaunama informacija yra įdomi ir netgi svarbi \cite{movie}.\par
+Informacijos rinkimas fizine forma, juos užrašant ant popieriaus lapo, pasak MIT Media Lab direktoriaus Joi Ito, dar visai neseniai buvo vienintelis būdas rinkti, klasifikuoti ir saugoti duomenis. Žmogus mintis ir idėjas užrašydamas ant popieriaus lapo – paversdavo žiniomis (angl. \textit{knowledge}). Tačiau laikai keičiasi, ir dabartinė didžiųjų duomenų (angl. \textit{big data}) situacija yra kitokia. Dėl milžiniškų surenkamų duomenų kiekio, nėra trivialu atskirti naudingus ir nenaudingus duomenis, todėl, natūraliai, negalima visų surenkamų duomenų automatiškai priskirti prie ir vadinti žiniomis. Surinkti duomenys nėra žinios, kol jų nepradedama nagrinėti, analizuoti ir filtruoti, ir tik pradėjus šį procesą galima pastebėti, kad gaunama informacija yra įdomi ir netgi svarbi \cite{movie}.\par
 
-Duomenų, kuriais yra operuojama, juos yra renkama ir saugoma, kiekiai nuolatos didėja \cite{iot}. Iš tiesų, dėl daugelio priežasčių net greitis, kuriuo šie duomenys yra generuojami eksponentiškai kyla \cite{zettabytes}. Jau 2015–2016 metais didžiosios socialinių tinklų kompanijos Twitter, Facebook ir LinkedIn pranešė fiksuojančios iki 12 milijonų įvykių (angl. \textit{events}) per sekundę \cite{twitter, facebook, linkedin}. Šie duomenų kiekiai gerokai lenkia žmogaus gebėjimą juos apdoroti bei žymiai apsunkina darbą tiek analitikams, tiek analitiniams įrankiams. Keli iš geriausių (angl. \textit{best-of-class}) šių dienų taikomųjų programų operatorių praneša panaudojantys anekdotiškai mažą jų surenkamų duomenų kiekį – mažiau nei 6\% \cite{prioritizing_attention}.\par
+Duomenų, kuriais yra operuojama, juos yra renkama ir saugoma, kiekiai nuolatos didėja \cite{iot}. Iš tiesų, dėl daugelio priežasčių net greitis, kuriuo šie duomenys yra generuojami eksponentiškai kyla \cite{zettabytes}. Jau 2015–2016 metais didžiosios socialinių tinklų kompanijos Twitter, Facebook ir LinkedIn pranešė fiksuojančios iki 12 milijonų įvykių (angl. \textit{events}) per sekundę \cite{twitter, facebook, linkedin}. Šie duomenų kiekiai gerokai lenkia žmogaus gebėjimą juos apdoroti bei žymiai apsunkina darbą tiek analitikams, tiek analitiniams įrankiams. Net aukščiausios kvalifikacijos (angl. \textit{best-of-class}) šių dienų taikomųjų programų operatoriai bei analitikai praneša panaudojantys anekdotiškai mažą jų surenkamų duomenų kiekį – mažiau nei 6\% \cite{prioritizing_attention}.\par
 
-Renkant tokius didelius kiekius duomenų natūraliai, užfiksuojami įrašai, kurie yra nebūdingi įrašų rinkiniui bei išsiskiria. Duomenų vienetai nukrypę nuo kitų duomenų rinkinyje yra vadinami anomalijomis. Anomalijų aptikimas yra procesas, kurio metu yra aptinkama ir identifikuojama anomalija arba išskirtis (angl. \textit{outlier}) duomenų rinkinyje \cite{anomaly}. Šio darbo metu bus tiriamas anomalijų aptikimas remiantis belaidės interneto prieigos duomenų perdavimo spartos kontrolinių matavimų, atliktų 2014–2018 metais, rezultatais, kurie gauti naudojantis Lietuvos Respublikos ryšių reguliavimo tarnybos administruojama Interneto prieigos stebėsenos sistema (IPSS) \cite{ipss}.
+Renkant tokius didelius kiekius duomenų natūraliai, užfiksuojami įrašai, kurie yra nebūdingi įrašų rinkiniui bei išsiskiria. Duomenų vienetai nukrypę nuo kitų duomenų rinkinyje yra vadinami anomalijomis. Anomalijų aptikimas yra procesas, kurio metu yra aptinkama ir identifikuojama anomalija arba išskirtis (angl. \textit{outlier}) duomenų rinkinyje \cite{anomaly}. Šio darbo metu bus tiriamas anomalijų aptikimas remiantis belaidės interneto prieigos duomenų perdavimo spartos kontrolinių matavimų, atliktų 2014–2018 metais, rezultatais, kurie gauti naudojantis Lietuvos Respublikos ryšių reguliavimo tarnybos administruojama IPSS \cite{ipss}.\par
 
+Fiksuojami esminiai ar sisteminiai duomenys tobulu atveju turėtų būti peržiūrimi reguliariai ir pilnai, tam kad būtų galima užtikrinti tolygią sistemų veiklą, matavimų taisyklingumą ar renkamų duomenų korektiškumą ir laiku identifikuoti bei eliminuoti kylančias klaidas bei užkirsti kelią kenkėjiškoms atakoms. Tačiau kaip jau minėta anksčiau, didėjantis duomenų kiekis gerokai lenkia žmogaus gebėjimą juos apdoroti. Duomenų kiekis nuolatos didėja, tačiau žmogaus dėmesys išlieką riboto dydžio. Iškyla iššūkis prioritetizuoti žmogaus dėmesį – akcentuoti, filtruoti, jungti, grupuoti ir kontekstualizuoti svarbiausius analizuojamų duomenų elgsenos ir būsenos pakitimus, taip padedant išskirti svarbiausius duomenų ypatumus ir rodyti žmogui tik apibendrintą, svarbia ir ribotą kiekį informacijos \cite{prioritizing_attention}. Visa nereikalinga informacija, kuri yra rodoma žmogui reikalauja ir eikvoja jo dėmesį \cite{attention}. Nors žmonėms yra fiziškai neįmanoma peržiūrėti visų duomenų, mašinos ir/ar kompiuteriai gali tai atlikti, ar bent gebėtų, jei jų resursai būtų ekonomiškai paskirstyti. Analitikų teigimu, didelis kiekis svarbių duomenų yra praleidžiama dėl neefektyvaus ir/ar lėto mašinų darbo \cite{prioritizing_attention}.\par
+
+TODO: pabaigti
+
+
+
+\subsection{Darbo tikslai ir uždaviniai}
+Šio darbo \textbf{tikslas} – ištirti „MacroBase“ duomenų analizavimo ir anomalijų aptikimo įrankio „SQL“ paketą – „MacroBase SQL“ ir pritaikyti jo veikimą analizavimui ir anomalijų aptikimui IPSS belaidės interneto prieigos duomenų perdavimo spartos kontrolinių matavimų įrašuose.\par
+
+Darbui iškelti \textbf{uždaviniai}:
+\begin{enumerate}
+	\item Išanalizuoti „MacroBase SQL“ architektūrą ir veikimo principą.
+	\item Paruošti eksperimentinę aplinką ir IPSS įrašų rinkinį eksperimentui.
+	\item Atlikti eksperimentus su kontroliniais „MacroBase“ pateiktais duomenimis ir pritaikytais IPSS duomenimis	
+	\item Palyginti eksperimentų rezultatus, keičiant pagrindinių parametrų (procentilio, palaikymo ir rizikos koeficiento) reikšmes.
+	\item Atlikti duomenų transformacijas (pridėti, atimti, filtruoti, keisti reikšmes) ir palyginti eksperimento rezultatus.
+	\item Pateikti rekomendacijas IPSS duomenų anomalijų aptikimui naudojantis „MacroBase“.
+\end{enumerate}
 
 
 
@@ -207,10 +225,10 @@ Virtualios mašinos paruošimas eksperimentui:
 \subsubsection{„MacroBase“ analitinio įrankio paruošimas}
 „MacroBase SQL“ diegiamas pagal „MacroBase“ dokumentacijoje nurodytus žingsnius. Tačiau prieš pradedant diegimo procesą reikia įdiegti įrankius bei papildomus paketus, tam kad „MacroBase“ taisyklingai veiktų bei būtų galima atlikti diegimo procesą. Eksperimentui naudotos programinės įrangos specifikacijos:
 \begin{itemize}
-	\item „MacroBase“ versija v1.0.
-	\item Java JRE versija 1.8.0\_212.
-	\item Java JDK versija 1.8.0\_212.
-	\item „Apache Maven“ versija 3.6.0.
+	\item „MacroBase“ versija \textbf{v1.0}.
+	\item Java JRE versija \textbf{1.8.0\_212}.
+	\item Java JDK versija \textbf{1.8.0\_212}.
+	\item „Apache Maven“ versija \textbf{3.6.0}.
 \end{itemize}
 
 \subsubsubsection{„MacroBase SQL“ diegimui reikalingi papildomi paketai}
@@ -235,6 +253,7 @@ Sėkmingam „MacroBase SQL“ diegimo procesui naujai paruoštoje „švarioje�
 \end{enumerate}
 
 \subsubsubsection{„MacroBase SQL“ analitinio įrankio diegimas}
+TODO: CHANGE
 Sekant „MacroBase“ dokumentacijoje nurodytus žingsnius įdiegtas „MacroBase SQL“ įrankis:
 \begin{enumerate}
 	\item Atidarytas „Ubuntu“ terminalas.
@@ -295,6 +314,7 @@ atitikti darbo tikslą.
 % \sectionnonum{Sąvokų apibrėžimai}
 \sectionnonum{Santrumpos}
 \begin{itemize}
+	\item LRTC
 	\item CSV
 	\item 3G
 	\item LTE
