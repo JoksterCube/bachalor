@@ -117,7 +117,7 @@ Darbui iškelti \textbf{uždaviniai}:
 	\item \textbf{Aiškinamieji} – tai operatoriai, kurie grupuoja ir jungia duomenų taškus po kelis.
 \end{itemize}
 
-Toliau trumpai aprašoma „MacroBase“ darbo proceso struktūra \cite{macrobase_overview, kursinis}:
+Toliau trumpai aprašoma „MacroBase“ darbo proceso architektūra, kuri yra paremta dviem pagrindiniais principais. Pirma, visi operatoiai operuoja per duomenų srautus, jei duomenys yra išsaugoti ilgalaikėje atmintyje, prieš dirbant su šiais duomenimis, jie yra verčiami į srautus. Antra, „MacroBase“ yra paremtas kompiliatoriaus principu aprašytu žemiau, kuris užtikrina sąveiką tarp operatorių ir tvarkingą bendrą struktūrą \cite{macrobase_overview, kursinis}:
 \begin{itemize}
 	\item \textbf{Duomenų gavimas} (angl. \textit{ingestion}):
 		\begin{itemize}
@@ -150,8 +150,29 @@ Toliau trumpai aprašoma „MacroBase“ darbo proceso struktūra \cite{macrobas
 \end{itemize}
 
 \subsection{„MacroBase“ sprendžiamos problemos} \label{subsec:problems}
+„MacroBase“ apibrėžia tris pagrindinius iššūkius, kuriuos turi įveikti greitųjų duomenų analizės sistemos. Šiame poskyriuje aprašomi šie dizaino iššūkiai ir kaip „MacroBase“ greito duomenų srauto analitinis įrankis juos sprendžia \cite{prioritizing_attention}:
 
+Iškelti iššūkiai:
+\begin{enumerate}
+	\item Resursu nepakankamas kiekis jų interpretavimui.
+	\item Resursu nepakankamas kiekis analizavimui.
+	\item Resursų nepakankamas kiekis skaičiavimams.
+\end{enumerate}
 
+\subsubsection{Resursu nepakankamas kiekis jų interpretavimui}
+Šio iššūkio įgyvendinimui „MacroBase“ naudoja jų vaidinamą – \textbf{išvesties prioritetizavimo principą}. Tai yra pasiekiama grąžinant daugiau informacijos su mažesne išvestimi. Kadangi kiekvienas duomenų vienetas reikalauja dėmesio, analitinis įrankis turi padaryti sprendimą, kokius duomenis rodyti naudotojui. Tai turi būti atlikta protingai ir pateikiami ne konkretūs, o apibendrinti ir sugrupuoti duomenų vienetai. \par
+
+„MacroBase“ šis principas yra adaptuojamas leidžiant pasirinkti analizės metrikas ir atributus. Taip pat rodant anomalijas pasirinktai metrikai, kurias aiškina būtent pasirinkti atributai \cite{prioritizing_attention}.
+
+\subsubsection{Resursu nepakankamas kiekis analizavimui}
+Šio iššūkio įgyvendinimui „MacroBase“ naudoja jų vaidinamą – \textbf{iteracijų prioritetizavimo principą}. Analitinių sistemų vystymas turi būti paremtas iteracijomis ir grįžtamuoju ryšiu (anlg. \textit{feedback-driven}). Sistema turi suteikti naudingus numatytuosius nustatymus bei padaryti analitinio darbo procesą lengvai konfigūruojamą ir neversti naudotojų to daryti patiems. Pasikartojančios, klaidoms atsirasti aplinkybe suteikiančios ir varginančios užduotys turi būti automatizuojamos. Tuomet naudotojo darbas yra palengvinamas ir jo dėmesys sutelkiamas į taikomąją sričiai specifines žinias. \par
+
+„MacroBase“ pateikia skirtingas skirtas įvairios kvalifikacijos analitikams ar panaudojimo sferoms. Papildomai, „MacroBase“ pateikia numatytuosius nustatymus, leidžiančius pradėti darbą tik įdiegus programinę įrangą ir juos redaguoti darbo proceso metu \cite{demonstration, prioritizing_attention}. Galiausiai, atviro kodo programinės įrangos „MacroBase“ internetiniame puslapyje galima užduoti klausimus ir pranešti apie sistemines klaidas.
+
+\subsection{Resursų nepakankamas kiekis skaičiavimams}
+Šio iššūkio įgyvendinimui „MacroBase“ naudoja jų vaidinamą – \textbf{skaičiavimų prioritetizavimo principą}. Analitinė sistema privalo prioritetizuoti skaičiavimus su duomenimis, darančius didžiausią įtaką rezultatui. Greičiausias būdas skaičiuoti (angl. \textit{compute}) – yra vengti skaičiavimų. Darbas su įvestimi turi būti prioritetizuojamas atsižvelgiant į išvestį, taip atliekant skaičiavimus su duomenimis, kurie prasideda labiausiai prie rezultato. Šioje vietoje yra labai naudingi inkrementiniai algoritmai, kurie ilgus ir daug resursų reikalaujančius skaičiavimus išsisaugo (angl. \textit{cache}) ir pakartotinai panaudoja. \par
+
+„MacroBase“ analitinis įrankis prioritetizuoja skaičiavimus remdamasis galutiniais skaičiavimų rezultatais. Šiuo būdų ya  sutaupomas žymus kiekis nereikalingo darbo \cite{prioritizing_attention} ir „MacroBase“ gali pateikti skaičiavimų rezultatus greitai ir efektyviai.
 
 
 \section{„MacroBase“ „SQL“ paketo veikimo principas – „MacroBase SQL“} \label{sec:macrobasesql}
