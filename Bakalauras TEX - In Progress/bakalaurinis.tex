@@ -117,9 +117,42 @@ Darbui iškelti \textbf{uždaviniai}:
 	\item \textbf{Aiškinamieji} – tai operatoriai, kurie grupuoja ir jungia duomenų taškus po kelis.
 \end{itemize}
 
-
+Toliau trumpai aprašoma „MacroBase“ darbo proceso struktūra \cite{macrobase_overview, kursinis}:
+\begin{itemize}
+	\item \textbf{Duomenų gavimas} (angl. \textit{ingestion}):
+		\begin{itemize}
+			\item „MacroBase“ gauna išorinį duomenų srautą analizei.
+			\item Duomenų taškai susideda iš metrikų – matavimų (pavyzdžiui, greitism, kelionės laikas, baterijos procentai), ir atributų – siejamų duomenų (pavyzdžiui, telefono numeris, kompiuterio MAC adresas, paso kodas).
+			\item „MacroBase“ anomalijų aptikimui naudoja metrikas, kurias po to paaiškina naudodama atributus.
+		\end{itemize}
+	\item \textbf{Duomenų transformavimas} (angl. \textit{feature transformation}):
+		\begin{itemize}
+			\item Tai yra neprivalomas procesas.
+			\item Šio proceso metu „MacroBase“ vykdo domenui specifinių duomenų transformacijas. Šios transformacijos gali būti įvairių tipų: statistinės, priklausančios nuo duomenų tipo ar kt.
+		\end{itemize}
+	\item \textbf{Duomenų klasifikavimas} (angl. \textit{classification}):
+		\begin{itemize}
+			\item Kiekvienas duomenų taškas yra klasifikuojamas.
+			\item „MacroBase“ šiuos taškus klasifikuoja jiems priskirdama po žymę, kuri yra priklausomą nuo metrikos.
+			\item Taip pat, šioje proceso stadijoje yra treniruojamai klasifikatoriai. Klasifikatoriai yra treniruojami ir vertinami pagal srauto metrikas.
+		\end{itemize}
+	\item \textbf{Duomenų aiškinimas} (angl. \textit{explanation}):
+		\begin{itemize}
+			\item „MacroBase“ negrąžina tiesioginio sužymėtų duomenų taškų.
+			\item „MacroBase“ sugeneruoja paaiškinimus ir apjungia sužymėto srauto duomenų taškus.
+			\item Kadangi duomenų srauto duomenys yra nuolatos apdorojami, „MacroBase“ aiškinamieji operatoriai grąžina paaiškinimus tik gavusi naudotojo užklausą, taip išvengdamas nereikalingų skaičiavimų.
+		\end{itemize}
+	\item \textbf{Duomenų pateikimas} (angl. \textit{presentation}):
+		\begin{itemize}
+			\item Statistiniai reitingai yra priskiriami, dėl galimai didelio aiškinimų kiekio.
+			\item „MacroBase“ naudotojams aiškinimus pateikia jų svarbos tvarka.
+		\end{itemize}
+\end{itemize}
 
 \subsection{„MacroBase“ sprendžiamos problemos} \label{subsec:problems}
+
+
+
 
 \section{„MacroBase“ „SQL“ paketo veikimo principas – „MacroBase SQL“} \label{sec:macrobasesql}
 
@@ -249,13 +282,17 @@ Eksperimentas buvo atliekamas naudojant „Ubuntu (64-bit)“ operacinę sistem�
 „MacroBase“ pateikiami pavyzdžiai ir konfigūraciniai nurodymai yra pateikiami „Linux“ operacinėms sistemoms. Dėl šios priežasties, eksperimentui atlikti buvo pasirinkta atviro kodo nemokama operacinė sistema „Ubuntu“. Dėl paprastumo buvo nuspręsta naudoti virtualią mašiną operacinei sistemai įdiegti. Atviro kodo nemokama virtuali mašina „Oracle VM VirtualBox“ buvo pasirinkta šiai užduočiai. Galutinės eksperimentui naudotos sisteminės specifikacijos:
 \begin{itemize}
 	\item Reali mašina, kurioje atliekamas eksperimentas – nešiojamasis kompiuteris „Lenovo Y50-70“.
-		\subitem Realios mašinos Operacinė sistema \textbf{„Microsoft Windows 10 Pro“}, versija	10.0.17763.
-		\subitem Realios mašinos procesorius: \textbf{i7-4720HQ}
-		\subitem Realios mašinos operatyvioji atmintis: \textbf{8GB}
-	\item \textbf{„Oracle VM VirtualBOX“} virtuali mašina, versija  \textbf{6.0.8} r130520 (Qt5.6.2).
-		\subitem Virtualios mašinos operacinės sistemos „Ubuntu“ 64 bitų versiją \textbf{„Ubuntu (64-bit)“}, versija \textbf{18.04 LTS}.
-		\subitem Virtualiai mašinai suteiktas virtualus standusis diskas: \textbf{40GB}.
-		\subitem Virtualiai mašinai skirta operatyvioji atmintis: \textbf{4GB}.
+		\begin{itemize}
+			\item Realios mašinos Operacinė sistema \textbf{„Microsoft Windows 10 Pro“}, versija	10.0.17763.
+			\item Realios mašinos procesorius: \textbf{i7-4720HQ}
+			\item Realios mašinos operatyvioji atmintis: \textbf{8GB}
+		\end{itemize}
+	\item \textbf{„Oracle VM VirtualBOX“} virtuali mašina, versija  \textbf{6.0.8} r130520 (Qt5.6.2). 
+		\begin{itemize}
+			\item Virtualios mašinos operacinės sistemos „Ubuntu“ 64 bitų versiją \textbf{„Ubuntu (64-bit)“}, versija \textbf{18.04 LTS}.
+			\item Virtualiai mašinai suteiktas virtualus standusis diskas: \textbf{40GB}.
+			\item Virtualiai mašinai skirta operatyvioji atmintis: \textbf{4GB}.
+		\end{itemize}
 \end{itemize}
 
 \subsubsubsection{Virtualios mašinos paruošimas}
@@ -266,10 +303,12 @@ Virtualios mašinos paruošimas eksperimentui:
 	\item Iš „Ubuntu“ internetinės svetainės atsisiųstas naujausias „Ubuntu (64-bit)“ operacinės sistemos ISO failas (\url{https://www.ubuntu.com/download/desktop}).
 	\item Atidarius „Oracle VM VirtualBox“ programinę įrangą pradėtas naujos virtualios mašinos pridėjimo procesas spaudžiant mygtuką su tekstu „New“.
 	\item Sekant naujos virtualios mašinos pridėjimo langus pasirinktos šios parinktys:
-		\subitem Operacinės sistemos tipas: „Linux“.
-		\subitem Versija: „Ubuntu (64-bit)“.
-		\subitem Operatyviosios atminties kiekis megabaitais: 4096MB.
-		\subitem Virtualus standusis diskas: 40GB.
+		\begin{enumerate}
+			\item Operacinės sistemos tipas: „Linux“.
+			\item Versija: „Ubuntu (64-bit)“.
+			\item Operatyviosios atminties kiekis megabaitais: 4096MB.
+			\item Virtualus standusis diskas: 40GB.
+		\end{enumerate}
 	\item „Oracle VM VirtualBox“ pagrindiniame lange pasirinkus naujai sukurtą vitualią mašiną spaustas mygtukas su tekstu „Start“.
 	\item Atidarytame virtualios mašinos lange pasirinktas anksčiau atsiųstas „Ubuntu (64-bit)“ ISO failas.
 	\item Pasirinkta „Install“ operacija ir sekant diegimo vedlį, įdiegta „Ubuntu (64-bit)“ operacinė sistema.	
