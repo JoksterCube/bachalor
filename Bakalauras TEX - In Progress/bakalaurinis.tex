@@ -100,15 +100,17 @@ TODO: pabaigti
 
 Darbui iškelti \textbf{uždaviniai}:
 \begin{enumerate}
-	\item Išanalizuoti „MacroBase SQL“ architektūrą ir veikimo principą.
+	\item Išanalizuoti „MacroBase SQL“ veikimo principą.
 	\item Paruošti eksperimentinę aplinką ir IPSS įrašų rinkinį eksperimentui.
-	\item Atlikti eksperimentus su kontroliniais „MacroBase“ pateiktais duomenimis ir pritaikytais IPSS duomenimis	
 	\item Palyginti eksperimentų rezultatus, keičiant pagrindinių parametrų (procentilio, palaikymo ir rizikos koeficiento) reikšmes.
 	\item Atlikti duomenų transformacijas (pridėti, atimti, filtruoti, keisti reikšmes) ir palyginti eksperimento rezultatus.
+	\item Atlikti tas pačias transformacijas su kitais panašiais duomenimis ir palyginti eksperimento rezultatus. 
 	\item Pateikti rekomendacijas IPSS duomenų anomalijų aptikimui naudojantis „MacroBase“.
 \end{enumerate}
 
+\section{„MacroBase“ pasirinkimo motyvai}
 
+\section{„MacroBase“ vikimo principas – „SQL“ paketas}
 
 \section{Duomenų analizės eksperimentas naudojant „MacroBase SQL“ modulį}
 
@@ -313,21 +315,75 @@ Sekant „MacroBase“ dokumentacijoje nurodytus žingsnius įdiegtas „MacroBa
 \subsection{Eksperimento vykdymo eiga}
 Šiame poskyryje aprašoma eksperimento vykdymo eiga naudojant IPSS pateiktus 2014-2018 metų duomenų rinkinius naudojantis „MacroBase SQL“ analitinį įrankį.
 
-\subsubsection{Konfigūracija}
+\subsubsection{Konfigūracija} \label{subsubsec:conf}
 „MacroBase SQL“ paleidimui buvo naudojama komandinė eilutė, kuriai paduodami SQL formato failai. Šiuose failuose rašomos užklausos, kuriose nurodyti tokia informacija:
 \begin{itemize}
-	\item CSV failo kelias ir pavadinimas.
+	\item Tiriamųjų duomenų CSV failo kelias.
 	\item Skaitomų duomenų stulpelių pavadinimai ir tipai.
-	\item
+	\item Metrikų sąrašas.
+	\item Išskirčių kriterijai (pvz. mažiau/daugiau nei X arba tam tikra procentilio reikšmė).
+	\item Minimali palaikymo reikšmė.
+	\item Minimali rizikos koeficiento reikšmė.
+	\item Naudojamo koeficiento tipas.
+	\item Atributų sąrašas.
+	\item Rūšiavimo kriterijus.
+	\item Rezultatų išvedimo CSV failų kelias.
+\end{itemize}
+Visų eksperimentų metu, visos SQL užklausos naudojo procentilio reikšmę išskirčių kriterijui nurodyti, taip pat naudojamo koeficienoto tipos buvo visur nustatytas į rizikos koeficientą „risk\_ratio(COUNT(*))“. Kiekvienos užklausos metu duomenų ir išeities rezultatų failų keliai buvo keičiami. Atributų sąrašas paliktas pilnas/tuščias „ON *“ („MacroBase SQL“ naudoja visus tinkamus atributus).\par
+Kitus kintamuosiu buvo keičiama prikausomai nuo eksperimento tipo ar tiriamų duomenų. Tačiau buvo nustatytos numatytosios (angl. \textit{default}) reikšmės:
+\begin{itemize}
+	\item Numatytoji procentilio reikšmė – \textbf{0,99}.
+	\item Numatytoji minimali palaikymo reikšmė – \textbf{0,001}.
+	\item Numatytoji minimali rizikos koeficiento reikšmė – \textbf{3,0}.
 \end{itemize}
 
 \subsubsection{Eksperimento eiga}
-Šiame skyriuje aprašyta eksperimento eiga 
+Šiame skyriuje aprašyta eksperimento eiga su trimis duomenų rinkiniais – IPSS pateiktais (3G, LTE, WiMAX) ir „MacroBase SQL“ pateiktais demonstraciniais. Eksperimento metu buvo naudojamas atsitiktinai paimtas vienas iš rinkinių – 3G. Su juo buvo atliekami eksperimentai ir analizuojami rezultatai. Buvo bandoma gauti kuo geresnius rezultatus, keičiant parametrus. Galiausiai tie patys parametrai buvo pritaikyti kitiems rinkiniams.
 
+\subsubsubsection{Eksperimento eiga su pritaikytais IPSS belaidžio interneto 3G duomenimis} \label{subsubsubsec:exp1}
+Šio eksperimento metu buvo naudojami \ref{subsubsubsec:paruošimas1} papunktyje minimi ir paruošti duomenys. Iš pritaikytų IPSS 3G duomenų „MacroBase SQL“ automatiškai atrinko atributus: datą, technologiją ir operatorių. Eksperimento metu nustatyta metrika – sparta kb/s. Pasitelkus pateiktus atributus ir metrikas galima rasti kokie interneto operatoriai ar kokia technologija yra mažiau patikima, fiksuoja daugiau neįprastų duomenų savo tinkluose.\par
 
+Buvo keistos procentilio, minimalios rizikos koeficiento ir minimalios palaikymo reikšmės. Numatytosios reikšmės paminėtos punkte \ref{subsubsec:conf}.\par
 
+Eksperimento atvejai, minimi tik pakitimai nuo numatytosios reikšmės:
+\begin{enumerate}
+	\item Su numatytomis reikšmėmis.
+	\item Procentilio reikšmė – 0,95.
+	\item Palaikymo reikšmė – 0,01.
+	\item Procentilio reikšmė – 0,95; palaikymo reikšmė – 0,01.
+	\item Rizikos koeficientas - 10,0; palaikymo reikšmė – 0,01.
+	\item Rizikos koeficientas - 50,0; palaikymo reikšmė – 0,01.
+\end{enumerate}
+Kiekviena užklausa rezultatus įkėlė į jai priskirtą išeities rezultatų failą CSV formatu. Šiame CSV faile, laukai susidėjo iš atributų naudotų metrikų aiškinimui (šiuo atveju: datos, operatoriaus ir technologijos), palaikymo, rizikos koeficiento, išskirčių skaičiaus ir išskirtinių atributų kombinacijų sąrašo dydžio.
 
+\subsubsubsection{Eksperimento eiga su pritaikytais IPSS belaidžio interneto 3G duomenimis, papildytais aukščio virš jūros lygio ir suapvalintų reikšmių laukais} \label{subsubsubsec:exp2}
+Šio eksperimento metu buvo naudojami \ref{subsubsubsec:paruošimas2} papunktyje aprašyti papildyti IPSS 3G duomenų rinkinys. Duomenys yra papildyti aukščio virš jūros lygio reikšmės lauku, kuris buvo gautas iš koordinačių. Taip pat buvo pridėti koordinačių ir aukščio suapvalintų reikšmių laukais. Suapvalintų laukų reikšmės buvo interpretuojamos kaip „string“ tipo kintamieji, todėl „MacroBase SQL“ galėjo jas naudoti aiškinimui.\par
 
+Šio eksperimento metu buvo atliekami tie patys atvejai, kokie buvo minimi \ref{subsubsubsec:exp1} papunktyje, tačiau buvo daugiau atributų, kuriuos „MacroBase SQL“ galėjo naudoti aiškinimui: data, operatorius, technologijos, suapvalinta ilgumos, suapvalinta platumos, suapvalinta aukščio virš jūros lygio. Metrika naudota ta pati – sparta kb/s. Rezultatai saugoti į atitinkamai pavadintus CSV duomenų failus.
+
+\subsubsubsection{Eksperimento eiga su pritaikytais IPSS belaidžio interneto 3G duomenimis, papildytais metų ir valandų laukais} \label{subsubsubsec:exp3}
+Eksperimentas atliktas tuo pačiu principu, kaip \ref{subsubsubsec:exp1} ir \ref{subsubsubsec:paruošimas2} papunkčiuose aprašyti eksperimentai. Tačiau atliktas su duomenimis paruoštais ir aprašytais \ref{subsubsubsec:paruošimas3} papunktyje. Turėti du papildomi atributai: valandos ir metai. Metrika – sparta. Rezultatai saugoti į CSV duomenų failus.
+
+\subsubsubsection{Eksperimento eiga su pritaikytais IPSS belaidžio interneto 3G duomenimis, tikrinami optimaliausi reikšmių apvalinimai} \label{subsubsubsec:exp4}
+Eksperimentas atliktas naudojant duomenų rinkinius aprašytus \ref{subsubsubsec:paruošimas4} papunktyje, tačiau atributai ir metrikos bei jų skaičius nepakito nuo \ref{subsubsubsec:exp3} papunktyje naudotų. Šio eksperimento esmė buvo iš sugeneruotų duomenų rinkinių surasti labiausiai naudingą.\par
+
+Eksperimento atvejai:
+\begin{enumerate}
+	\item Suapvalintų koordinačių skaitmenų skaičius po kablelio – 3; aukštis apvalinamas iki dešimčių (pvz. 7,6 suapvalinamas iki 10; 6,3 – iki 10).
+	\item Suapvalintų koordinačių skaitmenų skaičius po kablelio – 2; aukštis apvalinamas iki dešimčių.
+	\item Suapvalintų koordinačių skaitmenų skaičius po kablelio – 1; aukštis apvalinamas iki dešimčių.
+	\item Suapvalintų koordinačių skaitmenų skaičius po kablelio – 0; aukštis apvalinamas iki dešimčių.
+	\item Suapvalintų koordinačių skaitmenų skaičius po kablelio – 1; aukštis apvalinamas iki pusių – penketų (pvz. 7,6 suapvalinamas iki 10; 6,3 – iki 5).
+	\item Suapvalintų koordinačių skaitmenų skaičius po kablelio – 1; aukštis apvalinamas iki trečdalių (pvz. 7,6 suapvalinamas iki 6,67; 6,3 iki – 6,67).
+	\item Suapvalintų koordinačių skaitmenų skaičius po kablelio – 0; aukštis apvalinamas iki pusių.
+	\item Suapvalintų koordinačių skaitmenų skaičius po kablelio – 0; aukštis apvalinamas iki trečdalių.
+\end{enumerate}
+
+\subsubsubsection{Eksperimento eiga su pritaikytais IPSS belaidžio interneto LTE, pritaikius išanalizuotus 3G parametrus} \label{subsubsubsec:exp5}
+
+\subsubsubsection{Eksperimento eiga su pritaikytais IPSS belaidžio interneto WiMAX, pritaikius išanalizuotus 3G parametrus} \label{subsubsubsec:exp6}
+
+\subsubsection{Eksperimentinio tyrimo rezultatų analize}
 
 
 
@@ -474,5 +530,11 @@ IPSS \textbf{WiMAX} ryšio technologijos matavimai 2014–2018 metais. Viso 1816
 \section{Atrinktų IPSS papildomų CSV failų generavimo „Python“ skriptas} \label{script4}
 „Python“ skriptas skirtas jau atrinktiems CSV failams sugeneruoti skirtingų koordinačių ir aukščio virš jūros lygio reikšmių apvalinimo duomenų rinkinius. Šiems duomenims yra sugeneruojamas nauji CSV failai:
 \lstinputlisting[language=Python]{scripts/GenerateMoreRoundedOptions.py}
+
+\section{„MacroBase SQL“ SQL užklausų pavyzdys} \label{script4}
+Darbo metu naudotos „MacroBase SQL“ SQL užklausos pavyzdys su pradiniais duomenimis, papildytais su aukščio virš jūros lygio ir suapvalintomis reikšmėmis duomenimis, ir papildytais metų bei valandų laukais duomenimis:
+\lstinputlisting[language=Sql]{scripts/3G.sql}
+
+
 
 \end{document}

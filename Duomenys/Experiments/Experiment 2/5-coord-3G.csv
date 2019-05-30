@@ -1,0 +1,4 @@
+date,lng,provider,alt,technology,lat,support,risk_ratio,outlier_count,total_count
+,24.7,,,,55.4,0.013245033112582781,13.922024693888005,18.0,131.0
+,,24601,,,,0.8646063281824872,12.834202988354674,1175.0,45187.0
+,,,,DC-HSPA+,,1.0,Infinity,1359.0,74578.0
