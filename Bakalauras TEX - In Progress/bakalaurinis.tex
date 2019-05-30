@@ -263,7 +263,7 @@ Virtualios mašinos paruošimas eksperimentui:
 \begin{itemize}
 	\item „MacroBase“ versija \textbf{v1.0}.
 	\item Java JRE versija \textbf{1.8.0\_212}.
-	\item Java JDK versija \textbf{1.8.0\_212}.
+	\item Java JDK versija \textbf{1.8.0\_212} („MacroBase“ kol kas palaiko tik 1.8.0 JDK versiją).
 	\item „Apache Maven“ versija \textbf{3.6.0}.
 \end{itemize}
 
@@ -289,7 +289,6 @@ Sėkmingam „MacroBase SQL“ diegimo procesui naujai paruoštoje „švarioje�
 \end{enumerate}
 
 \subsubsubsection{„MacroBase SQL“ analitinio įrankio diegimas}
-TODO: CHANGE
 Sekant „MacroBase“ dokumentacijoje nurodytus žingsnius įdiegtas „MacroBase SQL“ įrankis:
 \begin{enumerate}
 	\item Atidarytas „Ubuntu“ terminalas.
@@ -314,10 +313,12 @@ Sekant „MacroBase“ dokumentacijoje nurodytus žingsnius įdiegtas „MacroBa
 \subsection{Eksperimento vykdymo eiga}
 Šiame poskyryje aprašoma eksperimento vykdymo eiga naudojant IPSS pateiktus 2014-2018 metų duomenų rinkinius naudojantis „MacroBase SQL“ analitinį įrankį.
 
-\subsubsection{Konfiguracija}
-„MacroBase SQL“ paleidimui buvo naudojama komandinė eilutė, kuriai paduodami SQL formato failai. Šiuose failuose nurodomi tokia informacija:
+\subsubsection{Konfigūracija}
+„MacroBase SQL“ paleidimui buvo naudojama komandinė eilutė, kuriai paduodami SQL formato failai. Šiuose failuose rašomos užklausos, kuriose nurodyti tokia informacija:
 \begin{itemize}
-	\item 
+	\item CSV failo kelias ir pavadinimas.
+	\item Skaitomų duomenų stulpelių pavadinimai ir tipai.
+	\item
 \end{itemize}
 
 \subsubsection{Eksperimento eiga}
@@ -379,81 +380,81 @@ santrumpos.
 IPSS \textbf{3G} ryšio technologijos matavimai 2014–2018 metais. Viso 136003 įrašai.
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/3G-1}
+	\includegraphics[scale=0.5]{img/3G-1}
 	\caption{3G Matavimai 2014 metais. Viso – 2245 matavimai}
 	\label{img:3G-1}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/3G-2}
+	\includegraphics[scale=0.5]{img/3G-2}
 	\caption{3G Matavimai 2015 metais. Viso – 19427 matavimai}
 	\label{img:3G-2}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/3G-3}
+	\includegraphics[scale=0.5]{img/3G-3}
 	\caption{3G Matavimai 2016 metais. Viso – 34769 matavimai}
 	\label{img:3G-3}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/3G-4}
+	\includegraphics[scale=0.5]{img/3G-4}
 	\caption{3G Matavimai 2017 metais. Viso – 38789 matavimai}
 	\label{img:3G-4}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/3G-5}
+	\includegraphics[scale=0.5]{img/3G-5}
 	\caption{3G Matavimai 2018 metais. Viso – 40773 matavimai}
 	\label{img:3G-5}
 \end{figure}
 IPSS \textbf{LTE} ryšio technologijos matavimai 2014–2018 metais. Viso 157522 įrašai.
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/LTE-1}
+	\includegraphics[scale=0.5]{img/LTE-1}
 	\caption{LTE Matavimai 2014 metais. Viso – 232 matavimai}
 	\label{img:LTE-1}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/LTE-2}
+	\includegraphics[scale=0.5]{img/LTE-2}
 	\caption{LTE Matavimai 2015 metais. Viso – 13962 matavimai}
 	\label{img:LTE-2}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/LTE-3}
+	\includegraphics[scale=0.5]{img/LTE-3}
 	\caption{LTE Matavimai 2016 metais. Viso – 40738 matavimai}
 	\label{img:LTE-3}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/LTE-4}
+	\includegraphics[scale=0.5]{img/LTE-4}
 	\caption{LTE Matavimai 2017 metais. Viso – 49672 matavimai}
 	\label{img:LTE-4}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/LTE-5}
+	\includegraphics[scale=0.5]{img/LTE-5}
 	\caption{LTE Matavimai 2018 metais. Viso – 52918 matavimai}
 	\label{img:LTE-5}
 \end{figure}
 IPSS \textbf{WiMAX} ryšio technologijos matavimai 2014–2018 metais. Viso 18166 įrašai.
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/WiMAX-1}
+	\includegraphics[scale=0.5]{img/WiMAX-1}
 	\caption{WiMAX Matavimai 2015 metais. Viso – 4307 matavimai}
 	\label{img:WiMAX-1}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/WiMAX-2}
+	\includegraphics[scale=0.5]{img/WiMAX-2}
 	\caption{WiMAX Matavimai 2016 metais. Viso – 7653 matavimai}
 	\label{img:WiMAX-2}
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.33]{img/WiMAX-3}
+	\includegraphics[scale=0.5]{img/WiMAX-3}
 	\caption{WiMAX Matavimai 2017 metais. Viso – 6206 matavimai}
 	\label{img:WiMAX-3}
 \end{figure}
@@ -473,32 +474,5 @@ IPSS \textbf{WiMAX} ryšio technologijos matavimai 2014–2018 metais. Viso 1816
 \section{Atrinktų IPSS papildomų CSV failų generavimo „Python“ skriptas} \label{script4}
 „Python“ skriptas skirtas jau atrinktiems CSV failams sugeneruoti skirtingų koordinačių ir aukščio virš jūros lygio reikšmių apvalinimo duomenų rinkinius. Šiems duomenims yra sugeneruojamas nauji CSV failai:
 \lstinputlisting[language=Python]{scripts/GenerateMoreRoundedOptions.py}
-
-
-\section{Eksperimentinio palyginimo rezultatai}
-% tablesgenerator.com - converts calculators (e.g. excel) tables to LaTeX
-\begin{table}[H]\footnotesize
-	\centering
-	\caption{Lentelės pavyzdys}
-	{\begin{tabular}{|l|c|c|} \hline
-			Algoritmas & $\bar{x}$ & $\sigma^{2}$ \\
-			\hline
-			Algoritmas A  & 1.6335    & 0.5584       \\
-			Algoritmas B  & 1.7395    & 0.5647       \\
-			\hline
-	\end{tabular}}
-	\label{tab:table example}
-\end{table}
-
-\end{document}
-
-			Algoritmas & $\bar{x}$ & $\sigma^{2}$ \\
-			\hline
-			Algoritmas A  & 1.6335    & 0.5584       \\
-			Algoritmas B  & 1.7395    & 0.5647       \\
-			\hline
-	\end{tabular}}
-	\label{tab:table example}
-\end{table}
 
 \end{document}
