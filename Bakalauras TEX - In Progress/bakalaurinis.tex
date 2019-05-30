@@ -71,11 +71,11 @@
 TODO: Santrauka
 % Nurodomi iki 5 svarbiausių temos raktinių žodžių (terminų).
 % Vienas terminas gali susidėti iš kelių žodžių.
-\raktiniaizodziai{raktinis žodis 1, raktinis žodis 2, raktinis žodis 3, raktinis žodis 4, raktinis žodis 5}   
+\raktiniaizodziai{„MacroBase“, IPSS, analitinis įrankis, raktinis žodis 4, raktinis žodis 5}   
 
 \sectionnonumnocontent{Summary}
 TODO: summary
-\keywords{keyword 1, keyword 2, keyword 3, keyword 4, keyword 5}
+\keywords{„MacroBase“, IPSS, analitic engine, keyword 4, keyword 5}
 
 \tableofcontents
 
@@ -91,9 +91,8 @@ Renkant tokius didelius kiekius duomenų natūraliai, užfiksuojami įrašai, ku
 
 Fiksuojami esminiai ar sisteminiai duomenys tobulu atveju turėtų būti peržiūrimi reguliariai ir pilnai, tam kad būtų galima užtikrinti tolygią sistemų veiklą, matavimų taisyklingumą ar renkamų duomenų korektiškumą ir laiku identifikuoti bei eliminuoti kylančias klaidas bei užkirsti kelią kenkėjiškoms atakoms. Tačiau kaip jau minėta anksčiau, didėjantis duomenų kiekis gerokai lenkia žmogaus gebėjimą juos apdoroti. Duomenų kiekis nuolatos didėja, tačiau žmogaus dėmesys išlieką riboto dydžio. Iškyla iššūkis prioritetizuoti žmogaus dėmesį – akcentuoti, filtruoti, jungti, grupuoti ir kontekstualizuoti svarbiausius analizuojamų duomenų elgsenos ir būsenos pakitimus, taip padedant išskirti svarbiausius duomenų ypatumus ir rodyti žmogui tik apibendrintą, svarbia ir ribotą kiekį informacijos \cite{prioritizing_attention}. Visa nereikalinga informacija, kuri yra rodoma žmogui reikalauja ir eikvoja jo dėmesį \cite{attention}. Nors žmonėms yra fiziškai neįmanoma peržiūrėti visų duomenų, mašinos ir/ar kompiuteriai gali tai atlikti, ar bent gebėtų, jei jų resursai būtų ekonomiškai paskirstyti. Analitikų teigimu, didelis kiekis svarbių duomenų yra praleidžiama dėl neefektyvaus ir/ar lėto mašinų darbo \cite{prioritizing_attention}.\par
 
-TODO: pabaigti
-
-
+2017 metais Standfordo universitetas kartu su Masačusetso technologijos institutu paskelbė
+kuriantys naują atviro kodo analitinį paieškos įrankį „MacroBase“. Šis įrankis yra skirtas ne tik darbui su didžiaisiais bet ir du greitaisiais duomenimis (angl. \textit{fast data}). Pagrindiniu uždaviniu „MacroBase“ sau išsikėlė žmogaus dėmesio prioritetizavimą. Vienas iš daugelio „MacroBase“ šio uždavinio sprendimų yra didžiausio dėmesio reikalaujančios išvesties sugeneravimas ir jos supaprastinimas, kur neįprastus duomenų vienetus „MacroBase“ padeda aiškinti pagal duomenų atributus \cite{macrobase_overview, prioritizing_attention, demonstration}. „MacroBase“ yra pakankamai naujas analitinis įrankis, gebantis grąžinti tikslius rezultatus dirbdamas 2 milijonų įvykių per sekundę, per užklausą, per branduolį greičiu, kuris taip pat pataikia daug inovatoriškų sprendimų vis didėjančių ir greitėjančių duomenų srautų analizei atlikti \cite{macrobase_overview}. Šiame darbe bus plačiau nagrinėjamas bei eksperimentai atliekami su „MacroBase“ įrankiu. Plačiau apie „MacroBase“ \ref{sec:macrobase} ir \ref{sec:macrobasesql} skyriuose.
 
 \subsection{Darbo tikslai ir uždaviniai}
 Šio darbo \textbf{tikslas} – ištirti „MacroBase“ duomenų analizavimo ir anomalijų aptikimo įrankio „SQL“ paketą – „MacroBase SQL“ ir pritaikyti jo veikimą analizavimui ir anomalijų aptikimui IPSS belaidės interneto prieigos duomenų perdavimo spartos kontrolinių matavimų įrašuose.\par
@@ -108,14 +107,30 @@ Darbui iškelti \textbf{uždaviniai}:
 	\item Pateikti rekomendacijas IPSS duomenų anomalijų aptikimui naudojantis „MacroBase“.
 \end{enumerate}
 
-\section{„MacroBase“ pasirinkimo motyvai}
+\section{„MacroBase“ analitinis įrankis} \label{sec:macrobase}
+Šiame skyriuje yra aprašomas „MacroBase“ analitinis įrankis (\ref{subsec:about} poskyrius). Įranis kuriamas Standfordo Universiteto bedradarbiaujant kartu su Masačusetso technologijos institutu. Taip pat, šiame skyriuje rašoma apie „MacroBase“ žmogaus dėmesio prioritetizavimo bei kitų problemų sprendimo būdus (\ref{subsec:problems} poskyrius). 
 
-\section{„MacroBase“ vikimo principas – „SQL“ paketas}
+\subsection{Apie „MacroBase“} \label{subsec:about}
+„MacroBase“ nuo pradžių buvo kurtas būti žmogaus dėmesio prioritetizavimui skirtas analitinis įrankis, bet kad tai būtų pasiekta, reikia naudoti efektyvius aiškinamuosius ir klasifikavimo  statistinius operatorius, ir dirbti su duomenų srautais \cite{talk}. „MacroBase“ naudoja du pagrindinius operatorių tipus:
+\begin{itemize}
+	\item \textbf{Klasifikavimo} – tai operatorius, kuris pagal naudotojo nurodytas klases pats susižymi individualius taškus, kuriuos jau yra ištyręs (pavyzdžiui, statistiškai „normalus“ arba statistiškai „išskirtinis“).
+	\item \textbf{Aiškinamieji} – tai operatoriai, kurie grupuoja ir jungia duomenų taškus po kelis.
+\end{itemize}
+
+
+
+\subsection{„MacroBase“ sprendžiamos problemos} \label{subsec:problems}
+
+\section{„MacroBase“ „SQL“ paketo veikimo principas – „MacroBase SQL“} \label{sec:macrobasesql}
+
+
+
 
 \section{Duomenų analizės eksperimentas naudojant „MacroBase SQL“ modulį}
+Eksperimentui atlikti buvo pasirinktas „MacroBase SQL“ analitinis įrankis „MacroBase“ su „SQL“ moduliu. Kadangi „MacroBase SQL“ yra leidžiama per komandinę eilutę, grafinė sąsajai kaip „MacroBase GUI“ naudota nebuvo. Atliekant eksperimentą buvo pasirinkti CSV tipo failų duomenų šaltiniai.
 
 \subsection{Duomenų rinkinys}
-Šiame skyriuje aprašyti eksperimentui pritaikyti IPSS duomenų rinkiniai.
+Šiame skyriuje aprašyti eksperimentui pritaikyti duomenų rinkiniai.
 
 \subsubsection{Eksperimentui pritaikyti duomenys}
 Eksperimentui buvo naudojami Lietuvos Respublikos ryšių reguliavimo tarnybos administruojamos IPSS atliekami belaidės interneto prieigos duomenų perdavimo spartos kontrolinių matavimų 2014–2018 metų rezultatai. Matavimai atlikti operatorių UAB „Bitė Lietuva“, AB „Telia Lietuva“, UAB „TELE2“ ir AB LRTC judriojo ryšio tinkluose visoje Lietuvos teritorijoje. Matavimų paskirtis yra stebėti ir įvertinti teikiamų interneto prieigos paslaugų kokybę, kaip to reikalauja Europos Sąjungos direktyvos, taip pat supažindinti visuomenę su tokių matavimų rezultatais. Įrašai pateikiami CSV formato failais. Iš viso gauti 3 failai skirti trims skirtingoms technologijoms: 3G, LTE ir WiMAX. Viename CSV faile priklausomai nuo failui priskirtos technologijos buvo apytiksliai 136000, 157000 ir 18000 įrašų eilučių, vidutiniškai 104000. Vieno failo dydis vidutiniškai 8,5MB.
@@ -354,6 +369,7 @@ Eksperimento atvejai, minimi tik pakitimai nuo numatytosios reikšmės:
 	\item Rizikos koeficientas - 10,0; palaikymo reikšmė – 0,01.
 	\item Rizikos koeficientas - 50,0; palaikymo reikšmė – 0,01.
 \end{enumerate}
+
 Kiekviena užklausa rezultatus įkėlė į jai priskirtą išeities rezultatų failą CSV formatu. Šiame CSV faile, laukai susidėjo iš atributų naudotų metrikų aiškinimui (šiuo atveju: datos, operatoriaus ir technologijos), palaikymo, rizikos koeficiento, išskirčių skaičiaus ir išskirtinių atributų kombinacijų sąrašo dydžio.
 
 \subsubsubsection{Eksperimento eiga su pritaikytais IPSS belaidžio interneto 3G duomenimis, papildytais aukščio virš jūros lygio ir suapvalintų reikšmių laukais} \label{subsubsubsec:exp2}
