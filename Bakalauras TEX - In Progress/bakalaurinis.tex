@@ -195,7 +195,7 @@ IPSS duomenyse yra pateikta daug informacijos, tačiau, dėl didelės jų įvair
 \end{enumerate}
 
 \subsubsubsection{Papildytų duomenų paruošimas: metų ir valandų išskyrimas} \label{subsubsubsec:paruošimas3}
-Ruošiant IPSS duomenis eksperimentui jau buvo panaudota didžioji dalis originaliai paruoštų duomenų laukų (papunkčiai \ref{subsubsubsec:paruošimas1} ir \ref{subsubsubsec:paruošimas2}). Tačiau dėl didesnio potencialių aiškinamųjų laukų kiekio buvo sukurtas skriptas išskirti valandas iš laiko lauko (pvz. iš „09:15:39“ gaunama „09“), kadangi laiko laukas buvo nenaudojamas ir metus iš datos lauko (pvz. iš „2015-09-13“ gaunama „2015“). „Python“ skriptas pavadintas „AddYearAndHour.py“. Naudojantis skriptu, galima nurodyti pradinių CSV failų kelius ir naujų CSV failų kelius.Skriptas atlieka šiuos veiksmus 3 kartus kiekvienai ryšio technologijai (3G, LTE, WiMAX) (Priedas \ref{script3}):
+Ruošiant IPSS duomenis eksperimentui jau buvo panaudota didžioji dalis originaliai paruoštų duomenų laukų (papunkčiai \ref{subsubsubsec:paruošimas1} ir \ref{subsubsubsec:paruošimas2}). Tačiau dėl didesnio potencialių aiškinamųjų laukų kiekio buvo sukurtas skriptas išskirti valandas iš laiko lauko (pvz. iš „09:15:39“ gaunama „09“), kadangi laiko laukas buvo nenaudojamas ir metus iš datos lauko (pvz. iš „2015-09-13“ gaunama „2015“). „Python“ skriptas pavadintas „AddYearAndHour.py“. Naudojantis skriptu, galima nurodyti pradinių CSV failų kelius ir naujų CSV failų kelius. Skriptas atlieka šiuos veiksmus 3 kartus kiekvienai ryšio technologijai (3G, LTE, WiMAX) (Priedas \ref{script3}):
 \begin{enumerate}
 	\item Nuskaito CSV įrašų failą pateiktą nurodytu keliu bei atskiria antraštę nuo įrašų \textit{(6–10 ir 39 eilutės)}. 
 	\item Iš antraštės surandami datos ir laiko laukų indeksai \textit{(11–14 ir 40 eilutės)}.
@@ -207,6 +207,22 @@ Ruošiant IPSS duomenis eksperimentui jau buvo panaudota didžioji dalis origina
 	\item Išvedama operacijos užbaigimo žinutė \textit{(44 eilutė)}.
 \end{enumerate}
 
+\subsubsubsection{Papildytų duomenų paruošimas: apvalinimo variacijos} \label{subsubsubsec:paruošimas4}
+Eksperimentui atlikti jau buvo sukurta pakankamai laukų (papunkčiai \ref{subsubsubsec:paruošimas1}, \ref{subsubsubsec:paruošimas2} ir \ref{subsubsubsec:paruošimas3}), tačiau patikrinti, kuri apvalinimo aukščio ir koordinačių kombinacija yra geriausia ir paaiškina daugiausiai anomalijų, reikia sugeneruoti daugiau duomenų rinkinių. Tam buvo parašytas dar vienas „Python“ skriptas – „GenerateMoreRoundedOptions.py“. Šis skriptas leidžia pasirinkti pradinius CSV failus, norimus testuoti intervalus koordinačių apvalinimui ir aukščio virš jūros lygio apvalinimui. Šiems intervalams yra sugeneruojamas po įrašų rinkinys, kurie yra išsaugomi pasirinktu pavadinimu ir keliu. Koordinačių apvalinimas vyksta skaitmenų po kablelio kiekio keitimu \textit{[0, inf)}, aukščio virš jūros lygio apvalinimas vyksta iki dešimčių dalių \textit{(0, inf)} (pvz. dalinama į 1 dalį ir apvalinama iki – „10 20 30...“; į 2 dalis – „5 10 15...“; 3 – „3,33 6,67 10...“ ir t.t.). Taigi, šis skriptas pagal duotą pradinį duomenų rinkinį generuoja kiekvienam intervalų atvejui po naują duomenų rinkinį. Skriptas atlieka šiuos veiksmus 3 kartus kiekvienai ryšio technologijai (3G, LTE, WiMAX) (Priedas \ref{script4}):
+\begin{enumerate}
+	\item Nuskaito CSV įrašų failą pateiktą nurodytu keliu bei atskiria antraštę nuo įrašų \textit{(6–10 ir 34 eilutės)}. 
+	\item Iš antraštės surandami ilgumos, platumos, aukščio virš jūros lygio bei jų suapvalintų reikšmių laukų indeksai \textit{(11–18 ir 35 eilutės)}.
+	\item Vykdomas ciklas cikle, kuris kiekvienai apvalinimo iki skaitmenų po kablelio ir kiekvienai aukščio virš jūros lygio apvalinimo parinkčiai sugeneruoja po atskirą failą \textit{(36–43 eilutės)}.
+	\item Kiekvienam failui sukuriamas naujas unikalus pavadinimas \textit{(25–26 ir 36 eilutės)}.
+	\item Vykdomas ciklas, kuris platumo, ilgumos ir aukščio reikšmes suapvalinta iki nurodytos reikšmės ir pakeičia senas suapvalintas reikšmes naujomis. \textit{(19–24 ir 39 eilutės)}.
+	\item Sukuriamas naujas CSV failas nurodytu keliu ir pavadinimu \textit{(27–32 ir 40 eilutės)}.
+	\item Įrašoma nauja antraštė su papildytais pavadinimais \textit{(30 eilutė)}.
+	\item Vykdomas ciklas, kuris kiekvieną atnaujinto įrašų sąrašo elementą įveda į naują CSV failą \textit{(31–32 eilutės)}.
+	\item Išvedama vienos operacijos užbaigimo žinutė \textit{(40 eilutė)}.
+	\item Išvedama ciklo užbaigimo žinutė \textit{(41 eilutė)}.
+	\item Išvedama visų operacijų užbaigimo žinutė \textit{(42 eilutė)}.
+\end{enumerate}
+ 
 Eksperimentui atlikti buvo nuskaityti ir apdoroti apie 300000 įrašų, vidutiniškai 100000 per failą.
 TODO: pridėti citatą
 \subsection{Eksperimento aplinkos paruošimas}
@@ -454,6 +470,9 @@ IPSS \textbf{WiMAX} ryšio technologijos matavimai 2014–2018 metais. Viso 1816
 „Python“ skriptas skirtas jau atrinktiems CSV failams pridėti papildomus laukus: metų ir valandų (gaunamas iš datos ir laiko). Šiems duomenims yra sugeneruojamas nauji CSV failai:
 \lstinputlisting[language=Python]{scripts/AddYearAndHour.py}
 
+\section{Atrinktų IPSS papildomų CSV failų generavimo „Python“ skriptas} \label{script4}
+„Python“ skriptas skirtas jau atrinktiems CSV failams sugeneruoti skirtingų koordinačių ir aukščio virš jūros lygio reikšmių apvalinimo duomenų rinkinius. Šiems duomenims yra sugeneruojamas nauji CSV failai:
+\lstinputlisting[language=Python]{scripts/GenerateMoreRoundedOptions.py}
 
 
 \section{Eksperimentinio palyginimo rezultatai}
