@@ -116,17 +116,16 @@ Darbui iškelti \textbf{uždaviniai}:
 Šiame skyriuje aprašyti eksperimentui pritaikyti IPSS duomenų rinkiniai.
 
 \subsubsection{Eksperimentui pritaikyti duomenys}
-Eksperimentui buvo naudojami Lietuvos Respublikos ryšių reguliavimo tarnybos administruojamos Interneto prieigos stebėsenos sistemos (IPSS) atliekami belaidės interneto prieigos duomenų perdavimo spartos kontrolinių matavimų 2014–2018 metų rezultatai. Matavimai atlikti operatorių UAB „Bitė Lietuva“, AB „Telia Lietuva“, UAB „TELE2“ ir AB Lietuvos radijo ir televizijos centro (LRTC) judriojo ryšio tinkluose visoje Lietuvos teritorijoje. Matavimų paskirtis yra stebėti ir įvertinti teikiamų interneto prieigos paslaugų kokybę, kaip to reikalauja Europos Sąjungos direktyvos, taip pat supažindinti visuomenę su tokių matavimų rezultatais. Įrašai pateikiami CSV formato failais. Iš viso gauti 3 failai skirti trims skirtingoms technologijoms: 3G, LTRE ir WiMAX. Viename CSV faile priklausomai nuo failui priskirtos technologijos buvo apytiksliai 136000, 157000 ir 18000 įrašų eilučių, vidutiniškai 104000. Vieno failo dydis vidutiniškai 8,5MB.
+Eksperimentui buvo naudojami Lietuvos Respublikos ryšių reguliavimo tarnybos administruojamos IPSS atliekami belaidės interneto prieigos duomenų perdavimo spartos kontrolinių matavimų 2014–2018 metų rezultatai. Matavimai atlikti operatorių UAB „Bitė Lietuva“, AB „Telia Lietuva“, UAB „TELE2“ ir AB LRTC judriojo ryšio tinkluose visoje Lietuvos teritorijoje. Matavimų paskirtis yra stebėti ir įvertinti teikiamų interneto prieigos paslaugų kokybę, kaip to reikalauja Europos Sąjungos direktyvos, taip pat supažindinti visuomenę su tokių matavimų rezultatais. Įrašai pateikiami CSV formato failais. Iš viso gauti 3 failai skirti trims skirtingoms technologijoms: 3G, LTE ir WiMAX. Viename CSV faile priklausomai nuo failui priskirtos technologijos buvo apytiksliai 136000, 157000 ir 18000 įrašų eilučių, vidutiniškai 104000. Vieno failo dydis vidutiniškai 8,5MB.
 
 \subsubsubsection{Duomenų aprašymas}
 Kiekvienas IPSS įrašų failas prasideda antraštės (angl. \textit{header}) eilute, kuri susideda iš faile saugomų įrašų sąrašo laukų (angl. \textit{fields}) pavadinimų. IPSS įrašų sarašų laukai ir jų paaiškinimas:
 
 \begin{itemize}
-	\item \textbf{Bendri visiems failams laukai:}
-	\item \textbf{Data ir laikas} – matavimo įrašo fiksavimo data ir laikas, užrašoma „yyyy-MM-dd hh:mm:ss“ formatu.
+	\item \textbf{Data ir laikas} – įrašo fiksavimo data ir laikas, užrašoma „yyyy-MM-dd hh:mm:ss“ formatu.
 	\item \textbf{Platuma} – matavimo įrašo fiksavimo koordinačių platuma užrašoma dešimtainiais laipsniais (angl. \textit{decimal degrees}).
 	\item \textbf{Ilguma} – matavimo įrašo fiksavimo koordinačių ilguma užrašoma dešimtainiais laipsniais (angl. \textit{decimal degrees}).
-	\item \textbf{Operatorius} – matavimo įrašo operatoriaus skaitinis kodas arba pavadinimas (vieno iš jau minėtų operatorių: „Bitė Lietuva“, „Telia Lietuva“, „TELE2“ ir LRTC).
+	\item \textbf{Operatorius} – matavimo įrašo operatoriaus skaitinis kodas arba pavadinimas (vieno iš jau minėtų operatorių: „Bitė Lietuva“, „Telia Lietuva“, „TELE2“ ar LRTC).
 	\item \textbf{Ryšio tinklas} – tinklo technologija (3G, LTE arba WiMAX).
 	\item \textbf{Celės id} – korinio tinklo ląstelės identifikacinis numeris atvaizduotas skaitine šešioliktaine forma.
 	\item \textbf{Bazinės stoties id} – bazinės stoties identifikacinis numeris atvaizduotas skaitine šešioliktaine forma, parametras pateikiamas tik LRTC WiMAX tinkle atliktuose matavimuose.
@@ -138,7 +137,7 @@ Kiekvienas IPSS įrašų failas prasideda antraštės (angl. \textit{header}) ei
 	\item \textbf{CINR} – (angl. \textit{Carrier to Interference and Noise Ratio}) nešlio ir trukdžių plius triukšmo santykis, dB, parametras pateikiamas tik LRTC WiMAX tinkle atliktuose matavimuose.
 	\item \textbf{Sparta kbit/s} – (angl. \textit{Download speed}) išmatuota duomenų gavimo spartos vertė, kbps.
 \end{itemize}
-IPSS matavimai atliekami naudojant Ryšių reguliavimo tarnybos turimą įrangą, kuri yra sumontuota matavimams skirtame automobilyje. Matavimai atliekami automobiliui judant (angl. \textit{drive test}) miestų gatvėmis, automagistralėmis arba rajoniniais keliais pagal pasirinktus maršrutus. Atliktų matavimų koordinates galima pamatyti \ref{img:3G-0}, \ref{img:LTE-0} ir \ref{img:WiMAX-0} pav.
+IPSS matavimai atliekami naudojant Ryšių reguliavimo tarnybos turimą įrangą, kuri yra sumontuota matavimams skirtame automobilyje. Matavimai atliekami automobiliui judant (angl. \textit{drive test}) miestų gatvėmis, automagistralėmis arba rajoniniais keliais pagal pasirinktus maršrutus. Atliktų matavimų maršrutų bei koordinates galima pamatyti \ref{img:3G-0}, \ref{img:LTE-0} ir \ref{img:WiMAX-0} paveikslėliuose.
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{img/3G-0}
@@ -160,33 +159,47 @@ IPSS matavimai atliekami naudojant Ryšių reguliavimo tarnybos turimą įrangą
 Aiškiau išskirtus įrašų koordinačių duomenis galima rasti Priede \ref{coordpav}.
 
 
-\subsubsubsection{Duomenų paruošimas}
-Eksperimentui atlikti buvo atrinkti laukai, kurie turi reikšmes visose įrašų sąrašo eilutėse bei taip pat buvo atmesti pasikartojančios informacijos laukai (ryšio tinklo ir ryšio technologijos laukai, kurie nurodo, koks tinklo tipas iš trijų tiriamųjų yra naudojamas faile). Taip pat buvo nuspręsta datos ir laiko lauką pakeisti tik metų lauku. Taigi, 3G tinklui atrinkti šie pradiniai laukai: metai, ilguma, platuma, operatorius, celės id, rssi, 3G ryšio technologija ir sparta; iš LTE duomenų atrinkti laukai: metai, ilguma, platuma, operatorius, celės id, rssi, rsrp, sparta; iš WiMAX duomenų atrinkti laukai: metai, ilguma, platuma, operatorius, bazinės stoties id, rssi, cirn, sparta.\par
-Eksperimentui atlikti buvo reikalingas CSV formato failai, kuriuose nebūtų lietuviškų raidžių ir būtų naudojami vieno žodžio arba vienos simbolių eilutės antraštės pavadinimai (pavyzdžiui, tarpai gali būti pakeičiami „\_“ simboliu), todėl buvo realizuoti „Python“ skriptas, kuris nuskaito duotųjų duomenų CSV failus ir juos apdorojus, grąžina naujus CSV failus. Skriptas kurtas ir leistas „Jupyter Notebook“ aplinkoje. Skripte galima pasirinkti kelią iki duotųjų CSV failų ir kelią iki naujai sukuriamų CSV failų. Šis skriptas skirtas pervadinti antraštes, atskirti metus ir atrinkti nereikalingus laukus. Skriptai atlieka šiuos veiksmus 3 kartus kiekvienai ryšio technologijai (3G, LTE, WiMAX) (Priedas \ref{script1}):
+\subsubsubsection{Pradinių duomenų paruošimas} \label{subsubsubsec:paruošimas1}
+Eksperimentui atlikti buvo atrinkti laukai, kurie turi reikšmes visose įrašų sąrašo eilutėse bei taip pat buvo atmesti pasikartojančios informacijos laukai (ryšio tinklo ir ryšio technologijos laukai, kurie nurodo, koks tinklo tipas iš trijų tiriamųjų yra naudojamas faile). Taigi, 3G tinklui atrinkti šie pradiniai laukai: data, laikas, ilguma, platuma, operatorius, celės id, rssi, 3G ryšio technologija ir sparta; iš LTE duomenų atrinkti laukai: data, laikas, ilguma, platuma, operatorius, celės id, rssi, sparta; iš WiMAX duomenų atrinkti laukai: data, laikas, ilguma, platuma, operatorius, bazinės stoties id, rssi, sparta.\par
+
+Eksperimentui atlikti buvo reikalingas CSV formato failai, kuriuose nebūtų lietuviškų raidžių ir būtų naudojami vieno žodžio arba vienos simbolių eilutės antraštės pavadinimai (pavyzdžiui, tarpai gali būti pakeičiami „\_“ simboliu), todėl buvo realizuotas „Python“ skriptas pavadintas „RenameAndRemoveFields.py“, kuris nuskaito duotųjų duomenų CSV failus ir juos apdorojus, grąžina naujus CSV failus. Skriptas, kaip ir visi darbo metu kurti skriptai, kurtas ir leistas „Jupyter Notebook“ aplinkoje. Skripte galima pasirinkti kelią iki duotųjų CSV failų ir kelią iki naujai sukuriamų CSV failų. Taip pat galima nurodyti norimas antraštes ir norimus laukus. Šio skripto paskirtis yra pervadinti antraštes ir atmesti nereikalingus laukus ir atskirti datą nuo laiko. Skriptas atlieka šiuos veiksmus 3 kartus kiekvienai ryšio technologijai (3G, LTE, WiMAX) (Priedas \ref{script1}):
 \begin{enumerate}
-	\item Nuskaito CSV įrašų failą pateiktą nurodytu keliu.
-	\item Sukuria naują CSV failą nurodytų keliu ir pavadinimu.
-	\item Įrašo į naujai sukurtą CSV failą, naują antraštę, su naujais angliškais vieno žodžio (simbolių eilutės) pavadinimais.
-	\item Vykdo ciklą, kuris skaitant po vieną eilutę iš pradinio failo įrašo tik reikalingus duomenis į naują failą bei iš datos ir laiko paima tik metus. Taip pat kiekviena eilutė yra skaičiuojama.
-	\item Išvedamas galutinis eilučių skaičius.
+	\item Nuskaito CSV įrašų failą pateiktą nurodytu keliu \textit{(18–23 ir 38 eilutės)}.
+	\item Sukuria naują CSV failą nurodytų keliu ir pavadinimu \textit{(24 ir 39 eilutės)}.
+	\item Sukuria „csv.writer“ objektą skirtą duomenų rašymui į CSV failus\textit{ (25 eilutė)}.
+	\item Įrašo į naujai sukurtą CSV failą, naują antraštę, su naujais angliškais vieno žodžio (simbolių eilutės) pavadinimais \textit{(26 eilutė)}.
+	\item Vykdo ciklą, kuris iš pradinio failo nuskaitytų duomenų kiekvieno įrašo atrenka reikalingus laukus, atskiria laiką nuo datos ir įrašo į CSV failą naujai sukurtą eilutę. Taip pat atlieką kiekvienos eilutės skaičiavimą \textit{(28–34 eilutės)}.
+	\item Išvedamas galutinis eilučių skaičius \textit{(35 eilutė)}.
+	\item Į konsolę išvedama operacijos užbaigimo žinutė \textit{(40 eilutė)}.
 \end{enumerate}
-Atrinkus duomenis iš pradinių duomenų buvo sukurtas antras skriptas skirtas išgauti daugiau informacijos iš koordinačių. Kadangi ilgumos ir platumos laukai yra realiosios reikšmės, jomis yra nepatogu naudotis. Tam buvo sukurtas dar vienas skriptas, kuris suapvalina koordinačių laukus iki pasirinkto skaičiaus po kableliu taip sumažinant unikalių reikšmių kiekį. Šios reikšmės buvo pridėtos į joms sukurtus naujus laukus. Papildomai originalios koordinačių reikšmės buvo panaudotos išgauti kiekvieno koordinačių taško aukštį virš jūros lygio. Ši bei suapvalinta iki dešimčių metrų reikšmės buvo pridėtos į papildomus joms sukurtus laukus. Taigi naujas „Python“ skriptas nuskaito prieš tai sukurtus CSV failus, gauna aukščio virš jūros lygio reikšmes, suapvalina koordinačių bei aukščio reikšmes ir sukuria naujus CSV failus pasirinktu adresu. Skriptai atlieka šiuos veiksmus 3 kartus kiekvienai ryšio technologijai (3G, LTE, WiMAX) (Priedas \ref{script2}):
+
+\subsubsubsection{Papildytų duomenų paruošimas: koordinačių suapvalinimas, aukščio virš jūros lygio pridėjimas} \label{subsubsubsec:paruošimas2}
+IPSS duomenyse yra pateikta daug informacijos, tačiau, dėl didelės jų įvairovės ir dėl realių skaičių laukuose, tik maža dalis jų yra potencialiai panaudojama aiškinimo procesui. Todėl buvo sukurtas antras skriptas pradinių duomenų papildymui  (papunktis \ref{subsubsubsec:paruošimas1}). Skripto paskirtis buvo pridėti papildomus koordinačių laukus, kuriuose būtų tos pačios koordinatės tačiau suapvalintos iki pasirinkto skaičiaus po kablelio. Skriptas turėjo ir antrą uždavinį – pasinaudojus tiksliomis, originaliomis koordinatėmis rasti aukštį virš jūros lygio ir pridėti šią bei suapvalintą reikšmes į joms skirtus naujus laukelius. Šis skriptas buvo pavadintas „AddAltitudeAndRoundedColumns.py“. Skriptas leidžia pasirinkti kelią iki pradinio CSV failo, kelią iki naujai sukuriamo CSV failo, taip pat skaitmenų po kablelio apvalinimo skaičių, bei aukščio virš jūros lygio apvalinimo sąlygas. Kadangi skriptas naudoja „Jawg.io“ API, jam reikia pateikti vartotojo prieigos žymę (angl. \textit{access token}). Taigi naujas „Python“ skriptas nuskaito prieš tai sukurtus CSV failus, gauna aukščio virš jūros lygio reikšmes, suapvalina koordinačių bei aukščio reikšmes ir sukuria naujus CSV failus pasirinktu keliu ir pavadinimu. Skriptas atlieka šiuos veiksmus 3 kartus kiekvienai ryšio technologijai (3G, LTE, WiMAX) (Priedas \ref{script2}):
 \begin{enumerate}
-	\item Nuskaito CSV įrašų failą pateiktą nurodytu keliu.
-	\item Iš nuskaitytų duomenų atskiriama antraštė nuo įrašų.
-	\item Iš antraštės surandami metų, platumos ir ilgumos laukų indeksai.
-	\item Pasinaudojus gautais indeksais, sukuriami visų ilgumos ir platumos reikšmių masyvai.
-	\item Vykdomas ciklas, kuris visus įrašus padalina į pasirinkto žingsnio dydžio dalis.
-	\item Vykdomas ciklas cikle, kuris visas ilgumos ir platumos reikšmes sujungia į „string“ tipo kintamuosius, kuriuose ilguma ir platuma yra atskirtos kableliu „,“.
-	\item Kiekvienam žingsniui, iš platumos ir ilgumos bendrų kintamųjų sukuriamas vienas „string“ kintamasis, kur kiekvienas bendras koordinačių kintamasis yra atskirtas vertikaliu brūkšniu „|“.
-	\item Vykdomas ciklas, kuris kiekvienai žingsnio koordinačių kiekio „string“ kintamajam sukuria URL užklausą „Jawg.io“ API, kuri susideda iš koordinačių kintamojo, pagrindinio URL ir vartotojo prieigos žymės (angl. \textit{access token}).
-	\item Kiekvienam žingsniui yra siunčiama HTTP užklausa, kuri grąžina JSON duomenų struktūrą su koordinatėmis ir jų aukščiais virš jūros lygio.
-	\item Iš JSON duomenų struktūros atskiriamos aukščio virš jūros lygio reikšmės ir jos yra patalpinamos į masyvą atitinkamu indeksu.
-	\item Vykdomas ciklas, kuris kiekvienam nuskaitytam įrašui sukuria nauja įrašą su suapvalintomis iki pasirinkto skaičiaus po kablelio reikšmėmis bei aukščio virš jūros lygio ir suapvalinta iki dešimčių aukščio virš jūros lygio reikšmėmis. Šie įrašai sujungiami su atitinkamais įrašais ir sukuriamas naujas masyvas su šiais įrašais.
-	\item Sukuriamas naujas CSV failas nurodytu keliu ir pavadinimu.
-	\item Įrašoma nauja antraštė su papildytais pavadinimais.
-	\item Vykdomas ciklas, kuris kiekvieną naujai papildytą įrašą įveda į naują CSV failą.
+	\item Nuskaito CSV įrašų failą pateiktą nurodytu keliu bei atskiria antraštę nuo įrašų \textit{(9–13 ir 89 eilutės)}.
+	\item Iš antraštės surandami platumos ir ilgumos laukų indeksai \textit{(14–17 ir 90 eilutės)}.
+	\item Pasinaudojus gautais indeksais, sukuriami visų ilgumos ir platumos reikšmių masyvai \textit{(18–21 ir 91 eilutės)}.
+	\item Kadangi bus atliekamos HTTP užklausos ir URL užklausos ilgis yra ribots, yra vykdomas ciklas, kuris visus įrašus padalina į pasirinkto žingsnio dydžio dalis \textit{(22–34 ir 92)}.
+	\item Vykdomas ciklas cikle, kuris visas ilgumos ir platumos reikšmes sujungia į „string“ tipo kintamuosius, kuriuose ilguma ir platuma yra atskirtos kableliu „,“\textit{ (26–31 eilutės)}.
+	\item Kiekvienam žingsniui, iš platumos ir ilgumos bendrų kintamųjų sukuriamas vienas „string“ kintamasis, kur kiekvienas koordinačių poros kintamasis yra atskirtas vertikaliu brūkšniu „|“ \textit{(33 eilutė)}.
+	\item Vykdomas ciklas, kuris kiekvienai žingsnio koordinačių kiekio „string“ kintamajam sukuria URL užklausą „Jawg.io“ API, kuri susideda iš koordinačių kintamojo, pagrindinio URL ir vartotojo prieigos žymės (angl. \textit{access token}) \textit{(35–40 ir 93 eilutės)}.
+	\item Kiekvienam žingsniui yra siunčiama HTTP užklausa, kuri grąžina JSON duomenų struktūrą su koordinatėmis ir jų aukščiais virš jūros lygio \textit{(41–44 eilutės)}.
+	\item Iš JSON duomenų struktūros atskiriamos aukščio virš jūros lygio reikšmės ir jos yra patalpinamos į masyvą atitinkamu indeksu \textit{(45 eilutė)}.
+	\item Kas 100 žingsnių yra atspausdinamas atliktų žingsnių kiekis (naudotas žingsnio dydis – 100 įrašų, todėl spausdinama, kas 10000 įrašų), tai atliekama, kad būtų galima stebėti procesą, ypač, kadangi tinkle atliekamos operacijos yra lėtesnės ir yra ribotas „Jawg.io“ API duodamų operacijų skaičius \textit{(37 ir 47–49 eilutės)}.
+	\item Vykdomas ciklas, kuris kiekvienam nuskaitytam įrašui sukuria nauja įrašą su suapvalintomis iki pasirinkto skaičiaus po kablelio reikšmėmis bei aukščio virš jūros lygio ir suapvalinta iki dešimčių aukščio virš jūros lygio reikšmėmis. Šie įrašai sujungiami su atitinkamais įrašais ir sukuriamas naujas sąrašas su šiais įrašais \textit{(51–65 ir 94 eilutės)}.
+	\item Sukuriami nauji laukų antraštės pavadinimai bei pertvarkomos naujai pridėtų laukų (suapvalintų ir aukščio reikšmių) pozicijos \textit{(47–87 ir 95 eilutės)}.
+	\item Sukuriamas naujas CSV failas nurodytu keliu ir pavadinimu \textit{(66–72 ir 96 eilutės)}.
+	\item Įrašoma nauja antraštė su papildytais pavadinimais \textit{(69 eilutė)}.
+	\item Vykdomas ciklas, kuris kiekvieną naujo įrašų sąrašo elementą įveda į jam skirtą naujo CSV failo poziciją \textit{(70–72 eilutės)}.
+	\item Išvedama operacijos pabaigimo žinutė \textit{(97 eilutė)}.
 \end{enumerate}
+
+\subsubsubsection{Papildytų duomenų paruošimas: metų ir valandų išskyrimas} \label{subsubsubsec:paruošimas3}
+Ruošiant IPSS duomenis eksperimentui jau buvo panaudota didžioji dalis originaliai paruoštų duomenų laukų (papunkčiai \ref{subsubsubsec:paruošimas1} ir \ref{subsubsubsec:paruošimas2}). Tačiau dėl didesnio potencialių aiškinamųjų laukų kiekio buvo sukurtas skriptas išskirti valandas iš laiko lauko (pvz. iš „09:15:39“ gaunama „09“), kadangi laiko laukas buvo nenaudojamas ir metus iš datos lauko (pvz. iš „2015-09-13“ gaunama „2015“). „Python“ skriptas pavadintas „AddYearAndHour.py“. Naudojantis skriptu, galima nurodyti pradinių CSV failų kelius ir naujų CSV failų kelius.Skriptas atlieka šiuos veiksmus 3 kartus kiekvienai ryšio technologijai (3G, LTE, WiMAX) (Priedas \ref{script3}):
+\begin{enumerate}
+	\item Nuskaito CSV įrašų failą pateiktą nurodytu keliu bei atskiria antraštę nuo įrašų \textit{(9–13 ir 89 eilutės)}. 
+\end{enumerate}
+
 Eksperimentui atlikti buvo nuskaityti ir apdoroti apie 300000 įrašų, vidutiniškai 100000 per failą.
 TODO: pridėti citatą
 \subsection{Eksperimento aplinkos paruošimas}
@@ -423,12 +436,16 @@ IPSS \textbf{WiMAX} ryšio technologijos matavimai 2014–2018 metais. Viso 1816
 \end{figure}
 
 \section{Pradinių IPSS CSV failų apdorojimo „Python“ skriptas} \label{script1}
-„Python“ skriptas skirtas iš duotųjų IPSS duomenų CSV failų atrinkti nereikalingus laukus ir pervadinti lietuviškus antraštės pavadinimus į vieno žodžio (vienos simbolių eilutės) angliškus pavadinimus bei sugeneruoti naujus CSV failus:
-\lstinputlisting[language=Python]{scripts/script1.py}
+„Python“ skriptas „RenameAndRemoveFields.py“ skirtas iš duotųjų IPSS duomenų CSV failų atrinkti nereikalingus laukus ir pervadinti lietuviškus antraštės pavadinimus į vieno žodžio (vienos simbolių eilutės) angliškus pavadinimus bei sugeneruoti naujus CSV failus:
+\lstinputlisting[language=Python]{scripts/RenameAndRemoveFields.py}
 
-\section{Atrinktų IPSS CSV failų duomenų papildymo „Python“ skriptas} \label{script2}
+\section{Atrinktų IPSS CSV failų duomenų papildymo aukščio virš jūros lygio ir suapvalintų reikšmių laukais „Python“ skriptas} \label{script2}
 „Python“ skriptas skirtas jau atrinktiems CSV failams pridėti papildomus laukus: aukščio virš jūros lygio (gaunamas iš koordinačių), suapvalintų koordinačių reikšmių bei suapvalintos aukščio reikšmės. Šiems duomenims yra sugeneruojamas nauji CSV failai:
-\lstinputlisting[language=Python]{scripts/script2.py}
+\lstinputlisting[language=Python]{scripts/AddAltitudeAndRoundedColumns.py}
+
+\section{Atrinktų IPSS CSV failų duomenų papildymo metų ir valandu laukais „Python“ skriptas} \label{script3}
+„Python“ skriptas skirtas jau atrinktiems CSV failams pridėti papildomus laukus: metų ir valandų (gaunamas iš datos ir laiko). Šiems duomenims yra sugeneruojamas nauji CSV failai:
+\lstinputlisting[language=Python]{scripts/AddYearAndHour.py}
 
 
 
