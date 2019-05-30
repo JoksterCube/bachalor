@@ -191,13 +191,20 @@ IPSS duomenyse yra pateikta daug informacijos, tačiau, dėl didelės jų įvair
 	\item Sukuriamas naujas CSV failas nurodytu keliu ir pavadinimu \textit{(66–72 ir 96 eilutės)}.
 	\item Įrašoma nauja antraštė su papildytais pavadinimais \textit{(69 eilutė)}.
 	\item Vykdomas ciklas, kuris kiekvieną naujo įrašų sąrašo elementą įveda į jam skirtą naujo CSV failo poziciją \textit{(70–72 eilutės)}.
-	\item Išvedama operacijos pabaigimo žinutė \textit{(97 eilutė)}.
+	\item Išvedama operacijos užbaigimo žinutė \textit{(97 eilutė)}.
 \end{enumerate}
 
 \subsubsubsection{Papildytų duomenų paruošimas: metų ir valandų išskyrimas} \label{subsubsubsec:paruošimas3}
 Ruošiant IPSS duomenis eksperimentui jau buvo panaudota didžioji dalis originaliai paruoštų duomenų laukų (papunkčiai \ref{subsubsubsec:paruošimas1} ir \ref{subsubsubsec:paruošimas2}). Tačiau dėl didesnio potencialių aiškinamųjų laukų kiekio buvo sukurtas skriptas išskirti valandas iš laiko lauko (pvz. iš „09:15:39“ gaunama „09“), kadangi laiko laukas buvo nenaudojamas ir metus iš datos lauko (pvz. iš „2015-09-13“ gaunama „2015“). „Python“ skriptas pavadintas „AddYearAndHour.py“. Naudojantis skriptu, galima nurodyti pradinių CSV failų kelius ir naujų CSV failų kelius.Skriptas atlieka šiuos veiksmus 3 kartus kiekvienai ryšio technologijai (3G, LTE, WiMAX) (Priedas \ref{script3}):
 \begin{enumerate}
-	\item Nuskaito CSV įrašų failą pateiktą nurodytu keliu bei atskiria antraštę nuo įrašų \textit{(9–13 ir 89 eilutės)}. 
+	\item Nuskaito CSV įrašų failą pateiktą nurodytu keliu bei atskiria antraštę nuo įrašų \textit{(6–10 ir 39 eilutės)}. 
+	\item Iš antraštės surandami datos ir laiko laukų indeksai \textit{(11–14 ir 40 eilutės)}.
+	\item Vykdomas ciklas, kuris kiekvienam nuskaitytam įrašui sukuria nauja įrašą į kurį yra įterpiamos naujos metų ir valandų reikšmės į joms skirtas vietas. Šie įrašai sujungiami ir sukuriamas naujas sąrašas \textit{(15–24 ir 41 eilutės)}.
+	\item Sukuriami nauji laukų antraštės pavadinimai su įterptomis naujomis metų ir valandų reikšmėmis, joms skirtose pozicijose \textit{(25–31 ir 42 eilutės)}.
+	\item Sukuriamas naujas CSV failas nurodytu keliu ir pavadinimu \textit{(32–37 ir 43 eilutės)}.
+	\item Įrašoma nauja antraštė su papildytais pavadinimais \textit{(34 eilutė)}.
+	\item Vykdomas ciklas, kuris kiekvieną naujo įrašų sąrašo elementą įveda į naują CSV failą \textit{(36–37 eilutės)}.
+	\item Išvedama operacijos užbaigimo žinutė \textit{(44 eilutė)}.
 \end{enumerate}
 
 Eksperimentui atlikti buvo nuskaityti ir apdoroti apie 300000 įrašų, vidutiniškai 100000 per failą.
