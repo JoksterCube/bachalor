@@ -18,6 +18,8 @@
 \usepackage{enumitem}\setlist{nosep}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{multirow}
+\usepackage[table,xcdraw]{xcolor}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -49,7 +51,6 @@
 \university{Vilniaus universitetas}
 \faculty{Informatikos Institutas}
 \department{Programų sistemų katedra}
-%\papertype{Bakalauro darbas}
 \papertype{Bakalauro darbas}
 \title{Anomalijų aptikimas interneto prieigos stebėsenos sistemos įrašuose}
 \titleineng{Detection of anomalies in internet access monitoring system data}
@@ -117,7 +118,7 @@ Darbui iškelti \textbf{uždaviniai}:
 	\item \textbf{Aiškinamieji} – tai operatoriai, kurie grupuoja ir jungia duomenų taškus po kelis.
 \end{itemize}
 
-Toliau trumpai aprašoma „MacroBase“ darbo proceso architektūra, kuri yra paremta dviem pagrindiniais principais. Pirma, visi operatoiai operuoja per duomenų srautus, jei duomenys yra išsaugoti ilgalaikėje atmintyje, prieš dirbant su šiais duomenimis, jie yra verčiami į srautus. Antra, „MacroBase“ yra paremtas kompiliatoriaus principu aprašytu žemiau, kuris užtikrina sąveiką tarp operatorių ir tvarkingą bendrą struktūrą \cite{macrobase_overview, kursinis}:
+Toliau trumpai aprašoma „MacroBase“ darbo proceso architektūra, kuri yra paremta dviem pagrindiniais principais. Pirma, visi operatoiai operuoja per duomenų srautus, jei duomenys yra išsaugoti ilgalaikėje atmintyje, prieš dirbant su šiais duomenimis, jie yra verčiami į srautus. Antra, „MacroBase“ yra paremtas kompiliatoriaus principu aprašytu žemiau, kuris užtikrina sąveiką tarp operatorių ir tvarkingą bendrą struktūrą \cite{macrobase_overview}:
 \begin{itemize}
 	\item \textbf{Duomenų gavimas} (angl. \textit{ingestion}):
 		\begin{itemize}
@@ -459,7 +460,46 @@ Eksperimento atvejai:
 
 \subsubsubsection{Eksperimento eiga su pritaikytais IPSS belaidžio interneto WiMAX, pritaikius išanalizuotus 3G parametrus} \label{subsubsubsec:exp6}
 
-\subsubsection{Eksperimentinio tyrimo rezultatų analize}
+\subsection{Eksperimentinio tyrimo rezultatų analize}
+Šiame skyriuje aprašyta atliktų eksperimentų pateiktiems duomenų rinkiniams rezultatų analizė.
+
+\subsubsection{Pritaikytais IPSS belaidžio interneto 3G duomenų gauti rezultatai}
+Šiame poskyryje aprašoma atliktų eksperimentų su IPSS belaidžio interneto 3G duomenimis rezultatai.
+
+\subsubsubsection{Rezultatų palyginimas, keičiant procentilio parametro reikšmes}
+Buvo palyginti \ref{subsubsubsec:exp1}, \ref{subsubsubsec:exp2} ir \ref{subsubsubsec:exp3} papunkčiuose aprašytų eksperimentų 1 ir 2 atvejai, kur buvo pakeista procentilio reikšmė (0,99 ir 0,95), bet palaikymo ir rizikos koeficiento reikšmės paliktos ir naudotos pagal numatymą.\par
+
+Atliekant eksperimentą su pritaikytais 3G duomenimis (\ref{subsubsubsec:paruošimas1} papunktis), kai procentilis buvo nekeičiamas (0,99 pagal numatymą), buvo aptiktos 2534 išskirtys iš 136003 (tai 133469 neišskirtys). Tačiau kai procentilio reikšmė buvo pakeista į 0,95, buvo aptikta 12119 išskirčių (123884 neišskirtys). Surinkti duomenys buvo suvesti į \ref{tab:comp12} lentelę.\par
+
+Iš suvestų duomenų pastebėta, kad naudojant 0,99 procentilio reikšmę gauta 9585	mažiau išskirčių negu naudojant 0,95 reikšmę. Tačiau, abiejų procentilio reikšmių atvejais išskirtinių atributų reikšmių kombinacijų sąrašo dydis buvo vienodas – 119765.\par
+
+Buvo atlikti tie patys eksperimentai su 3G duomenimis papildytais aukščio virš jūros lygio ir suapvalintų reikšmių laukais (\ref{subsubsubsec:paruošimas2} papunktis) ir su 3G duomenimis papildytais metų ir valandų laukais (\ref{subsubsubsec:paruošimas3} papunktis). Gauti rezultatai buvo įvesti į \ref{tab:comp12} lentelę.\par
+
+Atliekant eksperimentus su papildytais duomenimis, kurių rezultatai yra antri lentelėje \ref{tab:comp12} buvo pastebėta, jog pridėjus papildomos informacijos ir davus daugiau aiškinamųjų atributų išskirčių skaičius gerokai išaugo. Su 0,99 procentiliu išskirčių skaičius pakilo nuo 2534 iki 5118, tai yra 2584 vienetų arba ~2.02 karto. Naudojant 0,95 procentilio reikšmę išskirčių skaičius pakilo iki 15241 (3122 vienetų arba ~1,26 karto daugiau nei su pritaikytais pradiniais duomenimis). Taip pat pakilo ne tik išskirčių bet ir išskirtinių atributų kombinacijų sąrašo dydis: naudojant 0,99 procentilį – 173650, o 0,95 – 136689. Pastebėta jog naudojant procentilio reikšmę lygią 0,95 išskirtinių atributų kombinacijų sąrašo dydis yra mažesnis 36961 vienetų nei kai naudojama 0,99 procentilio reikšmė. Šį skirtumą galima paaiškinti tuo, kad mažėjant išskirčių skaičiui, atributo reikšmės rizikos koeficientas didėja, taigi kuo daugiau išskirčių, tuo didesnė konkurencija tarp jų ir palaikymo bei rizikos koeficientai automatiškai mažesni. Iš to galima spręsti, jog kai buvo naudojama 0,95 procentilio reikšmė, paaiškinimo operatorius davė tik tas atributų reikšmes, kurių rizikos koeficiento ir palaikymo reikšmės buvo didesnės už nurodytas minimalias reikšmes, tačiau tokių reikšmių buvo mažiau negu su 0,99 procentiliu.\par
+
+Suvedus rezultatus į lentelės \ref{tab:comp12} trečią stulpelį, buvo pastebėtos tos pačios tendencijos. Padidėjus aiškinamųjų atributų kiekiui pakilo ir išskirčių skaičius. Naudojant 0,99 procentilio reikšmę, užfiksuota 7809 išskirčių, tai yra 2691 vienetų daugiau nei yra užfiksuota \ref{tab:comp12} lentelės antrame stulpelyje ir 5275 vienetais daugiau nei užfiksuota su pradiniais duomenimis. Su 0,95 procentilio reikšme pastebima panašus išskirčių kieki išaugis – iki 19640 vienetų, tai yra 4399 daugiau nei praeito eksperimento metu. Taip pat pastebėta, jog skirtumas tarp 0,95 ir 0,99 išskirčių skaičiaus irgi kyla. Šių eksperimentų metu užfiksuotas skirtumas buvo 11831 vienetų.\par
+
+\begin{table}[H]
+	\centering
+	\caption{Visų pirmų ir antrų eksperimentinių atvejų palyginimas}
+	\label{tab:comp12}
+	\begin{tabular}{|l|l|l|l|l|l|l|}
+		\hline
+		\multirow{2}{*}{\textbf{Palyginimo aspektas}} & \multicolumn{6}{c|}{\textbf{Eksperimentas}} \\ \cline{2-7} 
+		& \multicolumn{2}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Pritaikyti 3G\\ duomenys\end{tabular}}} & \multicolumn{2}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Papildyti 3G\\ duomenys, I\end{tabular}}} & \multicolumn{2}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Papildyti 3G\\ duomenys, II\end{tabular}}} \\ \hline
+		Procentilio reikšmė & 0,99 & 0,95 & 0,99 & 0,95 & 0,99 & 0,95 \\ \hline
+		Išskirčių skaičius & 2534 & 12119 & 5118 & 15241 & 7809 & 19640 \\ \hline
+		\begin{tabular}[c]{@{}l@{}}Išskirtinių atributų\\ kombinacijų sąrašo dydis\end{tabular} & 119765 & 119765 & 173650 & 136689 & 235005 & 161210 \\ \hline
+		Neišskirčių skaičius & 133469 & 123884 & 130885 & 120762 & 128194 & 116363 \\ \hline
+	\end{tabular}
+\end{table}
+
+\subsubsubsection{Rezultatų palyginimas, keičiant palaikymo parametro reikšmes}
+
+
+
+
+
 
 
 
@@ -471,42 +511,27 @@ rekomendacijos, akcentuojamos naujovės). Rezultatai ir išvados pateikiami
 sunumeruotų (gali būti hierarchiniai) sąrašų pavidalu. Darbo rezultatai turi
 atitikti darbo tikslą.
 
-\printbibliography[heading=bibintoc]  % Šaltinių sąraše nurodoma panaudota
-% literatūra, kitokie šaltiniai. Abėcėlės tvarka išdėstomi darbe panaudotų
-% (cituotų, perfrazuotų ar bent paminėtų) mokslo leidinių, kitokių publikacijų
-% bibliografiniai aprašai. Šaltinių sąrašas spausdinamas iš naujo puslapio.
-% Aprašai pateikiami netransliteruoti. Šaltinių sąraše negali būti tokių
-% šaltinių, kurie nebuvo paminėti tekste. Šaltinių sąraše rekomenduojame
-% necituoti savo kursinio darbo, nes tai nėra oficialus literatūros šaltinis.
-% Jei tokių nuorodų reikia, pateikti jas tekste.
-
+\printbibliography[heading=bibintoc]
 % \sectionnonum{Sąvokų apibrėžimai}
 \sectionnonum{Santrumpos}
 \begin{itemize}
-	\item LRTC
-	\item CSV
-	\item 3G
-	\item LTE
-	\item MAC adresas
-	\item IPSS
-	\item URL
-	\item API
-	\item HTTP
-	\item JSON
-	\item JRE
-	\item JDK
-	\item BASH
-	\item SQL
+	\item \textbf{API} – Aplikacijų programavimo sąsaja, kurią suteikia kompiuterinė sistema galėtų pasiekti jos funkcionalumą (anlg. \textit{Application programming interface}).
+	\item \textbf{BASH} – Komandinių eilučių interpretatorius ir komandų kalba.
+	\item \textbf{LRTC} – Lietuvos radio ir televizijos centras.
+	\item \textbf{CSV} – Failas, sudarytas iš kablelias atskirtų reikšmių (angl.\textit{ Comma Separated Values}).
+	\item \textbf{HTTP} – Standaritinis protokolas pateikti HTML puslapiams (angl. \textit{hypertext transfer protocol}).
+	\item \textbf{IPSS} – Lietuvos Respublikos ryšių reguliavimo tarnybos administruojama interneto prieigos stebėsenos sistema.
+	\item \textbf{JDK} – JAVA vystymo rinkinys (angl. \textit{java development kit}).
+	\item \textbf{JRE} – JAVA vykdymo aplinka, yra dalis JDK (angl. \textit{java runtime enviroment}).
+	\item \textbf{JSON} – Atviro standarto formatas, perduodantis duomenų objektus, sudarytus iš
+	\item \textbf{3G} – Belaidės interneto prieigos mobiliojo ryšio trečios kartos technologija.
+	\item \textbf{LTE} – Belaidės interneto prieigos mobiliojo ryšio technologija (angl. \textit{long-term evolution }).
+	\item \textbf{MAC} – Įrenginių unikalus identifikatorius priskirtas tinklo sąsajos valdikliui (angl. \textit{media access control address}).
+	\item \textbf{SQL} – Struktūrizuota užklausų kalba (angl. \textit{structured query language}).
+	\item \textbf{URL} – Nuorodos adresas nurodantis specifinį tinklo resursą (angl. \textit{uniform resource locator}). atributo ir reikšmės porų, lengvai skaitomame tekste (angl. \textit{javascript object notation}).
 \end{itemize}
-Sąvokų apibrėžimai ir santrumpų sąrašas sudaromas tada, kai darbo tekste
-vartojami specialūs paaiškinimo reikalaujantys terminai ir rečiau sutinkamos
-santrumpos.
 
-\appendix  % Priedai
-% Prieduose gali būti pateikiama pagalbinė, ypač darbo autoriaus savarankiškai
-% parengta, medžiaga. Savarankiški priedai gali būti pateikiami ir
-% kompaktiniame diske. Priedai taip pat numeruojami ir vadinami. Darbo tekstas
-% su priedais susiejamas nuorodomis.
+\appendix
 
 \section{IPSS matavimų koordinatės 2014–2018 metais} \label{coordpav}
 IPSS \textbf{3G} ryšio technologijos matavimai 2014–2018 metais. Viso 136003 įrašai.
