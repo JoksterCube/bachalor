@@ -19,60 +19,35 @@
 
 % Titulinio aprašas
 \university{Vilniaus universitetas}
-\faculty{Matematikos ir informatikos fakultetas}
-\department{Programų sistemų katedra}
+\faculty{Informatikos institutas}
+\department{Programų sistemos}
 %\papertype{Bakalauro darbas}
 \papertype{Bakalauro baigiamojo darbo planas}
-\title{Interneto Prieigos Stebėsenos Sistemos Anomalijų Aptikimas, Anomalijų Aptikimo Tikslumo Gerinimas}
-\titleineng{Internet Access Monitoring System Anomaly Detection, Improvement of Anomaly Detection Precision}
+\title{Sustiprinto mokymosi taikymas žaidimo agento valdymo programos kūrimui}
+\titleineng{Application of reinforcement learning to the software development for game agent management}
 \author{Jokūbas Rusakevičius}
-\supervisor{asist. dr. Vytautas Valaitis}
+\supervisor{<reikia parašyti pareigas> Virginijus Marcinkevičius}
 \reviewer{}
 \date{Vilnius – \the\year}
 
 % Nustatymai
-\setmainfont{Palemonas}  
-\bibliography{bibliografija}
+\setmainfont[ItalicFont 	= Palem3.2-it.ttf,
+			BoldItalicFont	=Palem3.2-bi.ttf,
+			BoldFont		=Palem3.2-bd.ttf]
+			{Palem3.2-nm.ttf}
 
 \begin{document}
 \maketitle
 
 \setcounter{page}{2}
 
-%% Padėkų skyrius
-% \sectionnonumnocontent{}
-% \vspace{7cm}
-% \begin{center}
-%     Padėkos asmenims ir/ar organizacijoms
-% \end{center}
-
-%\sectionnonumnocontent{Santrauka}
-%Glaustai aprašomas darbo turinys: pristatoma nagrinėta problema ir padarytos išvados. Santraukos apimtis ne didesnė nei 0,5 puslapio. Santraukų gale nurodomi darbo raktiniai žodžiai. 
-% Nurodomi iki 5 svarbiausių temos raktinių žodžių (terminų).
-% Vienas terminas gali susidėti iš kelių žodžių.
-%\raktiniaizodziai{raktinis žodis 1, raktinis žodis 2, raktinis žodis 3, raktinis žodis 4, raktinis žodis 5}   
-
-%\sectionnonumnocontent{Summary}
-%Santrauka anglų kalba. Santraukos apimtis ne didesnė nei 0,5 puslapio.
-%\keywords{keyword 1, keyword 2, keyword 3, keyword 4, keyword 5}
-
-%\tableofcontents
-
-
-%Darbo planas, kuriame pateikiami: tyrimo objektas ir aktualumas, darbo tikslas, keliami uždaviniai ir laukiami rezultatai, tyrimo metodas, numatomas darbo atlikimo procesas, apibūdinami darbui aktualūs literatūros šaltiniai.
 
 \subsectionnonum{Tyrimo objektas ir aktualumas}
 
-Dėl nuolatos didėjančio duomenų kiekio (iki 2020 metų pranašaujama, kad bendras pasaulinis duomenų kiekis peržengs 40 zetabaitų ribą \cite{future_data_volume}), dėl spartos kuria duomenys yra generuojami (Didžiosios socialinių tinklų kompanijos Twitter, Facebook ir LinkedIn 2015-2016 metais pranešė kiekviena atskirai fiksuojanti iki 12 milijonų įvykių per sekundę \cite{twitter,facebook,linkedin}) naudingu duomenų dalis yra pakankamai maža. Reikia atsižvelgti ir į tai, kad dažnai galimi ir neteisingi rezultatų nuskaitymai ar duomenų praradimas, dėl ko gali atsirasti anomalijos. Duomenų vienetai kurie yra nukrypę nuo kitų duomenų rinkinyje yra vadinami anomalijomis. Anomalijų aptikimas yra procesas, kurio metu yra aptinkama ir identifikuojama anomalija arba išskirtis (angl. outlier) duomenų rinkinyje \cite{anomaly}. Anomalijos yra retas reiškinys, tačiau jų egzistavimas gali reikšti didelį pavojų \cite{kursinis}. \par
-
-
-Darbo \textbf{tiriamas objektas} yra Anomalijų aptikimas naudojantis „MacroBase“ duomenų analizavimo ir anomalijų aptikimo įrankiu \cite{macrobase_overview,prioritizing_attention,asap}. Taip pat, bus tiriamas įrašų rinkinio filtravimas, skaidymas, jungimas ar kitoks manipuliavimas, duomenų ir „MacroBase“ aptinkamų anomalijų tikslumui pagerinti. \par
-
-Darbui bus naudojami Belaidės interneto prieigos duomenų perdavimo spartos kontrolinių matavimų, kuriuos atlieka Lietuvos Respublikos ryšių reguliavimo tarnyba, rezultatai kaupiami Interneto prieigos stebėsenos sistemoje (IPSS). Šie matavimai atliekami operatorių UAB „Bitė Lietuva“, AB „Telia Lietuva“, UAB „TELE2“ ir AB Lietuvos radijo ir televizijos centro (LRTC) judriojo ryšio tinkluose visoje Lietuvos teritorijoje, siekiant stebėti ir įvertinti teikiamų interneto prieigos paslaugų kokybę.\cite{dataset} \par
 
 
 \subsectionnonum{Darbo Tikslas, keliami uždavyniai ir laukiami rezultatai}
-Šio darbo \textbf{tikslas} - naudojantis „MacroBase“  įrankiu išanalizuoti ir aptikti anomalijas pritaikytuose "Interneto prieigos stebėsenos sistemos" (IPSS) duomenyse bei pagerinti gautus rezultatus pritaikius duomenų gerinimo principus.\par
+Šio darbo \textbf{tikslas} - \par
 
 Darbui iškelti \textbf{uždavyniai}:\par
 
