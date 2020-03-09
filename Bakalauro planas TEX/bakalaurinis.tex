@@ -45,25 +45,25 @@
 
 
 \subsectionnonum{Tyrimo objektas ir aktualumas}
-Kompiuterių pajėgumui ir atliekamų operacijų per sekundę skaičiui nuolatos didėjant -- didėja ir lūkesčiai bei sprendžiamų uždavinių sudėtingumas. Dar reletyviai neseniai sudėtingiausios programos ir kompiuterių sprendžiami uždaviniai susidėjo iš skaičiuotuvo operacijų ar žinučių perdavimo. Tačiau technologijoms tobulėjant, kiekvienam žmogui kišenėje besinešiojant pirmųjų kompiuterių kaip \enquote{ENIAC} \cite{computer_history} didį pajuokenčius kompiuterinius įrenginius, naturaliai didėja ir jiems keliami iššūkiai. \par
+Kompiuterių pajėgumui ir atliekamų operacijų per sekundę skaičiui nuolatos didėjant -- didėja ir lūkesčiai bei sprendžiamų uždavinių sudėtingumas. Dar reliatyviai neseniai sudėtingiausios programos ir kompiuterių sprendžiami uždaviniai susidėjo iš skaičiuotuvo operacijų ar žinučių perdavimo. Tačiau technologijoms tobulėjant, kiekvienam žmogui kišenėje besinešiojant pirmųjų kompiuterių kaip \enquote{ENIAC} \cite{computer_history} dydį pajuokiančius kompiuterinius įrenginius, natūraliai didėja ir jiems keliami iššūkiai. \par
 
-Šiais laikais kompiuteriai gali simuliuoti atominius sprogimus, nuspėti orus ir atlikti kitas didžiulių skaičiavimo išteklių reikalaujančias užduotis \cite{supercomputers}. Tačiau užduoties sudėtingumą gali lemti ne tik milžiniškų išteklių skaičiaus reikalavimas. 2016 metais matėme, kaip \enquote{Google’s AlphaGo} nugalėjo pasaulio aukščiausio lygio \enquote{Go} žaidėją ir čempioną Ke Jie \cite{go}. Autonomiškai gatvėmis važinėjantys automobiliai neišvengiamai artėja, o \enquote{Boston Dynamics} robotai stebina savo galimybėmis \cite{bostondynamics}. \par
+Šiais laikais kompiuteriai gali simuliuoti atominius sprogimus, nuspėti orus ir atlikti kitas didžiulių skaičiavimo išteklių reikalaujančias užduotis \cite{supercomputers}. Tačiau užduoties sudėtingumą gali lemti ne tik milžiniškų išteklių skaičiaus reikalavimas. 2016 metais matėme, kaip \enquote{Google’s AlphaGo} nugalėjo pasaulio aukščiausio lygio \enquote{Go} žaidėją ir čempioną Ke Jie \cite{go}. Autonominiai gatvėmis važinėjantys automobiliai neišvengiamai artėja, o \enquote{Boston Dynamics} robotai stebina savo galimybėmis \cite{bostondynamics}. \par
 
-Šie uždaviniai nėra trivialiai aprašomi ar išsprendžiami, jiems gali net neegzistuoti sprendimas. Tokiems uždaviniams spręsti yra naudojami mašininio mokymosi ar neuroninių tinklų metodai. Viena šių metodų atmaina yra \enquote{sustiprintas mokymas} -- agento atliekami veiksmai yra reguliariai vertinami ir atitinkamai agentas yra apdovanojamas arba baudžiamas. \par
+Šie uždaviniai nėra trivialiai aprašomi ar išsprendžiami, jiems gali net neegzistuoti sprendimas. Tokiems uždaviniams spręsti yra naudojami mašininio mokymosi metodai (pvz. neuroniniai tinklai). Viena šių metodų šaka yra \enquote{sustiprintas mokymas} -- agento atliekami veiksmai yra reguliariai vertinami ir atitinkamai agentas yra apdovanojamas arba baudžiamas. \par
 
-Sustiprintas mokymas ir jam kuriamas agentas būs šio bakalauro darbo tiriamasis objektas.
+Sustiprintas mokymasis ir žaidimo agento valdymo programa yra pagrindiniai šio bakalauro darbo tiriamieji objektai.
 
 
 
 \subsectionnonum{Darbo tikslas, keliami uždavyniai ir laukiami rezultatai}
-Šio darbo \textbf{tikslas} -- išanalizavus populiariausius sustiprinto mokymosi algoritmus, pritaikyti labiausiai tinkamą algoritmą parinktai eksperimentiniai aplinkai bei pagerinti gaunamus rezultatus pritaikius agento mokymosi gerinimo principus.\par
+Šio darbo \textbf{tikslas} -- išanalizavus populiariausius sustiprinto mokymosi algoritmus, pritaikyti labiausiai tinkamą algoritmą, pasirinkto žaidimo agentui valdyti, siekiant pagerinti agento žinomus veikimo rezultatus.\par
 
 Darbui iškelti \textbf{uždaviniai}:\par
 
 \begin{enumerate}
 	\item Paruošti eksperimentinę aplinką ir agentą.
-	\item Apmokyti agentą.
-	\item Palyginti gaunamą agento efektyvumą atliekant aplinkoje realizuotą užduotį, keičiant aplinkos bei agento mokymosi kriterijus.
+	\item Parinkti sustiprinto mokymosi algoritmą tinkamą agentui ir jį apmokyti.
+	\item Palyginti agento veikimo efektyvumo priklausomybes nuo algoritmo pasirinkimo ir nuo algoritmo hiper parametrų.
 	\item Pateikti rekomendacijas agento apmokymui parinktoje aplinkoje.
 \end{enumerate}
 
@@ -71,8 +71,8 @@ Darbo metu laukiami \textbf{rezultatai}:
 
 \begin{enumerate}
 	\item Paruošta eksperimentinė aplinka ir agentas.
-	\item Agentas yra apmokytas.
-	\item Pakeisti aplinkos ir agento mokymosi kriterijai, palyginti gaunami rezultatai ir taip pasiektas geriausias užduoties atlikimas.
+	\item Parinktas agento mokymui tinkamas sustiprinto mokymosi algoritmas.
+	\item Palyginta agento veikimo efektyvumo priklausomybė nuo algoritmo pasirinkimo ir nuo algoritmo hiper parametrų.
 	\item Pateiktos rekomendacijos agento apmokymui parinktoje aplinkoje.
 \end{enumerate}
 
@@ -80,23 +80,23 @@ Darbo metu laukiami \textbf{rezultatai}:
 Darbui atlikti bus naudojami šie tyrimo metodai:
 
 \begin{enumerate}
-	\item \textbf{Mokslinės lteratūros analizė}.
-	\item \textbf{Eksperimetas}.
-	\subitem \textbf{Kiekybinis metodas} -- apmokyti pirminius agentus, stebėti jų elgseną. Atliekamas, su keliais skirtingais kriterijais ir ieškoma tinkamiausio bei daugiausiai žadančio pradinio rezultato eksperimentui.
-	\subitem \textbf{Kokybinis metodas} -- su gautais pradiniais agentais bei jų mokymosi kriterijais atliekamos gilesnės kriterijų bei agento mokymosi parametrų manipuliacijos bei stebimi gaunamų rezultatų pakitimai.
+	\item \textbf{Mokslinės literatūros analizė}.
+	\item \textbf{Eksperimentas}.
+	\subitem \textbf{Kiekybinis metodas} -- apmokyti pirminius agentus, stebėti jų elgseną. Eksperimentas atliekamas, vertinant agento veikimą keliais skirtingais kriterijais ir ieškoma tinkamiausio bei daugiausiai žadančio agento mokymo algoritmo tolimesniems eksperimentams.
+	\subitem \textbf{Kokybinis metodas} -- su pasirinktais pradiniais agentais atliekamos gilesnės agento mokymosi parametrų manipuliacijos bei stebimi gaunamų rezultatų pakitimai.
 	\item \textbf{Gautų duomenų ir rezultatų analizė}.
 \end{enumerate}
 
 \subsectionnonum{Numatomas darbo atlikimo procesas}
-Darbo procesas susidės iš kelių skirtingų dalių:
+\textbf{Darbo procesas} susidės iš šių dalių:
 
 \begin{enumerate}
 	\item Visų pirma, eksperimentui atlikti bus paruošta eksperimentinė aplinka.
-	\item Agento paruošimas bus atliekamas pasirenkant pradinius, neutralius mokymosi kriterijus.
+	\item Atliekama literatūros analizė ir parenkamas agento valdymo algoritmas.
 	\item Atliekamas pirminis agento apmokymas, skirtas eksperimento bazei gauti bei įsitikinto aplinkos ir agento tarpusavio veikla. 
 	\item Pradėjus pagrindinę eksperimento dalį bus ieškoma ir eksperimentuojama su metodais, kuriuos pritaikius būtų gaunami geresni nei aukščiau gaunami rezultatai.
 	\item Galutinė visų atliktų tyrimų ir gautų rezultatų analizė.
-	\item Pateikiamos rekomendacijos, kaip pagerinti agento apmokymą parinktai aplinkai ir jos keliamoms problemoms bei uždaviniams.
+	\item Pateikiami apibendrinimai ir rekomendacijos, kaip pagerinti agento apmokymą parinktai aplinkai.
 \end{enumerate}
 
 
@@ -110,68 +110,5 @@ Darbo procesas susidės iš kelių skirtingų dalių:
 	\item \textbf{\cite{udemy2}} - \enquote{Udemy} \cite{udemy} kursas apie dirbtinio intelekto pritaikymo naudojantis giliuoju mokymusi ir neuroniniais tinklais įvaldymą.	
 \end{enumerate}
 
-
-
-
-%\section{Medžiagos darbo tema dėstymo skyriai}
-%Medžiagos darbo tema dėstymo skyriuose išsamiai pateikiamos nagrinėjamos temos detalės: pradiniai duomenys, jų analizės ir apdorojimo metodai, sprendimų įgyvendinimas, gautų rezultatų apibendrinimas.
-
-%Medžiaga turi būti dėstoma aiškiai, pateikiant argumentus. Tekste dėstomas trečiuoju asmeniu, t.y. rašoma ne „aš manau“, bet „autorius mano“, „autoriaus nuomone“. Reikėtų vengti informacijos nesuteikiančių frazių, pvz., „...kaip jau buvo minėta...“, „...kaip visiems žinoma...“ ir pan., vengti grožinės literatūros ar publicistinio stiliaus, gausių metaforų ar panašių meninės išraiškos priemonių. Skyriai gali turėti poskyrius ir smulkesnes sudėtines dalis, kaip punktus ir papunkčius.
-
-%\subsection{Poskyris}
-%Citavimo pavyzdžiai: cituojamas vienas šaltinis \cite{PvzStraipsnLt}; cituojami keli šaltiniai \cite{PvzStraipsnEn, PvzKonfLt, PvzKonfEn, PvzKnygLt, PvzKnygEn, PvzElPubLt, PvzElPubEn, PvzMagistrLt, PvzPhdEn}.
-
-%\subsubsection{Skirsnis}
-%\subsubsubsection{Straipsnis}
-%\subsubsection{Skirsnis}
-%\section{Skyrius}
-%\subsection{Poskyris}
-%\subsection{Poskyris}
-
-%\sectionnonum{Rezultatai ir išvados}
-%Rezultatų ir išvadų dalyje išdėstomi pagrindiniai darbo rezultatai (kažkas išanalizuota, kažkas sukurta, kažkas įdiegta), toliau pateikiamos išvados (daromi nagrinėtų problemų sprendimo metodų palyginimai, siūlomos rekomendacijos, akcentuojamos naujovės). Rezultatai ir išvados pateikiami sunumeruotų (gali būti hierarchiniai) sąrašų pavidalu. Darbo rezultatai turi atitikti darbo tikslą.
-
-\printbibliography[heading=bibintoc]  % Šaltinių sąraše nurodoma panaudota
-% literatūra, kitokie šaltiniai. Abėcėlės tvarka išdėstomi darbe panaudotų
-% (cituotų, perfrazuotų ar bent paminėtų) mokslo leidinių, kitokių publikacijų
-% bibliografiniai aprašai. Šaltinių sąrašas spausdinamas iš naujo puslapio.
-% Aprašai pateikiami netransliteruoti. Šaltinių sąraše negali būti tokių
-% šaltinių, kurie nebuvo paminėti tekste. Šaltinių sąraše rekomenduojame
-% necituoti savo kursinio darbo, nes tai nėra oficialus literatūros šaltinis.
-% Jei tokių nuorodų reikia, pateikti jas tekste.
-
-% \sectionnonum{Sąvokų apibrėžimai}
-%\sectionnonum{Santrumpos}
-%Sąvokų apibrėžimai ir santrumpų sąrašas sudaromas tada, kai darbo tekste vartojami specialūs paaiškinimo reikalaujantys terminai ir rečiau sutinkamos santrumpos.
-
-%\appendix  % Priedai
-% Prieduose gali būti pateikiama pagalbinė, ypač darbo autoriaus savarankiškai
-% parengta, medžiaga. Savarankiški priedai gali būti pateikiami ir
-% kompaktiniame diske. Priedai taip pat numeruojami ir vadinami. Darbo tekstas
-% su priedais susiejamas nuorodomis.
-
-%\section{Niauroninio tinklo struktūra}
-%\begin{figure}[H]
-%    \centering
-%    \includegraphics[scale=0.5]{img/MLP}
-%    \caption{Paveikslėlio pavyzdys}
-%    \label{img:mlp}
-%\end{figure}
-
-
-%\section{Eksperimentinio palyginimo rezultatai}
-% tablesgenerator.com - converts calculators (e.g. excel) tables to LaTeX
-%\begin{table}[H]\footnotesize
-%  \centering
-%  \caption{Lentelės pavyzdys}
-%  {\begin{tabular}{|l|c|c|} \hline
-%    Algoritmas & $\bar{x}$ & $\sigma^{2}$ \\
-%    \hline
-%    Algoritmas A  & 1.6335    & 0.5584       \\
-%    Algoritmas B  & 1.7395    & 0.5647       \\
-%    \hline
-%  \end{tabular}}
-%  \label{tab:table example}
-%\end{table}
-
+\printbibliography[heading=bibintoc] 
 \end{document}
