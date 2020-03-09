@@ -47,24 +47,24 @@
 
 
 \subsectionnonum{Darbo Tikslas, keliami uždavyniai ir laukiami rezultatai}
-Šio darbo \textbf{tikslas} - \par
+Šio darbo \textbf{tikslas} - išanalizavus populiariausius sustiprinto mokymosi algoritmus, pritaikyti labiausiai tinkamą algoritmą parinktai eksperimentiniai aplinkai bei pagerinti gaunamus rezultatus pritaikius agento mokymosi gerinimo principus.\par
 
-Darbui iškelti \textbf{uždavyniai}:\par
+Darbui iškelti \textbf{uždaviniai}:\par
 
 \begin{enumerate}
-	\item Paruošti eksperimentinę aplinką ir įrašų rinkinį eksperimentui.
-	\item Aptikti ir analizuoti anomalijas įrašų rinkinyje naudojantis „MacroBase“.
-	\item Palyginti aptinkamamas anomalijas, keičiant įrašų rinkinio gerinimo kriterijus.
-	\item Pateikti rekomendacijas IPSS duomenų anomalijų aptikimui naudojantis „MacroBase“.
+	\item Paruošti eksperimentinę aplinką ir agentą.
+	\item Apmokyti agentą.
+	\item Palyginti gaunamą agento efektyvumą atliekant aplinkoje realizuotą užduotį, keičiant aplinkos bei agento mokymosi kriterijus.
+	\item Pateikti rekomendacijas agento apmokymui parinktoje aplinkoje.
 \end{enumerate}
 
 Darbo metu laukiami \textbf{rezultatai}:
 
 \begin{enumerate}
-	\item Paruošta eksperimentinė aplinka ir paruoštas darbui tinkamas įrašų rinkinys.
-	\item Aptiktos anomalijos, naudojantis „MacroBase“.
-	\item Pakeisti duomenys pagal tam tikrus kriterijus ir gautos tikslesnės anomalijos.
-	\item Pateiktos rekomendacijos IPSS duomenų anomaljų aptikimui naudojantis „MacroBase“.
+	\item Paruošta eksperimentinė aplinka ir agentas.
+	\item Agentas yra apmokytas.
+	\item Pakeisti aplinkos ir agento mokymosi kriterijai, palyginti gaunami rezultatai ir taip pasiektas geriausias užduoties atlikimas.
+	\item Pateiktos rekomendacijos agento apmokymui parinktoje aplinkoje.
 \end{enumerate}
 
 \subsectionnonum{Tyrimo metodas} 
@@ -73,29 +73,27 @@ Darbui atlikti bus naudojami šie tyrimo metodai:
 \begin{enumerate}
 	\item \textbf{Mokslinės lteratūros analizė}.
 	\item \textbf{Eksperimetas}.
-	\subitem \textbf{Kiekybinis metodas} - aptikti pirmines anomalijas, jų priklausomybes nuo kitų atributų. Atliekamas, su visais turimais įrašų rinkiniais, ir ieškoma didžiausio anomalijų kiekio tarp turimų rinkinių.
-	\subitem \textbf{Kokybinis metodas} - su turima atrinkta (arba visa) įrašų rinkinio dalimi, atliekamos įvairios manipuliacijos ir stebimi pakitimai gaunamų anomalijų tikslume priklausomai nuo padarytų pakeitimų. 
+	\subitem \textbf{Kiekybinis metodas} - apmokyti pirminius agentus, stebėti jų elgseną. Atliekamas, su keliais skirtingais kriterijais ir ieškoma tinkamiausio bei daugiausiai žadančio pradinio rezultato eksperimentui.
+	\subitem \textbf{Kokybinis metodas} - su gautais pradiniais agentais bei jų mokymosi kriterijais atliekamos gilesnės kriterijų bei agento mokymosi parametrų manipuliacijos bei stebimi gaunamų rezultatų pakitimai.
 	\item \textbf{Gautų duomenų ir rezultatų analizė}.
 \end{enumerate}
 
 \subsectionnonum{Numatomas darbo atlikimo procesas}
-Kaip jau minėta anksčiau, darbo eksperimentas bus atliekamas per dvi dalis, tačiau visas darbo procesas susidės iš daugiau dalių:
+Darbo procesas susidės iš kelių skirtingų dalių:
 
 \begin{enumerate}
-	\item Visų pirma, eksperimentui atlikti bus paruošta eksperimentinė aplinka (tikėtina Ubuntu operacinė sistema įdiegta virtualioje mašinoje).
-	\item Duomenų paruošimas bus atliekamas, atrenkant svarbius tyrimui atributus ir padarant rinkinį pasiekiamą „MacroBase“ įrankiui.
-	\item Jei visas įrašų rinkinys bus per didelis analizei, bus ieškoma didžiausios anomalijų dalies bandymų keliu.
-	\item Su šiuo punktu, prasidės pagrindinė eksperimento dalis. Bus ieškoma ir eksperimentuojama su metodais, kurie pagerintų anksčiau gautus rezultatus.
-	\item Galutinė analizė visų atliktų tyrimų ir gautų rezultatų.
-	\item Pateikiama rekomendacija, kaip pagerinti anomalijų aptikimą IPSS įrašų rinkiniui naudojantis „MacroBase“ analitinį įrankį.
+	\item Visų pirma, eksperimentui atlikti bus paruošta eksperimentinė aplinka.
+	\item Agento paruošimas bus atliekamas pasirenkant pradinius, neutralius mokymosi kriterijus.
+	\item Atliekamas pirminis agento apmokymas, skirtas eksperimento bazei gauti bei įsitikinto aplinkos ir agento tarpusavio veikla. 
+	\item Pradėjus pagrindinę eksperimento dalį bus ieškoma ir eksperimentuojama su metodais, kuriuos pritaikius būtų gaunami geresni nei aukščiau gaunami rezultatai.
+	\item Galutinė visų atliktų tyrimų ir gautų rezultatų analizė.
+	\item Pateikiamos rekomendacijos, kaip pagerinti agento apmokymą parinktai aplinkai ir jos keliamoms problemoms bei uždaviniams.
 \end{enumerate}
 
 
 \subsectionnonum{Darbui aktualūs literatūros šaltiniai}
 
 \begin{enumerate}
-	\item \textbf{\cite{macrobase_overview}} - Standfordo Universiteto išleistas straipsnis apie jų vystomą „MacroBase“ analitinį įrankį bei jo apžvalga. Šiame leidinyje yra pristatomas pats įrankis, paaiškinamas kiekvienas iš jo naudojamų darbo proceso aspektų bei principų. Tai svarbus šalitinis naudojantis „MacroBase“.
-	\item \textbf{\cite{prioritizing_attention}} - Standfordo Universiteto išleistas straipsnis. Šiame leidinyje yra rašoma daugiau apie pačius principus ir teoriją, o ne apie  „MacroBase“ analitinį įrankį.
 	\item \textbf{\cite{asap}} - Standfordo Universiteto straipsnis apie laiko intervalu fiksuojamus duomenis bei jų išlyginimą, padaryma lengviau skaitomais. Straipsnyje tai vadinama ASAP, analitiniu operatoriumi, kuris automatiškai išlygina įrašų rinkinį, taip padidinant analizuojamų duomenų gautų rezultatų tikslumą, bei sumažinant skaičiavimams reikalingą greitį.
 \end{enumerate}
 
