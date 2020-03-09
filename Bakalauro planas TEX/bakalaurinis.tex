@@ -16,6 +16,7 @@
 \usepackage[table,xcdraw]{xcolor}
 \usepackage[backend=biber]{biblatex}
 \usepackage{enumitem}\setlist{nosep}
+\usepackage{csquotes}
 
 % Titulinio aprašas
 \university{Vilniaus universitetas}
@@ -32,9 +33,10 @@
 
 % Nustatymai
 \setmainfont[ItalicFont 	= Palem3.2-it.ttf,
-			BoldItalicFont	=Palem3.2-bi.ttf,
-			BoldFont		=Palem3.2-bd.ttf]
+			BoldItalicFont	= Palem3.2-bi.ttf,
+			BoldFont		= Palem3.2-bd.ttf]
 			{Palem3.2-nm.ttf}
+\bibliography{bibliografija}
 
 \begin{document}
 \maketitle
@@ -43,11 +45,18 @@
 
 
 \subsectionnonum{Tyrimo objektas ir aktualumas}
+Kompiuterių pajėgumui ir atliekamų operacijų per sekundę skaičiui nuolatos didėjant -- didėja ir lūkesčiai bei sprendžiamų uždavinių sudėtingumas. Dar reletyviai neseniai sudėtingiausios programos ir kompiuterių sprendžiami uždaviniai susidėjo iš skaičiuotuvo operacijų ar žinučių perdavimo. Tačiau technologijoms tobulėjant, kiekvienam žmogui kišenėje besinešiojant pirmųjų kompiuterių kaip \enquote{ENIAC} \cite{computer_history} didį pajuokenčius kompiuterinius įrenginius, naturaliai didėja ir jiems keliami iššūkiai. \par
+
+Šiais laikais kompiuteriai gali simuliuoti atominius sprogimus, nuspėti orus ir atlikti kitas didžiulių skaičiavimo išteklių reikalaujančias užduotis \cite{supercomputers}. Tačiau užduoties sudėtingumą gali lemti ne tik milžiniškų išteklių skaičiaus reikalavimas. 2016 metais matėme, kaip \enquote{Google’s AlphaGo} nugalėjo pasaulio aukščiausio lygio \enquote{Go} žaidėją ir čempioną Ke Jie \cite{go}. Autonomiškai gatvėmis važinėjantys automobiliai neišvengiamai artėja, o \enquote{Boston Dynamics} robotai stebina savo galimybėmis \cite{bostondynamics}. \par
+
+Šie uždaviniai nėra trivialiai aprašomi ar išsprendžiami, jiems gali net neegzistuoti sprendimas. Tokiems uždaviniams spręsti yra naudojami mašininio mokymosi ar neuroninių tinklų metodai. Viena šių metodų atmaina yra \enquote{sustiprintas mokymas} -- agento atliekami veiksmai yra reguliariai vertinami ir atitinkamai agentas yra apdovanojamas arba baudžiamas. \par
+
+Sustiprintas mokymas ir jam kuriamas agentas būs šio bakalauro darbo tiriamasis objektas.
 
 
 
 \subsectionnonum{Darbo tikslas, keliami uždavyniai ir laukiami rezultatai}
-Šio darbo \textbf{tikslas} - išanalizavus populiariausius sustiprinto mokymosi algoritmus, pritaikyti labiausiai tinkamą algoritmą parinktai eksperimentiniai aplinkai bei pagerinti gaunamus rezultatus pritaikius agento mokymosi gerinimo principus.\par
+Šio darbo \textbf{tikslas} -- išanalizavus populiariausius sustiprinto mokymosi algoritmus, pritaikyti labiausiai tinkamą algoritmą parinktai eksperimentiniai aplinkai bei pagerinti gaunamus rezultatus pritaikius agento mokymosi gerinimo principus.\par
 
 Darbui iškelti \textbf{uždaviniai}:\par
 
@@ -73,8 +82,8 @@ Darbui atlikti bus naudojami šie tyrimo metodai:
 \begin{enumerate}
 	\item \textbf{Mokslinės lteratūros analizė}.
 	\item \textbf{Eksperimetas}.
-	\subitem \textbf{Kiekybinis metodas} - apmokyti pirminius agentus, stebėti jų elgseną. Atliekamas, su keliais skirtingais kriterijais ir ieškoma tinkamiausio bei daugiausiai žadančio pradinio rezultato eksperimentui.
-	\subitem \textbf{Kokybinis metodas} - su gautais pradiniais agentais bei jų mokymosi kriterijais atliekamos gilesnės kriterijų bei agento mokymosi parametrų manipuliacijos bei stebimi gaunamų rezultatų pakitimai.
+	\subitem \textbf{Kiekybinis metodas} -- apmokyti pirminius agentus, stebėti jų elgseną. Atliekamas, su keliais skirtingais kriterijais ir ieškoma tinkamiausio bei daugiausiai žadančio pradinio rezultato eksperimentui.
+	\subitem \textbf{Kokybinis metodas} -- su gautais pradiniais agentais bei jų mokymosi kriterijais atliekamos gilesnės kriterijų bei agento mokymosi parametrų manipuliacijos bei stebimi gaunamų rezultatų pakitimai.
 	\item \textbf{Gautų duomenų ir rezultatų analizė}.
 \end{enumerate}
 
@@ -91,10 +100,14 @@ Darbo procesas susidės iš kelių skirtingų dalių:
 \end{enumerate}
 
 
-\subsectionnonum{Darbui aktualūs literatūros šaltiniai}
+\subsectionnonum{Darbui aktualūs šaltiniai}
 
 \begin{enumerate}
-	\item \textbf{\cite{asap}} - Standfordo Universiteto straipsnis apie laiko intervalu fiksuojamus duomenis bei jų išlyginimą, padaryma lengviau skaitomais. Straipsnyje tai vadinama ASAP, analitiniu operatoriumi, kuris automatiškai išlygina įrašų rinkinį, taip padidinant analizuojamų duomenų gautų rezultatų tikslumą, bei sumažinant skaičiavimams reikalingą greitį.
+	\item \textbf{\cite{gym}} -- viešai prieinama \enquote{OpenAI} \cite{openai} aplinka realizuojanti tradicinį Japonišką sandėlių prižiūrėjimo video žaidimą \enquote{Sokoban}. Tai yra parinkta aplinka bakalauro darbo eksperimento daliai.
+	\item \textbf{\cite{handson}} -- knyga -- mašininio ir neuroninio mokymosi algoritmų rinkinys. Rašoma apie daugelį populiariausių ir plačiausia žinomų skirtingų mokymosi algoritmų bei principų. Pateikiami pritaikymo bei panaudojimo pavyzdžiai.
+	\item \textbf{\cite{algorithms}} -- klasikinė knyga apie sustiprintą mokymą. Šiame šaltinyje rašoma apie tai kas yra sustiprintas mokymas, kokie algoritmai egzistavo šaltinio leidimo metu bei kaip ir kada juos naudoti.
+	\item \textbf{\cite{udemy1}} -- \enquote{Udemy} \cite{udemy} kursas apie dirbtinį intelektą bei pasiruošimą darbui su giliuoju sustiprintu mokymu. Kursas apžvelgia sustiprinto mokymosi algoritmų pritaikymo, programavimo ir dizaino principus.
+	\item \textbf{\cite{udemy2}} - \enquote{Udemy} \cite{udemy} kursas apie dirbtinio intelekto pritaikymo naudojantis giliuoju mokymusi ir neuroniniais tinklais įvaldymą.	
 \end{enumerate}
 
 
