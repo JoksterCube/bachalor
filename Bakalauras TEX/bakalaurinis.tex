@@ -18,6 +18,9 @@
 \usepackage[backend=biber]{biblatex}
 \usepackage{enumitem}\setlist{nosep}
 \usepackage{csquotes}
+\usepackage{setspace}
+
+%\onehalfspacing
 
 % Titulinio aprašas
 \university{Vilniaus universitetas}
@@ -25,18 +28,15 @@
 \department{Programų sistemos}
 %\papertype{Bakalauro darbas}
 \papertype{Bakalauro baigiamasis darbas}
-\title{Sustiprinto mokymosi taikymas žaidimo agento valdymo programos kūrimui}
+%sustiprinto mokymosi algoritmu skirtu Sokoban zaidimo agento valdymui palyginimas
+\title{Skatinamojo mokymosi taikymas žaidimo agento valdymo programos kūrimui}
 \titleineng{Application of reinforcement learning to the software development for game agent management}
 \author{Jokūbas Rusakevičius}
 \supervisor{vyresn. m.d. Virginijus Marcinkevičius}
-\reviewer{}
+\reviewer{j. asist. Linas Petkevičius}
 \date{Vilnius – \the\year}
 
-% Nustatymai
-\setmainfont[ItalicFont 	= Palem3.2-it.ttf,
-			BoldItalicFont	= Palem3.2-bi.ttf,
-			BoldFont		= Palem3.2-bd.ttf]
-			{Palem3.2-nm.ttf}
+\setmainfont{Palemonas}
 \bibliography{bibliografija}
 
 \begin{document}
@@ -48,46 +48,98 @@
 TODO: Santrauka
 % Nurodomi iki 5 svarbiausių temos raktinių žodžių (terminų).
 % Vienas terminas gali susidėti iš kelių žodžių.
-\raktiniaizodziai{, , , raktinis žodis 4, raktinis žodis 5}   
+\raktiniaizodziai{Skatinamasis mokymas, Sokoban žaidimas, aktorius-kritikas based metodai, raktinis žodis 4, raktinis žodis 5}   
 
 \sectionnonumnocontent{Summary}
 TODO: summary
-\keywords{, , , keyword 4, keyword 5}
+\keywords{Reinforcement learning, Sokoban game, actor-critic based methods, keyword 4, keyword 5}
 
 \tableofcontents
-z
+
 \sectionnonum{Įvadas}
 
-\section{Eksperimentas...}
-Šiame skyriuje aprašomas bakalauro darbo metu atlikta praktinė dalis bei eksperimentinės aplinkos paruošimas.................
+\section{Teorija}
 
-\subsection{Eksperimentinės aplinkos paruošimas}
-Eksperimentas atliekamas naudojant \enquote{Jupyter Notebook}  ...............
 
-\subsubsection{Eksperimentinė aplinka}
-Eksperimentas atliekamas naudojantis realią \enquote{Windows 10} mašiną.
+\subsection{Skatinamasis mokymasis}
+
+\subsubsection{Markovo procesas}
+\subsubsection{Sustiprinto mokymosi strategijos ieškojimas}
+\subsubsection{Aktoriaus-kritiko principas}
+
+\subsection{Gilusis mokymas}
+
+
+\subsection{Konvoliuciniai neuroniniai tinklai}
+
+\subsection{LSTM}
+
+
+\section{Metodologija}
+\subsection{Sokoban žaidimas}
+\subsubsection{OpenAI Gym}
+
+\subsection{Skatinamojo mokymosi bibliotekos parinkimas}
+\subsubsection{Stable Baselines architektūra}
+\subsubsubsection{A2C aprašymas}
+\subsubsubsection{ACER aprašymas}
+\subsubsubsection{POP2 aprašymas}
+
+\section{Eksperimentai}
+Šiame skyriuje aprašomi bakalauro darbo metu atlikti eksperimentai bei jiems paruošta eksperimentinė aplinka.
+
+\subsection{Sokoban aplinkos paruošimas}
+Šiame poskyryje yra aprašomas metodas eksperimento metu tiriamos Sokoban aplinkos paruošimui.
+\subsubsection{}
+
+
+\subsection{Eksperimentinė aplinka}
+Eksperimentai atlikti naudojantis realia mašina su \enquote{Ubuntu} OS. Minėtoje mašinoje įdiegta \enquote{Anaconda} paketų valdymo ir dislokavimo sistema, naudojama aplinkų atskyrimui. Didžioji programinė dalis eksperimento atliekama \enquote{Jupyter Notebook} programavimo aplinkoje naudojantis \enquote{Python} kalba.
+
+\subsubsection{Eksperimentinės aplinkos specifikacijos}
+Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 
 \begin{enumerate}
-	\item Realios mašinos techninė įranga:
+	\item Kompiuterio techninė specifikacija:
 	\begin{enumerate}
-		\item Procesorius - \enquote{\textbf{Intel Core i5-9600K}}.
+		\item Procesorius - \enquote{\textbf{Intel Core i5-9600K}} (6 branduoliai, bazinis greitis 3.70 GHz).
 		\item Grafinė vaizdo plokštė - \enquote{\textbf{Nvidia GeForce RTX 2070 Super}}.
-		\item Operatyvioji atmintis - \enquote{\textbf{HyperX Predator Black}} (\textbf{16GB}, 3200MHz, DDR4, CL16).
-		\item Pastovioji atmintis - \enquote{\textbf{Samsung SSD 970 EVO Plus}} (\textbf{500GB}, M.2 PCIe x4, 3500/3200 MB/s).
+		\item Operatyvioji atmintis - \enquote{\textbf{HyperX Predator Black}} (\textbf{32GB}, 3200MHz, DDR4, CL16).
+		\item Pastovioji atmintis - \enquote{\textbf{Western Digital}} (\textbf{1TB}).
 	\end{enumerate}
 
-	\item Realios mašinos programinė įranga:
+	\item Kompiuterio programinė įranga:
 	\begin{enumerate}
-		\item Operacinė sistema - \enquote{\textbf{Windows 10 Home N}} (versija: \textbf{1909}).
-		\item \enquote{\textbf{Anaconda}} paketų ir aplinkų valdymo sistema (versija: \textbf{2019.10}).
-		\item \enquote{\textbf{Python}} programavimo kalba (versija: \textbf{3.7.4}).
-		\item \enquote{\textbf{Jupyter Notebook}} atviro kodo programa skirta kintančio kodo, matematinių funkcijų, teksto bei duomenų vizualizavimui (versija: \textbf{6.0.1}).
+		\item Operacinė sistema - \enquote{\textbf{Ubuntu 18.04 LTS}} (versija: \textbf{18.04.4 LTS}).
+		\item Paketų ir aplinkų valdymo sistema - \enquote{\textbf{Anaconda}}  (versija: \textbf{2020.02}).
+		\item Programavimo kalba - \enquote{\textbf{Python}} (versija: \textbf{3.7.6}).
+		\item Atviro kodo programa kintančio kodo, matematinių funkcijų, teksto bei duomenų vizualizavimui - \enquote{\textbf{Jupyter Notebook}}  (versija: \textbf{6.0.3}).
+		\item ... \enquote{\textbf{Tensorflow}} (versija: \textbf{1.14.0}).
+		\item ... \enquote{\textbf{OpenAI Gym}} (versija: \textbf{0.17.1}).
+		\item ... \enquote{\textbf{Stable Baselines}} (versija: \textbf{2.10.1a0}).
+		\item Išskirstyta VSC sistema pakeitimų sekimui kode - \enquote{\textbf{Git}} (versija: \textbf{2.23.0}) 
 	\end{enumerate}
 \end{enumerate}
 
-\subsubsubsection{Ekseperimentinė}
+\subsubsection{Ekseperimentinės aplinkos paruošimas}
 
-\subsubsection{}
+\subsection{Eksperimento planas}
+Darbo metu atliktas eksperimentas susideda iš trijų dalių. Šiame skyriuje yra aprašomi šių trijų eksperimentų planai: kaip bus atliekamas eksperimentas, kokia bus naudojama aplinka, kokių rezultatų yra tikimasi ir pan.
+\subsubsubsection{Pirmo eksperimento planas: Geriausios strategijos ieškojimas}
+
+
+\subsubsection{Eksperimentas}
 
 \printbibliography[heading=bibintoc] 
+
+\sectionnonum{Santrumpos}
+Darbe naudojamų santrumpų paaiškinimai:
+\begin{itemize}[label={}, leftmargin=*] %apgalvoti kaip padaryti šį sąrašą
+	\item \textbf{RL} - (\textit{angl. Reinforcement Learning}) skatinamasis mokymas.
+	\item \textbf{MDP} - (\textit{angl. Markov Decision Processes}) Markovo procesas.
+	\item \textbf{VSC} - (\textit{angl. Version-Control System}) versijų tvarkymo sistema.
+\end{itemize}
+
+\appendix
+
 \end{document}
