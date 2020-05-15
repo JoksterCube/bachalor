@@ -20,12 +20,11 @@
 	howpublished = {\url{https://github.com/openai/baselines}},
 }
 
-@online{openai,
-	author={OpenAI},
-	title={Getting Started with Gym},
-	year={2016},
-	url={http://gym.openai.com/docs/},
-	urldate={2020-03-19},
+@misc{openaiGym,
+	Author = {Greg Brockman and Vicki Cheung and Ludwig Pettersson and Jonas Schneider and John Schulman and Jie Tang and Wojciech Zaremba},
+	Title = {OpenAI Gym},
+	Year = {2016},
+	Eprint = {arXiv:1606.01540},
 }
 
 @book{handson,
@@ -59,17 +58,6 @@
 	urldate={2020-03-19},
 }
 
-@book{algorithms,
-	author = {Szepesvári, Csaba},
-	year = {2010},
-	month = {01},
-	pages = {},
-	title = {Algorithms for Reinforcement Learning},
-	volume = {4},
-	journal = {Synthesis Lectures on Artificial Intelligence and Machine Learning},
-	doi = {10.2200/S00268ED1V01Y201005AIM009},
-}
-
 @online{computer_history,
 	author={History of Computers},
 	title={History of Computers},	
@@ -99,4 +87,61 @@
 	year={2020},
 	url={https://www.bostondynamics.com/about},
 	urldate={2020-03-19},
+}
+
+@misc{stable-baselines,
+	author = {Hill, Ashley and Raffin, Antonin and Ernestus, Maximilian and Gleave, Adam and Kanervisto, Anssi and Traore, Rene and Dhariwal, Prafulla and Hesse, Christopher and Klimov, Oleg and Nichol, Alex and Plappert, Matthias and Radford, Alec and Schulman, John and Sidor, Szymon and Wu, Yuhuai},
+	title = {Stable Baselines},
+	year = {2018},
+	publisher = {GitHub},
+	journal = {GitHub repository},
+	howpublished = {\url{https://github.com/hill-a/stable-baselines}},
+}
+
+@misc{kaelbling_littman_moore, 
+	title={Reinforcement Learning: A Survey}, 
+	url={https://doi.org/10.1613/jair.301}, 
+	journal={Journal of Artificial Intelligence Research}, 
+	author={Kaelbling, L. P. and Littman, M. L. and Moore, A. W.},
+	year = {1996},
+}
+
+@misc{a3c,
+	title={Asynchronous Methods for Deep Reinforcement Learning},
+	author={Volodymyr Mnih and Adrià Puigdomènech Badia and Mehdi Mirza and Alex Graves and Timothy P. Lillicrap and Tim Harley and David Silver and Koray Kavukcuoglu},
+	year={2016},
+	eprint={1602.01783},
+	archivePrefix={arXiv},
+	primaryClass={cs.LG}
+}
+
+@misc{acer,
+	title={Sample Efficient Actor-Critic with Experience Replay},
+	author={Ziyu Wang and Victor Bapst and Nicolas Heess and Volodymyr Mnih and Remi Munos and Koray Kavukcuoglu and Nando de Freitas},
+	year={2016},
+	eprint={1611.01224},
+	archivePrefix={arXiv},
+	primaryClass={cs.LG}
+}
+
+@misc{ppo,
+	title={Proximal Policy Optimization Algorithms},
+	author={John Schulman and Filip Wolski and Prafulla Dhariwal and Alec Radford and Oleg Klimov},
+	year={2017},
+	eprint={1707.06347},
+	archivePrefix={arXiv},
+	primaryClass={cs.LG}
+}
+
+@article{mdp,
+	ISSN = {00959057, 19435274},
+	URL = {http://www.jstor.org/stable/24900506},
+	author = {RICHARD BELLMAN},
+	journal = {Journal of Mathematics and Mechanics},
+	number = {5},
+	pages = {679--684},
+	publisher = {Indiana University Mathematics Department},
+	title = {A Markovian Decision Process},
+	volume = {6},
+	year = {1957}
 }
