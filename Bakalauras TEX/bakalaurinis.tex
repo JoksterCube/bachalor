@@ -11,7 +11,6 @@
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{listings}
-\usepackage{subfig}
 \usepackage{url}
 \usepackage{wrapfig}
 \usepackage[table,xcdraw]{xcolor}
@@ -19,7 +18,11 @@
 \usepackage{enumitem}\setlist{nosep}
 \usepackage{csquotes}
 \usepackage{setspace}
-\usepackage[colorlinks=false]{hyperref} 
+\usepackage[hidelinks]{hyperref} 
+\usepackage{subcaption}
+\usepackage{hyperref}
+
+\gappto{\UrlBreaks}{\UrlOrds}
 
 %\onehalfspacing
 
@@ -29,9 +32,8 @@
 \department{Programų sistemos}
 %\papertype{Bakalauro darbas}
 \papertype{Bakalauro baigiamasis darbas}
-%Skatinamojo mokymosi algoritmu skirtu Sokoban zaidimo agento valdymui palyginimas
-\title{Skatinamojo mokymosi taikymas žaidimo agento valdymo programos kūrimui}
-\titleineng{Application of reinforcement learning to the software development for game agent management}
+\title{Skatinamojo mokymosi algoritmų skirtų Sokoban žaidimo agento valdymui palyginimas}
+\titleineng{Comparison of Reinforcement Learning Algorithms for Sokoban Game Agent Training}
 \author{Jokūbas Rusakevičius}
 \supervisor{vyresn. m.d. Virginijus Marcinkevičius}
 \reviewer{j. asist. Linas Petkevičius}
@@ -65,45 +67,61 @@ TODO: summary
 
 \sectionnonum{Įvadas}\label{sec:ivadas}
 \subsectionnonum{Problematika}\label{subsec:problematika}
-Kompiuterių pajėgumui ir atliekamų operacijų per sekundę skaičiui nuolatos didėjant -- didėja ir lūkesčiai bei sprendžiamų uždavinių sudėtingumas. Dar reliatyviai neseniai sudėtingiausios programos ir kompiuterių sprendžiami uždaviniai susidėjo iš skaičiuotuvo operacijų ar žinučių perdavimo. Tačiau technologijoms tobulėjant, kiekvienam žmogui kišenėje besinešiojant pirmųjų kompiuterių kaip \enquote{ENIAC} \cite{computer_history} dydį pajuokiančius kompiuterinius įrenginius, natūraliai didėja ir jiems keliami iššūkiai.\par
-
-Šiais laikais kompiuteriai gali simuliuoti atominius sprogimus, nuspėti orus ir atlikti kitas didžiulių skaičiavimo išteklių reikalaujančias užduotis \cite{supercomputers}. Tačiau užduoties sudėtingumą gali lemti ne tik milžiniškų išteklių skaičiaus reikalavimas. 2016 metais matėme, kaip \enquote{Google’s AlphaGo} nugalėjo pasaulio aukščiausio lygio \enquote{Go} žaidėją ir čempioną Ke Jie \cite{go}. Autonominiai gatvėmis važinėjantys automobiliai neišvengiamai artėja, o \enquote{Boston Dynamics} robotai stebina savo galimybėmis \cite{bostondynamics}.\par
-
-Šie uždaviniai nėra trivialiai aprašomi ar išsprendžiami, jiems gali net neegzistuoti sprendimas. Tokiems uždaviniams spręsti yra naudojami mašininio mokymosi metodai (pvz. neuroniniai tinklai). Viena šių metodų šaka yra \enquote{skatinamasis mokymas} -- agento atliekami veiksmai yra reguliariai vertinami ir atitinkamai agentas yra apdovanojamas arba baudžiamas.
-
-..Kažką apie sokoban...
-
-
+{
+	Kompiuterių pajėgumui ir atliekamų operacijų per sekundę skaičiui nuolatos didėjant -- didėja ir lūkesčiai bei sprendžiamų uždavinių sudėtingumas. Dar reliatyviai neseniai sudėtingiausios programos ir kompiuterių sprendžiami uždaviniai susidėjo iš skaičiuotuvo operacijų ar žinučių perdavimo. Tačiau technologijoms tobulėjant, kiekvienam žmogui kišenėje besinešiojant pirmųjų kompiuterių kaip \enquote{ENIAC} \cite{computer_history} dydį pajuokiančius kompiuterinius įrenginius, natūraliai didėja ir jiems keliami iššūkiai.\par
+	
+	Šiais laikais kompiuteriai gali simuliuoti atominius sprogimus, nuspėti orus ir atlikti kitas didžiulių skaičiavimo išteklių reikalaujančias užduotis \cite{supercomputers}. Tačiau užduoties sudėtingumą gali lemti ne tik milžiniškų išteklių skaičiaus reikalavimas. 2016 metais matėme, kaip \enquote{Google’s AlphaGo} nugalėjo pasaulio aukščiausio lygio \enquote{Go} žaidėją ir čempioną Ke Jie \cite{go}. Autonominiai gatvėmis važinėjantys automobiliai neišvengiamai artėja, o \enquote{Boston Dynamics} robotai stebina savo galimybėmis \cite{bostondynamics}.\par
+	
+	Šie uždaviniai nėra trivialiai aprašomi ar išsprendžiami, jiems gali net neegzistuoti sprendimas. Tokiems uždaviniams spręsti yra naudojami mašininio mokymosi metodai (pvz. neuroniniai tinklai). Viena šių metodų šaka yra \enquote{skatinamasis mokymas} -- agento atliekami veiksmai yra reguliariai vertinami ir atitinkamai agentas yra apdovanojamas arba baudžiamas.
+	
+	..Kažką apie sokoban...
+}
 \subsectionnonum{Darbo tikslas}\label{subsec:tikslas}
-Šio darbo \textbf{tikslas} -- išanalizavus populiariausius skatinamojo mokymosi algoritmus, pritaikyti kelis labiausiai tinkamus Sokoban žaidimo aplinkai.......
-
+{
+	Šio darbo \textbf{tikslas} -- išanalizavus populiariausius skatinamojo mokymosi algoritmus, pritaikyti kelis labiausiai tinkamus Sokoban žaidimo aplinkai.......
+}
 \subsectionnonum{Darbo uždaviniai}\label{subsec:uzdaviniai}
-Darbui iškelti \textbf{uždainiai}:
-\begin{enumerate}
-	\item Paruošti eksperimentinę aplinką ir agentą.
-	\item
-\end{enumerate}
-
+{
+	Darbui iškelti \textbf{uždainiai}:
+	\begin{enumerate}
+		\item Paruošti eksperimentinę aplinką ir agentą.
+		\item
+	\end{enumerate}
+}
 \section{Teorija}\label{sec:1}
-
+Šiame skyriuje aprašyta teorinė darbo dalis bei susijusios temos.
 
 \subsection{Skatinamasis mokymasis}\label{subsec:RL} 
 {
-	Skatinamasis mokymasis (RL), kartu su prižiūrimuoju ir neprižiūrimuoju mokymu, yra viena iš pagrindinių mašinų mokymosi (ML) paradigmų. Klasikinis RL modelis susideda iš agento (\textit{angl. agent}), kuris priima sprendimus ir atlieka veiksmus (\textit{angl. actions}) pagal strategiją  (\textit{angl. policy}), paremtus aplinkos būsena (\textit{angl. state}), ir siekiantis pasiekti didžiausią įmanomą atlygį (\textit{angl. reward}).\par
+	Skatinamasis mokymasis (RL), kartu su prižiūrimuoju ir neprižiūrimuoju mokymu, yra viena iš pagrindinių mašininio mokymosi (ML) paradigmų. Klasikinis RL modelis susideda iš agento (\textit{angl. agent}), kuris priima sprendimus ir atlieka veiksmus (\textit{angl. actions}) pagal strategiją  (\textit{angl. policy}), paremtus aplinkos būsena (\textit{angl. state}), ir siekiantis pasiekti didžiausią įmanomą atlygį (\textit{angl. reward}) (paveikslėlis~\ref{img:rl}).\par
 	
-	Skirtingai nei kitos ML paradigmos, RL sprendžia ne regresijos, klasifikacijos, ar grupavimo, bet atlygiu paremtas (\textit{angl. reward-based}) problemas, ir tai daro bandymų ir klaidų (\textit{ang. trial and error}) principu. Dėmesys yra nukreiptas ne į sužymėtas (\enquote{angl. labeled}) įvesties ir išvesties duomenų poras, bet į balanso tarp tyrinėjimo (\textit{angl. exploration}) ir išnaudojimo (\textit{angl. exploitation}) ieškojimą \cite{kaelbling_littman_moore}.\par
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/rl}
+		\caption{Skatinamojo mokymosi agento sąveika su aplinka}
+		\label{img:rl}
+	\end{figure} 
 	
-	RL algoritmai yra skirstomi pagal skirtingus rodiklius į kelias skirtingas kategorijas. Prieš aiškinantis kuo skiriasi kiekviena kategorija, svarbu suprasti, kad RL algoritmai susideda iš dviejų fazių:
+	Skirtingai nei kitos ML paradigmos, RL sprendžia ne regresijos, klasifikacijos, ar grupavimo, bet atlygiu paremtas (\textit{angl. reward-based}) problemas, ir tai daro bandymų ir klaidų (\textit{ang. trial and error}) principu. Dėmesys yra nukreiptas ne į sužymėtas (\textit{angl. labeled}) įvesties ir išvesties duomenų poras, bet į balanso tarp tyrinėjimo (\textit{angl. exploration}) ir išnaudojimo (\textit{angl. exploitation}) ieškojimą \cite{kaelbling_littman_moore}.\par
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/rl_overview}
+		\caption{Skatinamojo mokymosi algoritmų kategorijos}
+		\label{img:rl_overview}
+	\end{figure} 
+	
+	RL algoritmai yra skirstomi pagal skirtingus rodiklius į kelias skirtingas kategorijas (paveikslėlis~\ref{img:rl_overview}). Prieš aiškinantis kuo skiriasi kiekviena kategorija, svarbu suprasti, kad RL algoritmai susideda iš dviejų fazių:
 	
 	\begin{enumerate}
 		\item \textbf{Mokymosi fazė} -- (\textit{angl. learning phase}) tai yra algoritmo apmokymo dalis, kai kiekvienas agento priimtas sprendimas ir atliktas veiksmas aplinkoje bei gautas atlygis ir nauja aplinkos būsena yra panaudojama tolimesniam modelio optimizavimui ir gerinimui.
 		\item \textbf{Taikymo fazė} -- (\textit{angl. interface phase}) tai yra algoritmo dalis, kai, nepriklausomai nuo atlikto veiksmo optimalumo, modelis nebėra keičiamas ir yra naudojamos iki šiol išmoktos reikšmės.
 	\end{enumerate}
 
-	 Kaip jau minėta anksčiau, RL algoritmai yra skirstomi į skirtingas kategorijas. Pagal modelio struktūrą:
+	 Kaip jau minėta anksčiau, RL algoritmai yra skirstomi į skirtingas kategorijas (paveikslėlis~\ref{img:rl_overview}). Pagal modelio struktūrą:
 	 
 	\begin{enumerate}
-		\item \textbf{Pagrįsti modeliu} -- (\textit{angl. model-based}) tai yra algoritmai, kurie optimalios strategijos apskaičiavimui naudojasi transakcijų funkcija (ir atlygio funkcija) (daugiau poskyryje~\ref{subsubsec:MDP}). Pagrįsti modeliu algoritmai gali nuspėti galimus aplinkos pakitimus, kadangi naudojasi apskaičiuota transakcijų funkcija. Tačiau, modelio turima funkcija gali būti tik apytikslė \enquote{tikrajai} funkcijai, tad modelis gali niekada nepasiekti optimalaus sprendimo. 
+		\item \textbf{Pagrįsti modeliu} -- (\textit{angl. model-based}) tai yra algoritmai, kurie optimalios strategijos apskaičiavimui naudojasi transakcijų funkcija (ir atlygio funkcija) (daugiau punkte~\ref{subsubsec:MDP}). Pagrįsti modeliu algoritmai gali nuspėti galimus aplinkos pakitimus, kadangi naudojasi apskaičiuota transakcijų funkcija. Tačiau, modelio turima funkcija gali būti tik apytikslė \enquote{tikrajai} funkcijai, tad modelis gali niekada nepasiekti optimalaus sprendimo. 
 		\item \textbf{Nepagrįsti modeliu} -- (\textit{angl. model-free}) tai yra algoritmai, kurie apskaičiuodami optimalią strategija nesinaudoja ir nebando apskaičiuoti aplinkos dinamikų (transakcijų ir perėjimų funkcijos nenaudojamos). Nepagrįsti modeliu algoritmai bando apskaičiuoti vertės arba strategijos funkciją tiesiai iš patirties (interakcijų su aplinka).
 	\end{enumerate}
 
@@ -114,28 +132,37 @@ Darbui iškelti \textbf{uždainiai}:
 		\item \textbf{Nesiremiantys optimalia strategija} -- (\textit{angl. off-policy}) algoritmai, kurie mokymosi metu remiasi skirtinga strategija nei tuo metu apskaičiuota optimaliausia strategija. Atnaujinimai atliekami remiantis geresnį rezultatą gražinančia strategija.
 	\end{enumerate}
 
-	Pagal ... asasdasd~\ref{subsubsec:MDP}:
+	Nepagrįsti modeliu algoritmai yra skirstomi į dar dvi kategorijas, pagal tai, kuo jie yra pagrįsti:
 	
 	\begin{enumerate}
-		\item \textbf{Pagrįsti verte} -- (\textit{angl. value-based}) tai yra algoritmai pagrįsti \textit{laiko skirtumų mokymusi} (\textit{angl. temporal difference learning}), kur yra mokomasi funkcija \(V^{\pi}\)  arba \(V^*\) (daugiau poskyryje~\ref{subsubsec:rlTeorija}).
+		\item \textbf{Pagrįsti verte} -- (\textit{angl. value-based}) tai yra algoritmai pagrįsti \textit{laiko skirtumų mokymusi} (\textit{angl. temporal difference learning}), kur yra mokomasi funkcija \(V^{\pi}\)  arba \(V^*\) (daugiau punkte~\ref{subsubsec:rlTeorija}).
 		\item \textbf{Pagrįsti strategija} -- (\textit{angl. policy-based}) tai algoritmai, kurie tiesiogiai mokosi optimalios strategijos \(\pi^*\) arba bando apytiksliai surasti optimalią strategiją.
 	\end{enumerate}
 
 	Toliau šiame poskyryje bus giliau nagrinėjamas RL ir jį sudarantys elementai.
 }
-
-\subsubsection{Skatinamojo mokymosi teorija} \label{subsubsec:rlTeorija} 
+\subsubsection{Skatinamojo mokymosi bendroji teorija} \label{subsubsec:rlTeorija} 
 {
-	Šiame darbe bus remiamasi standartine RL aplinka, kur agentas yra aplinkoje \(\mathcal{E}\) diskretų kiekį laiko vienetų arba žingsnių (\textit{angl. time steps}). Kiekvieną žingsnį \(t\) agentas gauna informaciją apie aplinkos būseną \(s_t\) ir iš visų įmanomų veiksmų rinkinio \(\mathcal{A}\) pasirenka atitinkamą veiksmą \(a_t\) pagal strategiją \(\pi\), kur \(\pi\) yra sužymėjimas kokį veiksmą \(a_t\) rinktis situacijoje \(s_t\). Aplinka agentui grąžina informaciją apie sekančią aplinkos būseną \(s_{t+1}\) ir skaliarinę atlygio reikšmę \(r_t\). Toks procesas yra tęsiamas, kol aplinka pasiekia galinę būseną (\textit{angl. terminal state}). Kai galinė būsena yra pasiekiama -- procesas yra pradedamas iš naujo. Rezultatas \(R_t = \sum_{k=0}^{\infty} \gamma^k r_{t+k}\) yra bendras žingsnyje \(t\) surinktas atlygis su nuolaidos koeficientu (\textit{angl. discount factor}) \(\gamma \in (0, 1] \). Agento tikslas yra gauti didžiausia įmanoma tikėtina rezultatą iš visų aplinkos būsenų \(s_t\).\par
+	Šiame darbe bus remiamasi standartine RL aplinka, kur agentas yra aplinkoje \(\mathcal{E}\) diskretų kiekį laiko vienetų arba žingsnių (\textit{angl. time steps}). Kiekvieną žingsnį \(t\) agentas gauna informaciją apie aplinkos būseną \(s_t\) ir iš visų įmanomų veiksmų rinkinio \(\mathcal{A}\) pasirenka atitinkamą veiksmą \(a_t\) pagal strategiją \(\pi\), kur \(\pi\) yra sužymėjimas kokį veiksmą \(a_t\) rinktis situacijoje \(s_t\). Aplinka agentui grąžina informaciją apie sekančią aplinkos būseną \(s_{t+1}\) ir skaliarinę atlygio reikšmę \(r_t\). Toks procesas yra tęsiamas, kol aplinka pasiekia galinę būseną (\textit{angl. terminal state}). Kai galinė būsena yra pasiekiama -- procesas yra pradedamas iš naujo. Rezultatas \(R_t = \sum_{k=0}^{\infty} \gamma^k r_{t+k}\) yra bendras žingsnyje \(t\) surinktas atlygis su nuolaidos koeficientu (\textit{angl. discount factor}) \(\gamma \in (0, 1] \). Agento tikslas yra gauti didžiausia įmanoma tikėtina rezultatą su visomis aplinkos būsenomis \(s_t\).\par
 	
-	Veiksmo vertė (\textit{angl. value}) apskaičiuojama: \(Q^{\pi}(s, a) = \mathbb{E}[R_t|s_t = s, a] \), kur tikėtinas rezultatas \(\mathbb{E}\) gaunamas pagal strategiją \(\pi\) pasirinkus veiksmą \(a\), esant situacijoje \(s\). Optimali vertės funkcija \(Q^*(s, a) = \max_{\pi}Q^{\pi}(s, a)\), grąžina didžiausią strategijos \(\pi\) pasiektą veiksmo vertę aplinkos būsenai \(s\) ir veiksmui \(a\). Panašiai, aplinkos būsenos \(s\) vertė remiantis strategija \(\pi\) yra apibrėžiama taip: \(V^{\pi}(s) = \mathbb{E}[R_t|s_t = s] \), ir yra tikėtinas rezultatas būsenai \(s\) pagal strategiją \(\pi \).\par
-
+	Veiksmo vertė (\textit{angl. action value}) apskaičiuojama: \(Q^{\pi}(s, a) = \mathbb{E}[R_t|s_t = s, a] \), kur tikėtinas rezultatas \(\mathbb{E}\) gaunamas pagal strategiją \(\pi\) pasirinkus veiksmą \(a\), esant situacijoje \(s\). Optimali vertės funkcija \(Q^*(s, a) = \max_{\pi}Q^{\pi}(s, a)\), grąžina didžiausią strategijos \(\pi\) pasiektą veiksmo vertę aplinkos būsenai \(s\) ir veiksmui \(a\). Panašiai, aplinkos būsenos \(s\) vertė (\textit{angl. state value}) remiantis strategija \(\pi\) yra apibrėžiama taip: \(V^{\pi}(s) = \mathbb{E}[R_t|s_t = s] \), ir tai yra tikėtinas rezultatas būsenai \(s\) pagal strategiją \(\pi\).\par
+	
+	Verte ir modeliu pagrįstuose (poskyris~\ref{subsec:RL}) RL metoduose, veiksmo vertės funkcija yra reprezentuojama funkcijos apytikslinimu (\textit{angl. approximtator}), pavyzdžiui, neuroniniu tinklu (daugiau poskyryje~\ref{subsec:neuro}). Jei imame \(Q(s, a; \theta)\) kaip apytikslė veiksmo vertės funkciją su parametrais \(\theta\), tada atnaujinimai skirti \(\theta\) gali būti išvesti iš įvairių RL algoritmų. Pavyzdžiui, vienas tokių algoritmų gali būti Q-mokymasis (\textit{angl. Q-learning}), kurio tikslas yra tiesiogiai surasti apytikslę optimalią veiksmo vertės funkciją: \(Q^*(s, a) \approx Q(s, a; \theta)\). Vieno-žingsnio (\textit{angl. one-step}) Q-mokymosi algoritmuose veiksmo vertės funkcijos \(Q(s, a; \theta)\) parametrai \(\theta\) yra išmokstami iteratyviai mažinant nuostolių (\textit{angl. loss}) funkcijos seką, kur kiekviena \(i\)-toji nuostolių funkcija yra funkcija~\ref{eq:loss} ir \(s'\) yra būsena pasiekta po būsenos \(s\).
+	\begin{equation}\label{eq:loss}
+		L_i(\theta_i) = \mathbb{E} \left( r + \gamma \max_{a'} Q(s', a'; \theta_{i-1}) - Q(s, a; \theta_i) \right)^2
+	\end{equation}
+	
+	Vieno-žingsnio Q-mokymosi algoritmas yra taip pavadintas, nes jo veiksmo vertės funkcija \(Q(s, a)\) yra atnaujinama link vieno-žingsnio rezultato \(r + \gamma \max\limits_{a'} Q(s', a'; \theta) \). Vienas vieno-žingsnio metodo naudojimo trūkumas yra, kad gautas atlygis \(r\) paveikia tik tiesiogiai į jį atvedusią būsenos ir veiksmo porą \(s\), \(a\). Kitų būsenų ir veiksmų porų vertės paveikiamos tik netiesiogiai per atnaujintą \(Q(s, a)\) vertę. Tai gali lemti labai lėtą mokymosi procesą, kadangi reikia labai daug atnaujinimų paskleisti (\textit{angl. propagate}) atlygį į aktualias ankstesnes būsenas ir veiksmus.\par
+	
+	Vienas būdas paskleisti atlygį greičiau yra naudoti \(n\)-žingsnių (\textit{angl. \(n\)-step}) rezultatus \cite{watkins, peng_williams_1994}. Naudojant \(n\)-žingsnių Q-mokymosi algoritmą, \(Q(s, a)\) yra atnaujinama link \(n\)-žingsnių rezultato, apibrėžto: \(r_t + \gamma r_{t+1} + \cdots + \gamma^{n-1} r_{t+n-1} + \max\limits_a \gamma^n Q(s_{t+n}, a) \). Taip pasiekiama, kad vienas atlygis \(r\) tiesiogiai paveikia \(n\) ankstesnių būsenų ir veiksmų porų reikšmes ir gaunamas potencialiai daug efektyvesnis aktualioms būsenos-veiksmo poroms atlygio skleidimo procesas.\par
+	
+	Atvirkščiai nei verte pagrįsti metodai, strategija pagrįsti ir modeliu nepagrįsti (poskyris~\ref{subsec:RL}) RL metodai tiesiogiai parametrizuoja strategiją \(\pi(a|s;\theta)\) ir atnaujina parametrus \(\theta\) atlikdami apytikslį gradiento pakėlimą (\textit{angl. gradient ascent}) \(\mathbb{E}[R_t]\). Vienas tokio metodo pavyzdys yra REINFORCE šeimos algoritmai \cite{williams_1992}. Standartinis REINFORCE atnaujina strategijos parametrus \(\theta\) kryptimi \(\nabla_\theta \log \pi(a_t|s_t; \theta)R_t\), kas yra nešališkas (\textit{angl. unbiased}) \(\nabla_\theta \mathbb{E}[R_t] \) apskaičiavimas. Taip pat, yra įmanoma sumažinti šio apskaičiavimo dispersiją (\textit{angl. variance}) išlaikant nešališkumą iš rezultato atimant išmoktą būsenos funkciją \(b_t(s_t)\), žinomą kaip bazė (\textit{angl. baseline}) \cite{williams_1992}. Gautas gradientas yra \(\nabla_\theta \log \pi(a_t|s_t; \theta)(R_t - b_t(s_t))\).\par
+	
+	Vertės funkcijos išmoktas apskaičiavimas yra dažnai naudojamas kaip bazė \(b_t(s_t) \approx V^\pi(s_t) \) vedanti link daug mažesnės strategijos gradiento dispersijos. Kai apytikslė vertės funkcija yra naudojama kaip bazė, skaičius \(R_t - b_t\) gali būti panaudotas \textit{pranašumo} (\textit{angl. advantage}) apskaičiavimui veiksmui \(a_t\) būsenoje \(s_t\) arba \(A(a_t, s_t) = Q(a_t, s_t) - V(s_t)\), nes \(R_t\) yra \(Q^\pi (a_t, s_t)\) apskaičiavimas ir \(b_t\) yra \(V^\pi(s_t)\) apskaičiavimas. Toks principas gali būti vadinamas aktoriaus-kritiko architektūra, kur strategija \(\pi\) yra aktorius ir bazė \(b_t\) yra kritikas \cite{rl_intro_book}.
 }
-
-\subsubsection{Gilusis mokymas}
-\subsubsection{Markovo procesas}\label{subsubsec:MDP}
+\subsubsection{Markovo sprendimo priėmimo procesai}\label{subsubsec:MDP}
 { 
-	Pirmieji aprašyti Markovo procesai (MDP) \cite{mdp} priminė Markovo grandines (\textit{angl. Markov chains}).\par
+	Pirmieji aprašyti Markovo sprendimo priėmimo procesai (MDP) \cite{mdp} priminė Markovo grandines (\textit{angl. Markov chains}).\par
 	
 	\textbf{Markovo grandinė} -- tai kiekviename žingsnyje atsitiktinai judantis iš vienos į kitą būseną (\textit{angl. state}) procesas su fiksuotu skaičiumi būsenų, kur tikimybė pereiti iš būsenos \(s\) į būseną \(s'\) yra taip pat fiksuota ir priklauso tik nuo poros \((s, s')\), ne nuo jau praėjusių būsenų. Markovo grandinės neturi atminties \cite{handson}. 
 	
@@ -171,7 +198,8 @@ Darbui iškelti \textbf{uždainiai}:
 		\item \(\gamma\) yra nuolaidos koeficientas.
 	\end{itemize}
 
-	MDP taip pat gali būti užrašyta taip: \(\mathcal{M} = (\mathcal{S}, \mathcal{A}, P, R, \gamma)\).
+	MDP taip pat gali būti užrašytas taip:
+	\[\mathcal{M} = (\mathcal{S}, \mathcal{A}, P, R, \gamma)\].
 	\begin{itemize}
 		\item \(\mathcal{S}\): visų būsenų rinkinys.
 		\item \(\mathcal{A}\): visų veiksmų rinkinys.
@@ -180,22 +208,263 @@ Darbui iškelti \textbf{uždainiai}:
 		\item \(\gamma\): nuolaidos koeficientas.
 	\end{itemize}
 }
-\subsubsection{Sustiprinto mokymosi strategijos ieškojimas}
-\subsubsubsection{MlpPolicy}
-\subsubsubsection{CnnPolicy}
-\subsubsubsection{LSTM}
+\subsubsection{Sustiprinto mokymosi strategijos paieška}
+{
+	Agento naudojamas algoritmas veiksmo pasirinkimo sprendimui priimti yra vadinamas strategija. Strategija gali būti visiškai bet koks algoritmas, net nesvarbu ar jis yra stochastinis, ar deterministinis. Tačiau strategijos, kurios naudoja atsitiktines reikšmes yra vadinamos stochastinėmis strategijomis (\textit{angl. stochastic policy}). Kintamieji, naudojami strategijos sprendimo priėmimui vadinami strategijos parametrais (\textit{angl. policy parameters}) ir šių kintamųjų optimalių reikšmių ieškojimo procesas vadinamas strategijos paieška (\textit{angl. policy search}). Strategijos parametrų įmanomų reikšmių kombinacijų rinkinys vadinamas strategijos plotu (\textit{angl. policy space}) \cite{handson}.\par
+	
+	Atlikti strategijos paiešką galima įvairiais būdais. Jei strategijos paieškos plotas yra reliatyviai mažas ir ieškoma vieno ar dviejų parametrų reikšmės, galima pasitelkti paprasčiausią brutalią jėgą (\textit{angl. brute force}) ir išbandyti visus ar dauguma įmanomų variantų ir pasirinkti geriausią iš jų. Tačiau, paieškos plotui didėjant, gero strategijos parametrų rinkinio paieška sudėtingėja ir reikalingų resursų skaičius eksponentiškai kylą, todėl šitas sprendimas dažniausiai nėra taikomas.\par
+	
+	Kitas būdas yra pasitelkti genetinius algoritmus \cite{genetic_algorithm_book}. Sukuriant pirmą kartą (\textit{angl. generation}) strategijų su atsitiktinai parinktais strategijos parametrais ir iteratyviai šalinant blogiausius rezultatus rodančias vienetus bei atliekant atsitiktines mutacijas geriausiai pasirodžiusiųjų kopijoms. Taip galima iteruoti \enquote{išgyvenusiųjų} ir jų \enquote{vaikų} kartas, kol pasiekiama tinkama strategija. \par
+	
+	Dar vienas sprendimas būtu naudoti optimizavimo metodikas. Įvertinus atlygio gradientus, atsižvelgti į strategijos parametrus ir nežymiai juos pakeisti sekant gradientus link aukštesnio atlygio (gradiento pakilimas). Tai vadinama strategijos gradientais (\textit{angl. policy gradients}) (PG) \cite{handson}.
+	
+}
 \subsubsection{Aktoriaus-kritiko principas}
 
-\subsection{Neuroniniai tinklai}
-\subsubsubsection{Gilieji neuroniniai tinklai}
-\subsubsubsection{Konvoliuciniai neuroniniai tinklai}
+\subsubsection{Gilusis mokymas}
 
+\subsection{Dirbtiniai neuroniniai tinklai}\label{subsec:neuro}
+{
+	Dirbtiniai neuroniniai tinklai (\textit{angl. artificial neural networks}) (ANN) egzistuoja jau labai ilgą laiką, pirmos jų variacijo pristatytos dar 1943 metais \cite{mcculloch_pitts_1943}. Per tiek metu ANN implementacijos ir galimybės gerokai išaugo ir nors ANN perėjo per kelias populiarumo ir visiškos \enquote{užmiršties} epochas, yra matoma nemažai priežasčių, kodėl ši technologija turės ir turi didelę įtaką mūsų gyvenimams \cite{handson}. Keli pavyzdžiai:
+	\begin{itemize}
+		\item Dėl egzistuojančių didelių kiekių duomenų, kuriuos galima panaudoti ANN apmokymams bei dėl dažno ANN geresnių rezultatų nei kitos ML technikos pasiekimo naudojant sudėtingas ir labai dideles problemas.
+		
+		\item Dėl labai didelio kompiuterijos pasaulio patobulėjimo bei skaičiavimų galios išaugimo. 2000-2001 metais geriausiu laikytas superkompiuteris \enquote{ASCI White}\footnote{\url{https://www.top500.org/resources/top-systems/asci-white-lawrence-livermore-national-laboratory/}} galėjo pasiekti teoretinį 12.3 TFLOPS\footnote{TFLOPS arba teraFLOPS yra \(10^{12}\) FLOPS. FLOPS (\textit{angl. floating point operations per second}) yra operacijų atliekamų per sekundę su slankaus kablelio skaičiais matmuo dažnai naudojamas kompiuterinių įrenginių pajėgumui nustatyti.} pajėgumą, kai šiuolaikinės vartotojams prieinamos GPU yra vertinamos net iki 14\footnote{\url{https://www.microway.com/knowledge-center-articles/comparison-of-nvidia-geforce-gpus-and-nvidia-tesla-gpus/}} TFLOPS (ir nesveria šimtų tonų).
+		
+		\item Dėl dažno ANN pasiekiamų rezultatų atsiradimo žinių akiratyje, kas lemia didėjantį ir taip populiarų ANN technologijų finansavimą, greitėjantį progresą bei šią technologiją naudojančių naujų produktų atsiradimą\cite{handson}.
+	\end{itemize}
+	
+Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias technologijas.
+}
+\subsubsection{Dirbtinių neuroninių tinklų architektūros komponentai}\label{subsubsec:components}
+Šiame punkte aprašomi smulkūs ANN architektūros komponentai.
 
+\subsubsubsection{Dirbtinis neuronas}\label{subsubsubsec:artificial_neurons}
+{
+	\textbf{Dirbtinis neuronas} (\textit{angl. artificial neuron}) -- paprastas biologinio neurono modelis, turintis vieną ar daugiau binarinių (įjungta/išjungta) įvesčių (ryšių) ir vieną binarinę išvestį. Dirbtinis neuronas aktyvuoja išvestį, kai tam tikras skaičius įvesčių yra aktyvus. Paveikslėlyje~\ref{img:artificial_neurons} pavaizduotas paprastas ANN, galintis atlikti įvairius loginius skaičiavimus, su sąlyga, kad neuronas aktyvuojamas, kai bent dvi įvestys yra aktyvios. Dirbtinis neuronas yra labai limituotas savo galimybėmis todėl sudėtingesnis neurono medelis yra reikalingas sudėtingėjant užduotims. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/artificial_neurons}
+		\caption{Dirbtinio neurono atliekančio loginius skaičiavimus pavyzdys}
+		\label{img:artificial_neurons}
+	\end{figure} 
+}
+\subsubsubsection{Linijinis slenksčio vienetas}\label{subsubsubsec:ltu}
+{
+	\textbf{Linijinis slenksčio vienetas} (\textit{angl. linear treshold unit}) (LTU) yra paremtas kiek pakeistu dirbtiniu neuronu (papunktis~\ref{subsubsubsec:artificial_neurons}). LTU įvestys ir išvestys yra skaičiai (ne binarinės reikšmės) ir kiekviena įvestis turi savo svorį. LTU suskaičiuoja sumą su įvesčių svoriais (\(z = w_1 x_1 + w_2 x_2 + \cdots + w_n x_n = \mathbf{w}^T \cdot \mathbf{x} \)), tada suskaičiuotai sumai pritaiko žingsnio funkcija (\textit{angl. step function}) ir išveda rezultatą: \(h_\mathbf{w}(\mathbf{x}) = \textrm{žingsnis}(z) = \textrm{žingsnis}(\mathbf{w}^T \cdot \mathbf{x})\) (paveikslėlis~\ref{img:ltu}).
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/ltu}
+		\caption{Linijinis slenksčio vienetas}
+		\label{img:ltu}
+	\end{figure} 
+}
+\subsubsubsection{Pagalbiniai neuronai}\label{subsubsubsec:additional_neurons}
+{
+	Formuojant ANN neužtenka tik skaičiavimus atliekančių neuronų. Be LTU ir dirbtinio neurono egzistuoja keli paprasti pagalbiniai neuronai:\par
+	
+	\begin{itemize}
+	\item \textbf{Įvesties neuronas} (paveikslėlis~\ref{img:input_neuron}) išveda tuos pačius duomenis, kurie yra jam paduodame per įvestį.
+	
+	\item \textbf{Postūmio neuronas} (paveikslėlis~\ref{img:bias_neuron}) neturi įvesties ir visada išveda tą pačią reikšmę (konstanta).
+	\end{itemize}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{.5\textwidth}
+			\centering
+			\includegraphics[scale=0.5]{img/input_neuron}
+			\caption{Įvesties neuronas}
+			\label{img:input_neuron}
+		\end{subfigure}%
+		\begin{subfigure}[b]{.5\textwidth}
+			\centering
+			\includegraphics[scale=0.5]{img/bias_neuron}
+			\caption{Postūmio neuronas}
+			\label{img:bias_neuron}
+		\end{subfigure}
+		\caption{Pagalbiniai neuronai}
+		\label{img:additional_neurons}
+	\end{figure} 
+}
+\subsubsubsection{Dirbtinių neuroninių tinklų sluoksiniai}\label{subsubsubsec:neural_layers}
+{
+	Kiekvienas ANN yra sudaryti iš sluoksnių. Sluoksnis -- tai tame pačiame ANN gylyje kartu dirbančių neuronų rinkinys. Yra keli pagrindiniai apibrėžimai susiję su ANN sluoksniais: 
+	
+	\begin{itemize}
+		\item \textbf{Įvesties sluoksnis} (\textit{angl. input layer}) -- tai pats pirmas sluoksnis ANN architektūroje. Dar vadinamas pereinamuoju (\textit{angl. passthrough}), nes visi šiam sluoksniui paduoti duomenys yra tiesiogiai perduodami į tolimesnį sluoksnį be jokių pakeitimų.
+		
+		\item \textbf{Išvesties sluoksnis} (\textit{angl. output layer}) -- tai paskutinis sluoksnis ANN architektūroje, atsakingas už bendrą viso tinklo išvestą rezultatą.
+		
+		\item \textbf{Paslėptasis sluoksnis} (\textit{angl. hidden layer}) -- taip ANN architektūroje vadinami visi tarp įvesties ir išvesties sluoksnių esantys sluoksniai.
+	\end{itemize}
+	
+	Pagal paslėptųjų sluoksnių kiekį ANN architektūros yra klasifikuojamos į dvi grupes:
+	
+	\begin{itemize}
+		\item \textbf{Negilusis neuroninis tinklas} (\textit{angl. shallow neural network}) -- tai klasė tinklų, kurių architektūra yra sudaryta tik iš įvesties ir išvesties sluoksnių bei nėra nei vieno paslėpto sluoksnio.
+		
+		\item \textbf{Gilusis neuroninis tinklas} (\textit{angl. deep neural network}) (DNN) -- tai klasė tinklų, kurių architektūroje be įvesties ir išvesties sluoksnių yra bent vienas paslėptas sluoksnis.
+\end{itemize}
+}
+\subsubsection{Parceptronas}
+{
+	\textbf{Perceptronas} yra viena iš paprasčiausių ANN architektūrų ir yra paremta LTU (daugiau papunktis~\ref{subsubsubsec:ltu}) \cite{rosenblatt1957perceptron}. Perceptronuose dažniausiai naudojama sunkiosios pusės (\textit{angl. Heaviside step}) žingsnio funkcija~\ref{eq:heaviside} arba kartai ženklo (\textit{angl. sign}) funkcija~\ref{eq:sign}.
+	
+	\begin{align}
+		\label{eq:heaviside}
+		\textrm{heaviside} (z) = &
+		\begin{cases} 
+			0 & \textrm{jei} z < 0 \\ 
+			+1 & \textrm{jei} z \geq 1 
+		\end{cases} \\
+		\label{eq:sign}
+		\textrm{sign} (z) = &
+		\begin{cases} 
+			-1 & \textrm{jei} z < 0 \\ 
+			0 & \textrm{jei} z = 0 \\ 
+			+1 & \textrm{jei} z > 1 
+		\end{cases}
+	\end{align}
+	
+	Perceptronas sudarytas iš dviejų pilnai sujungtų sluoksnių (papunktis~\ref{subsubsubsec:neural_layers}): sluoksnio sudaryto tik iš LTU ir sluoksnio sudaryto iš įvesties neuronų bei dažnai papildomo postūmio neurono (\(x_0 = 1\)), kuris visada grąžina 1. Paveikslėlyje~\ref{img:perceptron} pavaizduotas perceptronas su dviem įvestimis ir trimis išvestimis (pavyzdžiui, galintis klasifikuoti į tris skirtingas klases).
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/perceptron}
+		\caption{Perceptrono pavyzdys}
+		\label{img:perceptron}
+	\end{figure} 
+	
+	Perceptronai yra apmokomi naudojantis Hebo\footnote{(\textit{angl. Hebb's rule}) \enquote{Cells that fire together, wire together} svoriai tarp neuronų yra didinami, jei jie turi vienodą išvestį.} taisyklės variaciją, kuri atsižvelgia į tinklo padarytas klaidas ir mažina ryšių vedančių į neteisingą išvestį įtaką. Perceptrono mokymosi lygtis \(w_{i, j}^{\textrm{ktias žingsnis}} = w_{i, j} + \eta (\hat{y}_j - y_j)x_i\) susideda iš \(w_{i, j}\) yra ryšio svorio tarp \(i\)-tojo įvesties ir \(j\)-tojo išvesties neuronų, \(x_i\) \(i\)-tosios įvesties, \(\hat{y}_j\) \(j\)-tojo išvesties neurono išvesties, \(y_j\) \(j\)-tajo išvesties neurono išvesties tikslo reikšmės, bei \(\eta\) mokymosi greičio koeficiento.\par
+}
+\subsubsection{Daugiasluoksniai perceptronai}
+{
+	Daugiasluoksniai perceptronai (\textit{angl. Multi-Layer Perceptron}) (MLP) yra pilnai sujungtas DNN sudarytas iš: įvesties sluoksnio, vieno ar daugiau paslėptų sluoksnių sudarytų iš LTU ir išvesties sluoksnio, taip pat sudaryto iš LTU. Visi, išskyrus išvesties, sluoksniai taip pat turi po vieną postūmio neuroną. Paveikslėlyje~\ref{img:mlp} pavaizduotas dviejų įvesčių, trijų išvesčių ir vieno paslėptojo sluoksnio MLP.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/mlp}
+		\caption{Daugiasluoksnio perceptrono pavyzdys}
+		\label{img:mlp}
+	\end{figure} 
+	
+	MLP mokymui yra naudojamas atgalinio sklidimo (\textit{angl. backpropogation}) mokymo algoritmas \cite{rumelhart1985learning}, kai treniravimo metu pirma yra apskaičiuojama prognozė, išmatuojamas klaidingumas ir grįžtama atgal per sluoksnius apskaičiuojant kiekvieno sluoksnio įtaką gautam klaidingumui bei nežymiai keičiant ryšių svorius, ateities skaičiavimų klaidingumui sumažinti. Šiam procesui yra reikalingi gradientai, todėl MLP žingsnio funkcija yra pakeičiama į aktyvavimo funkciją (\textit{angl. activation function}). Populiariausios aktyvavimo funkcijos:
+	
+	\begin{itemize}
+		\item \textbf{Logistinė funkcija} \(\sigma(z) = (1 + \exp(-z))^{-1}\), su visomis reikšmėmis turi stipriai apibrėžtą nenulinę išvestinę, kas leidžia progresuoti kiekviename mokymo žingsnyje (paveikslėlis~\ref{img:log_graph}).
+		
+		\item \textbf{Hiperbolinė tangento funkcija} \(\tanh(z) = 2\sigma(2z) – 1\), panašiai kaip logistinė funkcija yra S-formos, tačiau funkcijos galimos reikšmės yra \((–1, 1)\) ribose, kas padeda normalizuoti sluoksnių išvestis ir pagreitina konvergencija (paveikslėlis~\ref{img:tanh_graph}).
+		
+		\item \textbf{ReLU funkcija} \(\textrm{ReLU}(z) = \max(0, z)\), nors nėra diferencijuojama kai \(z=0\), praktiko pritaikyta veikia labai gerai. Didžiausias šios funkcijos privalumas -- labai greitas apskaičiavimas (paveikslėlis~\ref{img:relu_graph}).
+	\end{itemize}
+	
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{.333\textwidth}
+			\centering
+			\includegraphics[width=.75\textwidth]{img/log_graph}
+			\caption{Logistinė funkcija}
+			\label{img:log_graph}
+		\end{subfigure}%
+		\begin{subfigure}[b]{.333\textwidth}
+			\centering
+			\includegraphics[width=.75\textwidth]{img/tanh_graph}
+			\caption{Hiperbolinė tangento funkcija }
+			\label{img:tanh_graph}
+		\end{subfigure}%
+		\begin{subfigure}[b]{.333\textwidth}
+			\centering
+			\includegraphics[width=.75\textwidth]{img/relu_graph}
+			\caption{ReLU funkcija }
+			\label{img:relu_graph}
+		\end{subfigure}%
+		\caption{Aktyvavimo funkcijų grafikai}
+		\label{img:activation_graphs}
+	\end{figure} 
+	MLP yra dažnai naudojamas klasifikavimo uždaviniuose. Kai klasės yra diskrečios (pavyzdžiui, 6 skirtingos klasės su indeksais nuo 0 iki 5), išvesties sluoksnio individualios aktyvavimo funkcijos yra dažnai pakeičiamos viena bendra minkštojo maksimumo
+	\footnote{Minkštojo maksimumo funkcija, dar žinoma kaip normalizuota eksponentės funkicija, yra funkcija, kuri realių skaičių vektoriu normalizuoja į tokio pat dydžio proporcingų tikimybių vektorių, kurio visų narių suma yra lygi 1. Matematinė išraiška: \(\sigma(\mathbf{z})_i = \frac{e^{z_i}}{\sum_{j=1}^K e^{z_i}} \textrm{ su visais } i = 1, \cdots, K \textrm{ ir } \mathbf{z} = (z_1, \cdots, z_K) \in \mathbb{R}^K \).}
+	(\textit{angl. softmax}) funkcija, kuri padeda normalizuoti išvestis \cite{handson}.
+}
+\subsubsection{Konvoliuciniai neuroniniai tinklai}
+{
+	Konvoluciniai neuroniniai tinklai (\textit{angl. Convolutional Neural Networks}) (CNN) yra viena iš pagrindinių ML kategorijų atliekant: vaizdų atpažinimą, vaizdų klasifikavimą, objektų aptikimą, veidų atpažinimą ir pan. Tačiau CNN nėra limituoti tik vizualine įvestimi, juos taip pat galima pritaikyti dirbant su garsu ar natūraliam kalbos mokymui (\textit{angl. natural language processing}) \cite{cnn_online, handson}. Šiuolaikiniams CNN labai didelę įtaką turėjo regos smegenų žievės studijų įkvėptas neokognitronas\footnote{Neokognitronas -- Kunihiko Fukushima 1979 metais pristatytas hierarchinis daugiasluoksnis ANN. Buvo naudojamas ranka parašytų simbolių bei pasikartojančių ypatybių (\textit{angl. pattern}) atpažinimui.} \cite{fukushima1980neocognitron} bei 1998 metais pristatyta garsi \enquote{LeNet-5}\footnote{\enquote{LeNet-5} -- vienas pirmųjų CNN išplatinęs gilujį mokymasį, plačiai naudojamas ant čekių ranka urašytų skaičių atpažinimui.} architektūra \cite{lecun1998gradient}. \par
+	
+	Be pilnai sujungtų sluoksnių, CNN turi du papildomus architektūrinius komponentus:
+	\begin{itemize}
+		\item \textbf{Konvoliucinis sluoksnis} (\textit{angl. convolutional layers}).
+		\item \textbf{Sutelkimo sluoksins} (\textit{angl. Pooling layer}).
+	\end{itemize}
+	Toliau šiame punkte bus aprašomi minėtieji CNN architektūriniai komponentai.
+}	
+\subsubsubsection{Konvoliuciniai sluoksniai}\label{subsubsubsec:convolution_layer}
+{
+	Konvoliuciniai\footnote{Konvoliucija yra matematinė operacija, kuri per vieną funkciją pereina su kita ir išmatuoja taškinės daugybos integralą.} sluoksniai yra pats svarbiausias CNN architektūrinis komponentas. Pirmojo konvoliucinio sluoksnio neuronai nėra jungiami su kiekviena tiriamojo objekto įvestimi (pavyzdžiui, paveikslėlio pikseliu), bet tik su įvestimis kurios priklauso jų matymo laukui (\textit{angl. receptive field}). Tokiu pačiu principu, tolimesni konvoliuciniai sluoksniai yra jungiami su prieš tai buvusiais, kur gilesniame konvoliuciniame sluoksnyje esantis neuronas yra jungiamas tik su jo matymo laukui priklausančiais praeito sluoksnio neuronais. Pritaikius šią metodiką, žemesnio lygio sluoksniai yra atsakingi už paprastesnių požymių išskyrimą, o aukštesni už šių požymių apjungimą į sudėtingesnius.\par
+	
+	Sluoksnių ir matymo laukų dydžiai ne visada persidengia lygiai. Tokiais atvejais yra laikoma, kad visos matymo lauko reikšmės išeinančios iš tiriamojo sluoksnio ribų yra nuliai. Tai vadinama papildymu nuliais (\textit{angl. zero padding}).\par
+	
+	Jeigu prie didesnio sluoksnio yra jungiamas mažesnis, vienas iš būdų tą pasiekti yra darant didesnius tarpus tarp matymo laukų. Atstumas tarp dviejų matymo laukų yra vadinamas žingsniu (\textit{angl. stride}). Taip pat, verta paminėti, kad vertikalus ir horizontalus žingsniai neprivalo būti vienodo dydžio. \par
+	
+	Neuronų svoriai gali būti atvaizduojami mažais paveikslėliais, vadinamais filtrais arba konvoliucijų branduoliais (\textit{angl. convolution kernels}). Paveikslėlyje~\ref{img:cnn_filters} pavaizduoti du galimi filtrų pavyzdžiai, kairėje atvaizduotas filtras išryškina vertikalias linijas duotame paveikslėlyje, dešinėje -- horizontalias linijas išryškinantis filtras \cite{cnn_filters, handson}.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/cnn_filters}
+		\caption{Konvoliucinių filtrų pavyzdžiai}
+		\label{img:cnn_filters}
+	\end{figure} 
+	
+	Konvoliucinio sluoksnio, kurio visi neuronai naudoja tą patį filtrą rezultatas yra vadinamas požymių žemėlapiu (\textit{angl. feature map}). Požymių žemėlapis išryškina paveikslėlio dalis, kurios yra labiausiai panašios į filtrą. Mokymosi metu CNN ieško naudingiausių filtrų bei jų kombinacijų duotai užduočiai atlikti. Viename konvoliuciniame sluoksnyje įvesčiai yra pritaikomi iškarto keli skirtingi filtrai, taip vienu metu aptinkami keli skirtingi požymiai. Kai yra naudojamas vienas požymių žemėlapis, visi neuronai naudoja vienodus parametrus, tačiau skirtingi žemėlapiai gali naudoti skirtingus svorius ir poslinkius. Viena iš šio principo naudų yra: visi neuronai naudoja tuos pačius filtrus, kai CNN išmoksta naują taisyklę vienoje įvesties dalyje, vėliau ją gali atpažinti bet kur įvestyje. \par
+	
+	Konvoliucinio sluoksnio neurono išvestį galima apskaičiuoti naudojantis formule~\ref{eq:cnn}, kuri apskaičiuoja visų įvesčių svorių ir postūmių sumą.
+	
+	\begin{equation}\label{eq:cnn}
+		z_{i, j, k} = b_k + \sum_{u=1}^{f_h} \sum_{v=1}^{f_w} \sum_{k'=1}^{f_n'} x_{i', j', k'} \cdot w_{u,v,k',k} 
+		\quad \textrm{su} \
+		\begin{cases}
+			\begin{aligned}
+				i' &= u \cdot s_h + f_h - 1 \\
+				j' &= v \cdot s_w + f_w - 1 
+			\end{aligned}
+		\end{cases} 
+	\end{equation}
+	
+	\begin{itemize}
+		\item \(z_{i, j, k}\) konvoliucinio sluoksnio \(l\) eilutėje \(i\), stulpelyje \(j\), požymių žemėlapyje \(k\) esančio neurono išvestis.
+		\item \(s_h\) ir \(s_w\) vertikalus ir horizontalus žingsniai.
+		\item \(f_h\) ir \(f_w\) matymo lauko aukštis ir plotis.
+		\item \(f_n'\) praeito sluoksnio \(l-1\) požymių žemėlapių skaičius.
+		\item \(x_{i', j', k'}\) sluoksnyje \(l-1\), eilutėje \(i'\), stulpelyje \(j'\), požymių žemėlapyje \(k'\) esančio neurono išvestis.
+		\item \(b_k\) sluoksnyje \(l\) esančiam požymių žemėlapiui \(k\) priskirtas postūmis.
+		\item \(w_{u,v,k',k}\) ryšio svoris tarp neurono esančio požymių žemėlapyje \(k\) sluoksnyje \(l\) ir jo reliatyvios matymo laukui įvesties eilutėje \(u\), stulpelyje \(v\), požymių žemėlapyje \(k'\).
+	\end{itemize}
+}	
+\subsubsubsection{Sutelkimo sluoksniai}
+{
+	Sutelkimo sluoksniai veikia labai panašiai kaip konvoliuciniai sluoksniai (žiūrėti papunktyje~\ref{subsubsubsec:convolution_layer}). Šio sluoksnio tikslas yra sumažinti (\textit{angl. subsample}) įvesties objektą, taip padidinant skaičiavimų greitį bei sumažinant reikalingos atminties kiekį ir parametrų skaičių. Paveikslėlio dydžio sumažinimas padeda ANN toleruoti mažus pakitimus (pavyzdžiui, pasukimus).\par
+	
+	Sluoksnyje esančių neuronų įvestys  yra sujungtos tik su matymo laukui priklausančia dalimi praeito sluoksnio išvesčių. Matymo laukas yra apibrėžiamas tais pačiais parametrais: dydžiu, žingsniu, užpildymo būdu. Sutelkimo, skirtingai nei konvoliucinio, sluoksnio neuronai neturi svorių. Vienintelė jų paskirtis yra surinkti ir sujungti įvestis pagal duotą funkciją (\textit{angl. aggregation function}) (pavyzdžiui, didžiausios (\textit{angl. max}) arba vidutinės (\textit{angl. mean}) reikšmės). Dažniausiai naudojamas sutelkimo sluoksnis yra sutelkimo imant maksimalią reikšmę sluoksnis (\textit{angl. max pooling layer}), kuris į tolimesnį sluoksnį perduoda tik kiekvieno matymo lauko didžiausias reikšmes \cite{handson}.\par
+}
 
+\subsubsection{Pasikartojantys neuroniniai tinklai}
+{
+	
+}
 \section{Metodologija}
-\subsection{Sokoban žaidimas}
-\subsubsection{OpenAI Gym}
+{
 
+}
+\subsection{Sokoban žaidimas}
+{
+
+}
+\subsubsection{OpenAI Gym}
+{
+
+}
 \subsection{Skatinamojo mokymosi bibliotekos parinkimas}
 \subsubsection{Stable Baselines architektūra}
 \subsubsubsection{A2C aprašymas}
@@ -203,25 +472,33 @@ Darbui iškelti \textbf{uždainiai}:
 \subsubsubsection{POP2 aprašymas}
 
 \section{Eksperimentai}
-Šiame skyriuje aprašomi bakalauro darbo metu atlikti eksperimentai bei jiems paruošta eksperimentinė aplinka.
-
+{
+	Šiame skyriuje aprašomi bakalauro darbo metu atlikti eksperimentai bei jiems paruošta eksperimentinė aplinka.
+}
 \subsection{Sokoban aplinkos paruošimas}
-Šiame poskyryje yra aprašomas metodas eksperimento metu tiriamos Sokoban aplinkos paruošimui.
+{
+	Šiame poskyryje yra aprašomas metodas eksperimento metu tiriamos Sokoban aplinkos paruošimui.
+}
 \subsubsection{}
 
 
 \subsection{Eksperimentinė aplinka}
-Eksperimentai atlikti naudojantis realia mašina su \enquote{Ubuntu} OS. Minėtoje mašinoje įdiegta \enquote{Anaconda} paketų valdymo ir dislokavimo sistema, naudojama aplinkų atskyrimui. Didžioji programinė dalis eksperimento atliekama \enquote{Jupyter Notebook} programavimo aplinkoje naudojantis \enquote{Python} kalba.
-
+{
+	Eksperimentai atlikti naudojantis realia mašina su \enquote{Ubuntu} OS. Minėtoje mašinoje įdiegta \enquote{Anaconda} paketų valdymo ir dislokavimo sistema, naudojama aplinkų atskyrimui. Didžioji programinė dalis eksperimento atliekama \enquote{Jupyter Notebook} programavimo aplinkoje naudojantis \enquote{Python} kalba.
+}
 \subsubsection{Eksperimentinės aplinkos specifikacijos}
+{
 Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 
 \begin{enumerate}
 	\item Kompiuterio techninė specifikacija:
 	\begin{enumerate}
-		\item Procesorius -- \enquote{\textbf{Intel Core i5-9600K}} (6 branduoliai, bazinis greitis 3.70 GHz).
-		\item Grafinė vaizdo plokštė -- \enquote{\textbf{Nvidia GeForce RTX 2070 Super}}.
+		\item Procesorius (CPU) -- \enquote{\textbf{Intel Core i5-9600K}} (6 branduoliai, bazinis greitis 3.70 GHz).
+		\item Grafinė vaizdo plokštė (GPU) -- \enquote{\textbf{Nvidia GeForce RTX 2070 Super}} (\textbf{8GB} GDDR6, 1770 MHz).
 		\item Operatyvioji atmintis -- \enquote{\textbf{HyperX Predator Black}} (\textbf{32GB}, 3200MHz, DDR4, CL16).
+		\begin{enumerate}
+			\item Papildomai paskirta: \textbf{16GB} \enquote{Swap} atminties\footnote{\enquote{Swap} atmintis -- tai pastoviojoje atmintyje paskirta atminties dalis virtualiai operatyviajai atminčiai, kuri yra naudojama kai fizinės operatyviosio atminties neužtenka vykdomoms operacijoms.}.
+		\end{enumerate}
 		\item Pastovioji atmintis -- \enquote{\textbf{Western Digital}} (\textbf{1TB}).
 	\end{enumerate}
 
@@ -231,38 +508,51 @@ Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 		\item Paketų ir aplinkų valdymo sistema - \enquote{\textbf{Anaconda}}  (versija: \textbf{2020.02}).
 		\item Programavimo kalba -- \enquote{\textbf{Python}} (versija: \textbf{3.7.6}).
 		\item Atviro kodo programa kintančio kodo, matematinių funkcijų, teksto bei duomenų vizualizavimui -- \enquote{\textbf{Jupyter Notebook}}  (versija: \textbf{6.0.3}).
-		\item ... -- \enquote{\textbf{Tensorflow}} (versija: \textbf{1.14.0}).
-		\item ... -- \enquote{\textbf{OpenAI Gym}} (versija: \textbf{0.17.1}).
-		\item ... -- \enquote{\textbf{Stable Baselines}} (versija: \textbf{2.10.1a0}).
+		\item ML atviro kodo platforma su lanksčia įrankių ir bibliotekų ekosistema skirta kurti ir gerinti šiuolaikinius ML sprendimus -- \enquote{\textbf{TensorFlow}} (versija: \textbf{1.14.0}).
+		\item \enquote{TensorFlow} vizualizavimo įrankis -- \enquote{\textbf{TensorBoard}} (versija: \textbf{1.14.0}).
+		\item RL algoritmų kūrimo ir vertinimo įrankių rinkinys -- \enquote{\textbf{OpenAI Gym}} (versija: \textbf{0.17.1}).
+		\item Modernių RL algoritmų implementacijų rinkinys (\textit{angl. state-of-art}) -- \enquote{\textbf{Stable Baselines}} (versija: \textbf{2.10.1a0}).
 		\item Išskirstyta VSC sistema pakeitimų sekimui kode -- \enquote{\textbf{Git}} (versija: \textbf{2.23.0}) 
 	\end{enumerate}
 \end{enumerate}
-
+}
 \subsubsection{Ekseperimentinės aplinkos paruošimas}
 
 \subsection{Eksperimento planas}
-Darbo metu atliktas eksperimentas susideda iš trijų dalių. Šiame skyriuje yra aprašomi šių trijų eksperimentų planai: kaip bus atliekamas eksperimentas, kokia bus naudojama aplinka, kokių rezultatų yra tikimasi ir pan.
-\subsubsubsection{Pirmo eksperimento planas: Geriausios strategijos ieškojimas}
+{
+	Darbo metu atliktas eksperimentas susideda iš trijų dalių. Šiame skyriuje yra aprašomi šių trijų eksperimentų planai: kaip bus atliekamas eksperimentas, kokia bus naudojama aplinka, kokių rezultatų yra tikimasi ir pan.
+}
+\subsubsection{Pirmo eksperimento planas: Geriausios strategijos ieškojimas}
 
 
-\subsubsection{Eksperimentas}
+\subsection{Eksperimentas}
 
 \printbibliography[heading=bibintoc] 
 
 \sectionnonum{Santrumpos}
-Darbe naudojamų santrumpų paaiškinimai:
-\begin{itemize}[label={}] %, leftmargin=*] %apgalvoti kaip padaryti šį sąrašą
-	\item \textbf{A2C} -- (\textit{angl. Advantage Actor-Critic}) ...
-	\item \textbf{ACER} -- (\textit{angl. Actor-Critic with Experience Replay}) ...
-	\item \textbf{MDP} -- (\textit{angl. Markov Decision Processes}) Markovo procesas.
-	\item \textbf{ML} -- (\textit{angl. Machine Learning}) mašinų (arba kompiuterių) mokymasis.
-	\item \textbf{PPO2} -- (\textit{angl. Proximal Policy Optimization}) ...
-	\item \textbf{RL} -- (\textit{angl. Reinforcement Learning}) skatinamasis mokymas.
-	\item \textbf{VSC} -- (\textit{angl. Version-Control System}) versijų tvarkymo sistema.
-\end{itemize}
+{
+	Darbe naudojamų \textbf{santrumpų paaiškinimai}:
+	\begin{itemize}
+		\item \textbf{A2C} -- (\textit{angl. Advantage Actor-Critic}) Pranašumo Aktoriaus-Kritiko algoritmas.
+		\item \textbf{A3C} -- (\textit{angl. Asynchronous Advantage Actor-Critic}) Asinchroninis Pranašumo Aktoriaus-Kritiko algoritmas.
+		\item \textbf{ACER} -- (\textit{angl. Actor-Critic with Experience Replay}) Aktorius-Kritiko su patirties pakartojimu algoritmas.
+		\item \textbf{ANN} -- (\textit{angl. Artificial Neural Network}) dirbtinis neuroninis tinklas.
+		\item \textbf{CNN} -- (\textit{angl. Convolutional Neural Network}) konvoliucinis neuroninis tinklas.
+		\item \textbf{CPU} -- (\textit{angl. Central Processing Unit}) centrinis procesorius.
+		\item \textbf{DNN} -- (\textit{angl. Deep Neural Network}) gilusis neuroninis tinklas.
+		\item \textbf{GPU} -- (\textit{angl. Graphics Processing Unit}) grafinis procesorius.
+		\item \textbf{LSTM} -- (\textit{angl. Long Short-Term Memory}) ilga trumpalaikė atmintis.
+		\item \textbf{LTU} -- (\textit{angl. Linear Treshold Unit}) linijinis slenksčio vienetas.
+		\item \textbf{MDP} -- (\textit{angl. Markov Decision Processes}) Markovo sprendimo priėmimo procesai.
+		\item \textbf{ML} -- (\textit{angl. Machine Learning}) mašininis mokymasis.
+		\item \textbf{MLP} -- (\textit{angl. Multi-Layer Perceptrons}) daugiasluoksnis perceptronas.
+		\item \textbf{PG} -- (\textit{angl. Policy Gradient}) strategijos gradientas.
+		\item \textbf{PPO2} -- (\textit{angl. Proximal Policy Optimization}) Proksimalinis Strategijos Optimizavimo algoritmas.
+		\item \textbf{RL} -- (\textit{angl. Reinforcement Learning}) skatinamasis mokymas.
+		\item \textbf{RNN} -- (\textit{angl. Recurrent Neural Network}) pasikartojantis neuroninis tinklas.
+		\item \textbf{VSC} -- (\textit{angl. Version-Control System}) versijų tvarkymo sistema.
+	\end{itemize}
+}
 
 %\appendix
-
-\section{a}
-
 \end{document}
