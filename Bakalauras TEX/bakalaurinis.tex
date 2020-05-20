@@ -24,6 +24,13 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage[utf8]{inputenc}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{pifont}
+\usepackage{amssymb}
+\usepackage{array}
 
 \gappto{\UrlBreaks}{\UrlOrds}
 
@@ -54,6 +61,10 @@
 
 \lstset{style=mystyle}
 
+\newcommand{\cmark}{\textcolor[HTML]{008000}{\ding{51}}}%
+\newcommand{\xmark}{\textcolor[HTML]{800000}{\ding{55}}}%
+
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 
 %\onehalfspacing
 
@@ -97,6 +108,9 @@ TODO: summary
 \tableofcontents
 
 \sectionnonum{Įvadas}\label{sec:ivadas}
+{
+	Šiame skyriuje aprašomi bakalauro darbo problematika, tikslas ir uždaviniai.
+}
 \subsectionnonum{Problematika}\label{subsec:problematika}
 {
 	Kompiuterių pajėgumui ir atliekamų operacijų per sekundę skaičiui nuolatos didėjant -- didėja ir lūkesčiai bei sprendžiamų uždavinių sudėtingumas. Dar reliatyviai neseniai sudėtingiausios programos ir kompiuterių sprendžiami uždaviniai susidėjo iš skaičiuotuvo operacijų ar žinučių perdavimo. Tačiau technologijoms tobulėjant, kiekvienam žmogui kišenėje besinešiojant pirmųjų kompiuterių kaip \enquote{ENIAC} \cite{computer_history} dydį pajuokiančius kompiuterinius įrenginius, natūraliai didėja ir jiems keliami iššūkiai.\par
@@ -109,14 +123,17 @@ TODO: summary
 }
 \subsectionnonum{Darbo tikslas}\label{subsec:tikslas}
 {
-	Šio darbo \textbf{tikslas} -- išanalizavus populiariausius skatinamojo mokymosi algoritmus, pritaikyti kelis labiausiai tinkamus Sokoban žaidimo aplinkai.......
+	Šio darbo \textbf{tikslas} -- palyginti skatinamojo mokymosi algoritmus, siekiant nustatyti efektyviausią algoritmą ir jo strategiją Sokoban žaidimui.
 }
 \subsectionnonum{Darbo uždaviniai}\label{subsec:uzdaviniai}
 {
 	Darbui iškelti \textbf{uždainiai}:
 	\begin{enumerate}
-		\item Paruošti eksperimentinę aplinką ir agentą.
-		\item
+		\item Atlikti skatinamojo mokymosi algoritmų analizę ir atrinkti keletą potencialiausių algoritmų Sokoban žaidimo agento mokymui.
+		\item Paruošti eksperimentinę aplinką Sokoban žaidimui.
+		\item Atlikti eksperimentą, siekiant nustatyti, kuri Sokoban žaidimo agento valdymo strategija yra geriausia.
+		\item Eksperimentiškai palyginti sustiprinto mokymosi algoritmus: A2C, ACER, POP naudojant mažiausią įmanomą Sokoban žaidimo aplinką.
+		\item Panaudoti žinių perdavimą, siekiant Sokoban žaidimo agentą apmokyti veikti sudėtingesnėse aplinkose.
 	\end{enumerate}
 }
 \section{Teorija}\label{sec:1}
@@ -128,7 +145,7 @@ TODO: summary
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{img/rl}
+		\includegraphics[scale=0.33]{img/rl}
 		\caption{Skatinamojo mokymosi agento sąveika su aplinka}
 		\label{img:rl}
 	\end{figure} 
@@ -137,7 +154,7 @@ TODO: summary
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{img/rl_overview}
+		\includegraphics[scale=0.33]{img/rl_overview}
 		\caption{Skatinamojo mokymosi algoritmų kategorijos}
 		\label{img:rl_overview}
 	\end{figure} 
@@ -199,7 +216,7 @@ TODO: summary
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{img/markov_chain}
+		\includegraphics[scale=0.33]{img/markov_chain}
 		\caption{Markovo grandinės pavyzdys}
 		\label{img:markovChain}
 	\end{figure} 
@@ -210,7 +227,7 @@ TODO: summary
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{img/mdp}
+		\includegraphics[scale=0.33]{img/mdp}
 		\caption{Markovo proceso pavyzdys}
 		\label{img:mdp}
 	\end{figure} 
@@ -220,7 +237,7 @@ TODO: summary
 	Optimaliai būsenos vertei bet kuriai būsenai \(s\), žymimai \(V^*(s)\), nustatyti, galima naudoti \textit{Belmano Optimalumo Lygtį}. Ši rekursyvi lygtis~\ref{eq:bellmanOptimal} parodo, kad jei agentas atlieka veiksmus optimaliai, tada optimali dabartinės būsenos reikšmė yra lygi vidutiniškai agento gaunamam atlygiui atlikus vieną optimalų veiksmą, plius visų įmanomų toliau einančių būsenų tikėtina optimali vertė.
 	
 	\begin{equation}\label{eq:bellmanOptimal}
-		V^* = \max_a \Sigma_{s'}T(s, a, s')[R(s, a, s') + \gamma V^*(s')] \textrm{ su visais } s
+		V^* = \max_a \sum_{s'}T(s, a, s')[R(s, a, s') + \gamma V^*(s')] \textrm{ su visais } s
 	\end{equation} 
 	
 	\begin{itemize}
@@ -267,7 +284,7 @@ TODO: summary
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{img/actor-critic}
+		\includegraphics[scale=0.33]{img/actor-critic}
 		\caption{Aktoriaus-kritiko schema}
 		\label{img:actor-critic}
 	\end{figure} 
@@ -294,7 +311,7 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{img/artificial_neurons}
+		\includegraphics[scale=0.33]{img/artificial_neurons}
 		\caption{Dirbtinio neurono atliekančio loginius skaičiavimus pavyzdys}
 		\label{img:artificial_neurons}
 	\end{figure} 
@@ -305,7 +322,7 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{img/ltu}
+		\includegraphics[scale=0.33]{img/ltu}
 		\caption{Linijinis slenksčio vienetas}
 		\label{img:ltu}
 	\end{figure} 
@@ -324,13 +341,13 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 		\centering
 		\begin{subfigure}[b]{.5\textwidth}
 			\centering
-			\includegraphics[scale=0.5]{img/input_neuron}
+			\includegraphics[scale=0.33]{img/input_neuron}
 			\caption{Įvesties neuronas}
 			\label{img:input_neuron}
 		\end{subfigure}%
 		\begin{subfigure}[b]{.5\textwidth}
 			\centering
-			\includegraphics[scale=0.5]{img/bias_neuron}
+			\includegraphics[scale=0.33]{img/bias_neuron}
 			\caption{Postūmio neuronas}
 			\label{img:bias_neuron}
 		\end{subfigure}
@@ -383,7 +400,7 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{img/perceptron}
+		\includegraphics[scale=0.33]{img/perceptron}
 		\caption{Perceptrono pavyzdys}
 		\label{img:perceptron}
 	\end{figure} 
@@ -396,7 +413,7 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{img/mlp}
+		\includegraphics[scale=0.33]{img/mlp}
 		\caption{Daugiasluoksnio perceptrono pavyzdys}
 		\label{img:mlp}
 	\end{figure} 
@@ -510,13 +527,13 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 		\centering
 		\begin{subfigure}[b]{.33\textwidth}
 			\centering
-			\includegraphics[scale=0.5]{img/recurrent_neuron}
+			\includegraphics[scale=0.33]{img/recurrent_neuron}
 			\caption{Pasikartojantis neuronas}
 			\label{img:recurrent_neuron}
 		\end{subfigure}%
 		\begin{subfigure}[b]{.66\textwidth}
 			\centering
-			\includegraphics[scale=0.5]{img/unrolled}
+			\includegraphics[scale=0.33]{img/unrolled}
 			\caption{Laike išvyniotas pasikartojantis neuronas}
 			\label{img:unrolled}
 		\end{subfigure}
@@ -562,8 +579,8 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.5]{img/lstm}
-		\caption{Konvoliucinių filtrų pavyzdžiai}
+		\includegraphics[scale=0.33]{img/lstm}
+		\caption{Ilgos trumpalaikės atminties modelis}
 		\label{img:lstm}
 	\end{figure} 
 
@@ -572,7 +589,7 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 	\begin{itemize}
 		\item Pagrindinis sluoksnis yr su išvesti \(\mathbf{g}_{(t)}\). Jo paskirtis yra išanalizuoti naujai paduoto įvesties vektoriaus \(\mathbf{x}_{(t)}\) ir praeitą trumpalaikių būsenų vektorių \(\mathbf{h}_{(t-1)}\).
 		\item Kiti trys sluoksniai yra vadinami vartų valdikliai (\textit{angl. gate controllers}). Šie sluoksniai naudoja logistinę aktyvavimo funkciją, todėl jų išvestys yra \((0, 1)\) ribose. Jų visų išvestys yra paduodamos į atitinkamus vartus, kur yra atliekama narių daugyba
-		\footnote{Apskaičiuojamas \enquote{Hadamardo produktas} (\textit{angl. Hadamard product}). Hadamardo produktas tai yra matrica gaunama tarpusavyje sudauginus visus dviejų vienodo dydžio matricų elementus esančius tose pačiose vietose. Pavyzdžiui, 
+		\footnote{Apskaičiuojamas \enquote{Hadamardo daugyba} (\textit{angl. Hadamard product}). Hadamardo produktas tai yra matrica gaunama tarpusavyje sudauginus visus dviejų vienodo dydžio matricų elementus esančius tose pačiose vietose. Pavyzdžiui, 
 			\(\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix} \circ
 			\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix} =			
 			\begin{bmatrix} 1 & 4 & 9 \\ 16 & 25 & 36 \end{bmatrix}\).
@@ -586,29 +603,248 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 }
 \section{Metodologija}
 {
-	Šiame skyriuje aprašyta......... KOL KAS NIEKAS
+	Šiame skyriuje analizuojama Sokoban aplinka ir jos pasirinkimai. Taip pat analizuojama RL biblioteka ir jos pasirinkimai. Analizuojami algoritmai ir strategijos.
 }
 \subsection{Sokoban žaidimas}
 {
 	Sokoban (iš japonų kalbos išvertus \enquote{sandėlio prižiūrėtojas}) yra 1981 metais Hiroyuki Imabayashi sukurtas tradicinis galvosūkis. Tai yra sudėtingas vieno žaidėjo žaidimas, kuriame tikslas yra vaikštant po labirintą priminantį \enquote{sandėlį} nustumti dėžes ant tikslo langelių. Kai visos dėžės yra ant tikslo langelių -- Sokoban laikomas išspręstu. Žaidimo sudėtingumas kyla iš jo apribojimų:
-	\begin{itemize}
+	\begin{enumerate}
 		\item Žaidėjas gali judėti į visas keturias puses, tačiau negali pereiti kiaurai sienų ar dežių.
 		\item Žaidėjas gali pastumti šalia jo esančią dėžę, jei stūmimo kryptimi už jos esantis laukelis yra tuščias.
 		\item Žaidėjas negali pastumti daugiau nei vienos dėžės vienu metu.
 		\item Žaidėjas negali traukti dėžių. 
-	\end{itemize}\par
-	Sokoban neturi bendrojo sprendinio ar sprendimo būdo. Taip pat yra įrodyta kad Sokoban yra NP-Hard\footnote{NP-hard yra problemos, kurios yra tokio pat ar didesnio sudėtingumo, nei sudėtingiausios žinomos NP problemos. NP problemos yra klasė skaičiavimo problemų, kurios yra išsprendžiamos nedetriministiniu būdu polinominiame laike.} \cite{dor1999sokoban} ir PSPACE-complete\footnote{PSPACE-complete yra problemos, kurios gali būti išsprestos naudojantis polinominiu kiekiu atminties.} \cite{culberson1997sokoban} uždavinys.
+	\end{enumerate}\par
+	Sokoban neturi bendrojo sprendinio ar sprendimo būdo. Yra įrodyta, kad Sokoban yra NP-hard\footnote{NP-hard yra problemos, kurios yra tokio pat ar didesnio sudėtingumo, nei sudėtingiausios žinomos NP problemos. NP problemos yra klasė skaičiavimo problemų, kurios yra išsprendžiamos nedetriministiniu būdu polinominiame laike.} \cite{dor1999sokoban} ir PSPACE-complete\footnote{PSPACE-complete yra problemos, kurios gali būti išsprestos naudojantis polinominiu kiekiu atminties.} \cite{culberson1997sokoban} uždavinys.\par
+	Papildomas sudėtingumo veiksnys yra neišsprendžiamų būsenų atliekant netinkamą veiksmą egzistavimas. Kadangi žaidėjui yra leidžiama tik stumti dėžes, situacijos, kur galvosūkis nebėra išsprendžiamas yra dažnos. Tokios žaidimo būsenos yra vadinamos aklavietėmis (\textit{angl. deadlock}) \cite{junghanns1998sokoban}. Aptikti Sokoban aklavietes yra taip pat ar net sudėtingiau nei išspręsti patį galvosūki, todėl tai irgi yra NP-hard uždavinys \cite{schaul2005evolving}.
 }
-\subsubsection{OpenAI Gym}
+\subsubsection{Aplinka}
+Šiame punkte aprašoma aplinka ir jos pasirinkimo procesas.
+\subsubsubsection{Aplinkos pasirinkimas}\label{subsubsubsec:environment_choice}
 {
+	Sokoban yra dažnas įvairių tyrimų objektas, todėl jam egzistuoja jau paruoštos aplinkos. Šias aplinkas galima panaudoti RL algoritmų apmokymams, taip pakartotinai nenaudojant resursų aplinkos implementacijai. \par
+	Galimos viešai prieinamos atviro kodo Sokoban aplinkos:
+	\begin{itemize}
+		\item \textbf{XSokoban}\footnote{\url{http://www.cs.cornell.edu/andru/xsokoban.html}} \cite{myers1995xsokoban} -- moksliniuose darbuose dažna Sokoban žaidimo implementacija. XSokoban yra sudarytas iš 90 sudėtingų galvosūkių ir leidžia varžytis su kitais geriausiais Sokoban žaidėjais. Tačiau ši platforma veikia tik su Unix (Linux) sistemomis ir paskutinį kartą buvo atnaujinta tik 1997 metų liepą.
+		\item \textbf{Gym-Sokoban} \cite{SchraderSokoban2018} -- ant OpenAI Gym \cite{openaiGym} karkaso pastatyta Sokoban aplinka, kurios implementacija yra paremta \enquote{DeepMind\footnote{\enquote{Google} priklausanti dirbtinio intelekto tyrimų kompanija, garsi savo \enquote{AlphaGo} programa, 2016 mettais laimėjusia prieš \enquote{Go} žaidimo pasaulio čempijoną Lee Sedol.}} pateiktu taisyklių rinkiniu aplinkoms \cite{NIPS2017_7152}. Taip pat ši aplinka generuoja kambarius atsitiktinai, kas leidžia mokyti DNN be perpildymo (\textit{angl. overfitting}).
+	\end{itemize}
 
+	Darbui atlikti buvo pasirinkta naudoti Gym-Sokoban aplinką, dėl jos modernumo ir implementacijos paremtos OpenAI Gym karkasu, kuris yra tapęs RL aplinkų standartu. Taip pat, kadangi darbo metu bus naudojami modernūs DNN paremti RL algoritmai -- atsitiktinis kambarių generavimas yra didelis pranašumas.
 }
-\subsection{Skatinamojo mokymosi bibliotekos parinkimas}
-\subsubsection{Stable Baselines architektūra}
-\subsubsubsection{A2C aprašymas}
-\subsubsubsection{ACER aprašymas}
-\subsubsubsection{POP2 aprašymas}
+\subsubsubsection{OpenAI Gym aplinkos}\label{subsubsubsec:gym}
+{
+	Gym yra, \enquote{OpenAI\footnote{Dirbtinio intelekto sprendimų vystymo ir pritaikymo kompanija. \url{https://openai.com/about/}}} kompanijos kuriamas, RL algoritmų kūrimo ir palyginimo įrankių rinkinys. Šie įrankiai nedaro jokių prielaidų apie agento struktūrą bei yra pritaikomi su daugeliu skaičiavimo bibliotekų \cite{openaiGym}.\par
+	
+	\code{gym}\footnote{\url{https://github.com/openai/gym}} yra atviro kodo Python biblioteka. Centrinis bibliotekos interfeisas yra unifikuota aplinkos sąsaja \code{Env}, kurios pagrindiniai metodai yra:
+	\begin{itemize}
+		\item \code{\textbf{reset(self) -> observation}} -- atstato aplinkos parametrus į pradines reikšmes, bei grąžina naują jos būseną.
+		\item \code{\textbf{step(self, action) -> observation, reward, done, info}} -- aplinkos laiko žingsnio metodas, kuriam paduodamas pasirinktas veiksmas ir grąžinama: nauja aplinkos būsena, atlikto veiksmo atlygis, \code{bool} tipo reikšmė, nurodanti ar aplinka buvo užbaigta, bei papildoma (paprastai nenaudotina algoritmo mokymui) informacija apie aplinką .
+		\item \code{\textbf{render(self, mode='human')}} -- atvaizduojamas vienas aplinkos kadras. Numatytuoju būdu, metodas turėtų atlikti tai žmogui lengvai suprantamu būdu.
+	\end{itemize}\par
 
+	\code{Wrapper} yra dekoratoriaus dizaino modelio implementacija, leidžianti dinamiškai papildyti naujomis ar išplėsti esamas \code{Env} aplinkos objekto funkcijas.
+}
+\subsubsubsection{Gym-Sokoban}\label{subsubsubsec:gym-sokoban}
+{
+	\code{gym-sokoban} yra Python biblioteka, kuri leidžia sukurti OpenAI Gym (papunktis~\ref{subsubsubsec:gym}) paremtą Sokoban žaidimo aplinką pritaikytą RL algoritmų apmokymams. Pagrindinis bibliotekos objektas yra, \code{gym.Env} interfeiso implementacija, \code{SokobanEnv} -- Sokoban žaidimo aplinka.\par
+	
+	\code{gym-sokoban} turi penkias skirtingas Sokoban žaidimo variacijas (pavyzdžiui, variacija, kur žaidėjas gali stumti ir traukti dėžes), tačiau darbas bus atliekamas ir toliau aprašoma tik standartinė, artimiausia tradiciniam Sokoban žaidimui, variacija.\par
+	
+	Kambariai yra sudaromi iš penkių tipų elementų: sienų, grindų, dėžių, tikslų ir žaidėjo, tačiau kai kurie iš jų gali persidengti ir turi kelias skirtingas būsenas. Visos šios kambario elementų ir būsenų variacijos yra reprezentuojamos žaidime atskiru \(16 \times 16\) pikselių paveikslėliu (lentelė~\ref{tab:sokoban_tiles}). 
+	
+	\begin{table}[H]
+		\caption{Sokoban žaidimo aplinkos elementų būsenos ir jų grafinės reprezentacijos}
+		\label{tab:sokoban_tiles}
+		\centering
+		\begin{tabular}{llc}
+			\toprule
+			\multicolumn{1}{c}{\textbf{Tipas}} &
+			\multicolumn{1}{c}{\textbf{Būsena}} &
+			\textbf{\begin{tabular}[c]{@{}c@{}}Grafinė\\ reprezentacija\end{tabular}} \\ 
+			\midrule
+			
+			Siena & Statinė & \includegraphics[scale=.6]{img/sokoban/tiles/wall} \\ 
+			\rowcolor[HTML]{EFEFEF} 
+			Grindys & Tuščios & \includegraphics[scale=.6]{img/sokoban/tiles/floor} \\ 
+			Tikslas & Tuščias & \includegraphics[scale=.6]{img/sokoban/tiles/box_target} \\ 
+			\rowcolor[HTML]{EFEFEF} 
+			Dėžė & Ne ant tikslo & \includegraphics[scale=.6]{img/sokoban/tiles/box} \\ 
+			Dėžė & Ant tikslo & \includegraphics[scale=.6]{img/sokoban/tiles/box_on_target} \\ 
+			\rowcolor[HTML]{EFEFEF}  
+			Žaidėjas & Ne ant tikslo & \includegraphics[scale=.6]{img/sokoban/tiles/player} \\
+			Žaidėjas & Ant tikslo & \includegraphics[scale=.6]{img/sokoban/tiles/player_on_target} \\ 
+			
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	Standartinė aplinka priima devynis skirtingus veiksmus: nieko neveikimo veiksmas (\(0\)), po veiksmą dėžės pastūmimams (\(1-5\)) ir po veiksmą paėjimams (\(6-7\)) į visas keturias puses (aukštyn, žemyn, kairėn ir dešinėn). Judėjimo veiksmai yra atliekami tik tuo atveju, jei laukelis nurodyta kryptimi yra tuščias; pastūmimo veiksmai turi dvi variacijas, jei laukelis nurodytai kryptimi tuščias -- paeinama į jį, jei tas laukelis yra dėžė ir už jos tuščia -- pastumiama dėžė.\par
+	
+	Visos RL aplinkos turi duoti agentui atlygį už atliktą veiksmą (poskyris~\ref{subsec:RL}). Gym-Sokoban aplinka galimai duoda vieną ar kelis iš keturių atlygių:
+	\begin{itemize}
+		\item \(\mathbf{+10,0}\) -- už visų dėžių buvimą ant tikslo laukelių.
+		\item \(\mathbf{+1,0}\) -- už dėžės užstūmimą ant tikslo.
+		\item \(\mathbf{–1,0}\) -- už dėžės nustūmimą nuo tikslo.
+		\item \(\mathbf{–0,1}\) -- už atliktą veiksmą.
+	\end{itemize}
+	
+	Aplinka bibliotekoje yra apibrėžiama \code{SokobanEnv} klase, kuri yra atsakinga už kambarių generavimą ir veiksmų interpretavimą, bei atlygio už atliktą veiksmą apskaičiavimą. Generuojamų kambarių savybės (paveikslėlis~\ref{img:sokoban_examples}) yra nurodomos klasės konstruktoriumi, kurios leidžia modifikuoti parametrus:
+	\begin{itemize}
+		\item \textbf{Kambario dydį} (\code{tuple(int, int)})-- generuojamų kambarių aukštis ir plotįis.
+		\item \textbf{Dėžių kambaryje skaičių} (\code{int})-- kiek dėžių ir tikslo laukelių bus sugeneruojame per kambarį.
+		\item \textbf{Maksimalų žingsnių skaičių} (\code{int})-- jei žaidėjas neužbaigia kambario per nurodytą žingsnių skaičių, aplinka yra užbaigiama.
+	\end{itemize}
+
+	Agentui aplinkos būsenos yra duodamos trimačiu \((16 n_{\textrm{aukštis}}) \times (16 n_{\textrm{plotis}}) \times n_{\textrm{kanalų skaičius}} \) dydžio masyvu, kur \(\textrm{aukštis}\) ir \(\textrm{plotis}\) yra kambario dydis laukeliais (dauginamas iš \(16\) dėl pikselių skaičiaus per laukelį), \(n_{\textrm{kanalų skaičius}} = 3\) yra RGB spalvų kanalų skaičius, o reikšmės yra sveiki skaičiai \([0, 255]\) ribose.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{.2\textwidth}
+			\centering
+			\includegraphics[scale=0.4]{img/sokoban/rooms/4}
+			\captionsetup{justification=centering}
+			\caption{2 dėžės,\\ \(7 \times 7\) kambarys}
+			\label{img:room_1}
+		\end{subfigure}%
+		\begin{subfigure}[b]{.2\textwidth}
+			\centering
+			\includegraphics[scale=0.4]{img/sokoban/rooms/5}
+			\captionsetup{justification=centering}
+			\caption{6 dėžės,\\ \(7 \times 7\) kambarys}
+			\label{img:room_2}
+		\end{subfigure}%
+		\begin{subfigure}[b]{.2\textwidth}
+			\centering
+			\includegraphics[scale=0.4]{img/sokoban/rooms/3}
+			\captionsetup{justification=centering}
+			\caption{1 dėžė,\\ \(10 \times 10\) kambarys}
+			\label{img:room_3}
+		\end{subfigure}%
+		\begin{subfigure}[b]{.2\textwidth}
+			\centering
+			\includegraphics[scale=0.4]{img/sokoban/rooms/1}
+			\captionsetup{justification=centering}
+			\caption{3 dėžės,\\ \(10 \times 10\) kambarys}
+			\label{img:room_4}
+		\end{subfigure}%
+		\begin{subfigure}[b]{.2\textwidth}
+			\centering
+			\includegraphics[scale=0.4]{img/sokoban/rooms/2}
+			\captionsetup{justification=centering}
+			\caption{5 dėžės,\\ \(10 \times 10\) kambarys}
+			\label{img:room_5}
+		\end{subfigure}%
+		\caption{Sokoban žaidimo aplinkos skirtingo dydžio ir dėžių skaičiaus pavyzdžiai}
+		\label{img:sokoban_examples}
+	\end{figure} 
+}
+\subsection{Skatinamojo mokymosi biblioteka}
+Šiame poskyryje aprašoma skatinamojo mokymosi biblioteka ir jos pasirinkimo procesas.
+\subsection{Skatinamo mokymosi bibliotekos pasirinkimas}
+{
+	ML ir RL esant didelio susidomėjimo ir nuolatinių tyrimų objektais, natūraliai, moksliniuose darbuose pasiūlytos algoritmų implementacijos atsiranda ir cirkuliuoja viešai prieinamoje internetinėje erdvėje. Iš šių algoritmų yra formuojami rinkiniai ir RL bibliotekos. Tačiau bibliotekos turi savo naudojamus karkasus ir dažnai standartizuotą jų panaudojimo būdą. Renkantis RL biblioteką yra svarbu atsižvelgti į įvairius faktorius:  bibliotekos algoritmų rinkinį ir jų modernumą, kuriamo modelio aplinką ir jo karkasą, algoritmų naudojamas skaičiavimų bibliotekas, bibliotekos apibrėžtų objektų išplečiamumą ar naujų implementacijos sudėtingumą, pačios bibliotekos naudojimo sudėtingumą, programavimo kalbą ir panašiai \cite{simonini_2019}.\par
+	
+	Kelios dažniausiai naudojamos RL bibliotekos yra:
+	\begin{itemize}
+		\item \textbf{TF-Agents} \cite{TFAgents} -- šiame sąraše naujausia RL biblioteka, su daug žadančia moduline struktūra bei aukštos kokybės algoritmų implementacija. Ši biblioteka yra neoficialiai, kuriama pačio TensorFlow. Tačiau, kadangi tai yra jaunas produktas, biblioteka turi trūkumų: neturi dokumentacijos, dėl to, panaudojimas ar savo aplinkos pritaikymas nėra visiškai trivialus. Pilnas TensorBoard\footnote{TensorFlow vizualizacijos įrankis. \url{https://github.com/tensorflow/tensorboard}} palaikymas.
+		
+		\item \textbf{KerasRL} \cite{plappert2016kerasrl} -- RL biblioteka paremta Keras\footnote{Aukšto lygio ANN API parašyta su Python, kurios pagrindinis tikslas yra sudaryti sąlygas greitam eksperimentavimui.}. Nors kodas yra gerai komentuotas ir naudojamas geras agento, strategijos ir atminties atskyrimas, biblioteka nebuvo atnaujinta nuo 2019 metų. Bibliotekos algoritmų rinkinys yra limituotas, nors rinkinyje esami algoritmai yra modernus. Naujos aplinkos pridėjimas nėra galimas, nebent aplinka yra paremta OpenAI Gym (papunktis~\ref{subsubsubsec:gym}).
+		
+		\item \textbf{Tensorforce} \cite{tensorforce} -- modalių komponentų pagrindų sukurta, TensorFlow paremta RL biblioteka. Bibliotekos algoritmų rinkinyje yra didžioji dalis modernių RL algoritmų, tačiau pritaikymas nėra elementarus, dėl nepilnos algoritmų dokumentacijos. Biblioteka yra nuolatos naujinama bei yra lengvai modifikuojama, tačiau kodas beveik neturi komentarų. Pilnas TensorBoard palaikymas.
+		
+		\item \textbf{OpenAI Baselines} \cite{baselines} -- aukštos kokybes modernių RL algoritmų implementacijų rinkinys. Tačiau dokumentacijos dėl dokumentacijos trūkumo, naudotis biblioteka, suprasti kodą ar pritaikyti savo aplinkai yra sudėtinga. Nėra palaikomas TensorBoard.
+		
+		\item \textbf{Stable Baselines} \cite{stable-baselines} -- gerokai pagerinta OpenAI Baselines atšaka, su unifikuota algoritmų struktūra bei plačia dokumentacija. OpenAI Baselines modernių algoritmų implementacijos yra praplėstos naujais algoritmais, taip pat, originalus kodas yra papildytas komentarais ir TensorBoard palaikymu. Lengva pradėti naudotis, tačiau aplinkos yra limituotos OpenAI Gym (papunktis~\ref{subsubsubsec:gym}) karkaso.
+	\end{itemize}\par
+
+	Darbo metu buvo nuspręsta naudotis Stable Baselines, dėl kelių pagrindinių priežasčių. Kadangi Sokoban žaidimo pasirinkta aplinka (papunktis~\ref{subsubsubsec:environment_choice}) yra paremta OpenAI Gym karkasu, tai nėra laikoma aplinkos trūkumu. Pagrindinis rodiklis buvo modernių algoritmų implementacijų rinkinys, kuo KerasRL nepasižymi ir buvo atmestas. Kitas rodiklis buvo dokumentacija ir jos kokybė, ko TF-Agents ir OpenAI Baselines bibliotekos neturi, o Tensorfoce turi tačiau algoritmų dokumentacijos yra limituotos. Dar vienas rodiklis buvo, TensorBoard palaikymas, dėl galimybės stebėti algoritmo mokymą realiu laiku, ko neturi OpenAI Gym. Dėl šių priežasčių, pasirinkimo sąrašas buvo susiaurintas iki dviejų: Stable Baselines ir Tensorforce. Nors abu pasirinkimai yra geri, buvo nuspręsta naudotis Stable Baselines dėl paprastesnės naudojimo metodikos.
+}
+\subsubsection{Stable Baselines}\label{subsubsec:stable-baselines}
+{
+	Stable Baselines \cite{stable-baselines} yra rinkinys pagerintų RL algoritmų paremtų OpenAI Baselines \cite{baselines} implementacijomis. Ši RL biblioteka sudaryta iš plataus modernių algoritmų pasirinkimo. Tačiau, priklausomai nuo aplinkos veiksmų ir būsenų tipų, ne visi algoritmai gali jai būti pritaikyti (lentelė~\ref{tab:stable-baselines_algorithms}). Taip pat, biblioteka yra padalinta į dvi dalis: algoritmus naudojančius OpenMPI\footnote{Žinučių perdavimo sąsajos biblioteka.} jų lygiagretinimui, ir nenaudojančius OpenMPI.
+	\begin{table}[H]
+		\centering
+		\caption{Stable Baselines algoritmai ir jų priimami aplinkų veiksmų ir būsenų tipai}
+		\label{tab:stable-baselines_algorithms}
+		\begin{tabular}{p{2cm}P{1cm}P{1cm}P{1cm}P{1cm}P{1cm}P{1cm}P{1cm}P{1cm}P{1.5cm}}
+			\toprule
+			\multicolumn{1}{P{2.25cm}}{} &
+			\multicolumn{4}{p{5.5cm}}{\begin{tabular}{P{8.5cm}} \textbf{Galimi veiksmų tipai}\end{tabular}} &
+			\multicolumn{4}{P{5.5cm}}{\begin{tabular}{P{8.5cm}} \textbf{Galimi būsenų tipai}\end{tabular}} \\
+			\textbf{Algoritmai} &
+			\rotatebox[origin=l]{45}{\begin{tabular}{p{3cm}} \textbf{Discrete} \\ \hline \end{tabular}} &
+			\rotatebox[origin=l]{45}{\begin{tabular}{p{3cm}} \textbf{Box} \\ \hline \end{tabular}} &
+			\rotatebox[origin=l]{45}{\begin{tabular}{p{3cm}} \textbf{MultiDiscrete} \\ \hline \end{tabular}} &
+			\rotatebox[origin=l]{45}{\begin{tabular}{p{3cm}} \textbf{MultiBinary} \\ \hline \end{tabular}} &
+			\rotatebox[origin=l]{45}{\begin{tabular}{p{3cm}} \textbf{Discrete} \\ \hline \end{tabular}} &
+			\rotatebox[origin=l]{45}{\begin{tabular}{p{3cm}} \textbf{Box} \\ \hline \end{tabular}} &
+			\rotatebox[origin=l]{45}{\begin{tabular}{p{3cm}} \textbf{MultiDiscrete} \\ \hline \end{tabular}} &
+			\rotatebox[origin=l]{45}{\begin{tabular}{p{3cm}} \textbf{MultiBinary} \\ \hline \end{tabular}} & 
+			\textbf{MPI} \\
+			\midrule
+			
+			\textbf{A2C} & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+			\rowcolor[HTML]{EFEFEF} 
+			\textbf{ACER} & \cmark & \xmark & \xmark & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+			\textbf{ACKTR} & \cmark & \cmark & \xmark & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+			\rowcolor[HTML]{EFEFEF} 
+			\textbf{DDPG} & \xmark & \cmark & \xmark & \xmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+			\textbf{DQN} & \cmark & \xmark & \xmark & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+			\rowcolor[HTML]{EFEFEF} 
+			\textbf{GAIL} & \cmark &  \cmark & \xmark & \xmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+			\textbf{PPO1} & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+			\rowcolor[HTML]{EFEFEF} 
+			\textbf{PPO2} & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+			\textbf{SAC} & \xmark & \cmark & \xmark & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+			\rowcolor[HTML]{EFEFEF} 
+			\textbf{TD3} & \xmark & \cmark & \xmark & \xmark & \cmark & \cmark & \cmark & \cmark & \xmark \\
+			\textbf{TRPO} & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+			
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	Kadangi bakalauro darbui pasirinktos aplinkos (papunktis~\ref{subsubsubsec:gym-sokoban}) veiksmų tipas yra \code{Discrete}\footnote{OpenAI Gym diskrečių sveikų skaičių masyvo tipas, kur sukurtas \(n\) dydžio kintamasis susideda iš \((0, 1, \cdots, n-1)\) skaitmenų.}, algoritmai, kurie nepalaiko šio tipo, nėra pritaikomi. Taip pat, autorių siūlymu, dėl esamos programinės klaidos, algoritmai naudojantys OpenMPI, darbo metu nebus naudojami. Atmetus algoritmus pagal šiuos du kriterijus lieka tik: A2C, ACER, ACKTR, DQN ir POP2 algoritmai.
+}
+\subsubsubsection{Stable Baselines Karkasas}\label{subsubsubsec:stable-baselines_framework}
+{
+	Stable Baselines turi standartizuotą algortmų naudojimo būdą. Pagrindiniai modelių metodai:
+	\begin{itemize}
+		\item \textbf{\textit{Konstruktorius}} -- konstruktoriui yra paduodami algoritmo ir strategijos hiperparametrai bei aplinka. Grąžinamas paruoštas mokymui modelis.
+		
+		\item \textbf{\code{learn(total\_timesteps, \(\cdots\))}} -- grąžina nurodytą laiko žingsnių kiekį apmokytą modelį. Taip pat, galima nurodyti ankstesnio atšaukimo ar kitas taisykles bei loginimo vardą ar dažnumą.
+		
+		\item  \textbf{\code{save(save\_path, \(\cdots\))}} -- išsaugo modelį į nurodyto adreso failą.
+		
+		\item  \textbf{\code{load(load\_path, env=None, \(\cdots\))}} -- užkrauna modelį iš failo arba iš \code{Dictionary} tipo objekto. Jei naudojama tik veiksmų progrnozėms, aplinkos nurodyti nereikia, tačiau jei bus mokoma toliau, reikia nurodyti aplinką.
+		
+		\item \textbf{\code{predict(observation, \(\cdots\))}} -- padavaus aplinkos būseną, modelis atlieką progrnozės apskaičiavimą ir grąžina geriausią veiksmą. Galima papildomai nurodyti ar naudoti deterministinį principą ar ne.
+	\end{itemize}
+	
+	Stable Baselines turi būdą sudėti kelias aplinkas į vieną vektorių. Šie aplinkų veiktoriai yra pritaikomi daugeliui bibliotekos algoritmų ir leidžia vienu metu treniruoti modelį su keliom aplinkom. Jei naudojamos vektorizuotos aplinkos, vietoje būsenos ir veiksmų, modeliui yra paduodami aplinkų būsenų ir veiksmų vektoriai. Karkase yra apibrėžtos dviejų rūšių vektorizuotos aplinkos:
+	\begin{itemize}
+		\item \textbf{\code{DummyVecEnv}} -- paprastas vektorizuotas adapteris, kviečiantis visas aplinkas iš eilės.
+		\item \textbf{\code{SubprocVecEnv}} -- daugiaprocesinis vektorizuotas adapteris, kur kiekviena aplinka turi savo procesą ir kviečiant aplinkos metodą, visos aplinkos yra išlygiagretintos ir atlieką skaičiavimus vienu metu.
+	\end{itemize}
+
+	Mokymo metu galima modeliui paduoti perkvietimo (\textit{angl. callback}) funkcijas, kurios priklausomai nuo funkcijos gali būti iškviečiamos nurodytą mokymo proceso etapą. Naudojant šias funkcijas, galima pasiekti vidines modelio būsenas bei nutraukti mokymo procesą anksčiau. Perkvietimo funkcijų rašymui yra apibrėžtas \code{BaseCallback} interfeisas. Taip pat, yra kelios jau implementuotos funkcijos, kurias galima panaudoti skirtingų užduočių atlikimui: periodiniam saugojimui, modelio tarpiniam vertinimui, išankstinio modelio mokymo stabdymui pasiekus nurodytą slenkstinį atligį ir panašiai.
+	
+}
+\subsubsection{Stable Baselines strategijos}
+{
+	Stable Baselines turi rinkinį numatytųjų strategijų, paremtų ANN (poskyris~\ref{subsec:neuro}). Pagrindinės dvi kategorijos yra MLP (punktas~\ref{subsubsec:mlp}) ir CNN (punktas~\ref{subsubsec:cnn}). Tačiau, kadangi bakalauro darbui pasirinktos aplinkos būsenos yra pateikiamos kadro pikselių masyvais (papunktis~\ref{subsubsubsec:gym-sokoban}), mokymo metu bus naudojamos tik CNN strategijos.\par
+	
+	Stable Baselines turi trijų rūšių CNN paremtas strategijas: paprastą CNN, LSTM (papunktis~\ref{subsubsubsec:lstm}) su CNN požymių išskyrimu, normalizuotą LSTM su CNN požymių išskyrimu. Toliau, šiame punkte bus aprašomos šios trys strategijos.
+}
+\subsubsubsection{CnnPolicy strategijos aprašymas}\label{subsubsubsec:cnnpolicy}
+\subsubsubsection{CnnLstmPolicy strategijos aprašymas}\label{subsubsubsec:cnnlstmpolicy}
+\subsubsubsection{CnnLnLstmPolicy strategijos aprašymas}\label{subsubsubsec:cnnlnlstmpolicy}
+\subsubsection{Stable Baselines algoritmai}
+{
+	Iš Stable Baselines algoritmų rinkinio tik penki yra pritaikomi (punkte~\ref{subsubsec:stable-baselines}) pasirinktai Sokoban aplinkai (papunktis~\ref{subsubsubsec:gym-sokoban}): A2C, ACER, ACKTR, DQN ir POP2. Tačiau, darbo rašymo metu, ACKTR kode yra programinė klaida, kuri  neleidžia naudoti CnnLnLstmPolicy strategijos (papunktis~\ref{subsubsubsec:cnnlnlstmpolicy}) su bibliotekoje neapibrėžta aplinka, todėl šis algoritmas buvo atmestas. DQN taip pat buvo atmestas, tačiau dėl algoritmo vektorizuotų aplinkų (papunktis~\ref{subsubsubsec:stable-baselines_framework}) nepalaikymo, kas žymiai sulėtintų mokymosi procesą.\par
+	
+	Toliau šiame punkte bus aprašomi trys pasirinktai aplinkai pritaikomi ar kitaip neatmesti algoritmai: A2C, ACER ir POP2.
+}
+\subsubsubsection{A2C algoritmo aprašymas}
+\subsubsubsection{ACER algoritmo aprašymas}
+\subsubsubsection{POP2 algoritmo aprašymas}
 \section{Eksperimentai}
 {
 	Šiame skyriuje aprašomi bakalauro darbo metu atlikti eksperimentai bei jiems paruošta eksperimentinė aplinka.
@@ -635,7 +871,7 @@ Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 		\item Grafinė vaizdo plokštė (GPU) -- \enquote{\textbf{Nvidia GeForce RTX 2070 Super}} (\textbf{8GB} GDDR6, 1770 MHz).
 		\item Operatyvioji atmintis -- \enquote{\textbf{HyperX Predator Black}} (\textbf{32GB}, 3200MHz, DDR4, CL16).
 		\begin{enumerate}
-			\item Papildomai paskirta: \textbf{16GB} \enquote{Swap} atminties\footnote{\enquote{Swap} atmintis -- tai pastoviojoje atmintyje paskirta atminties dalis virtualiai operatyviajai atminčiai, kuri yra naudojama kai fizinės operatyviosio atminties neužtenka vykdomoms operacijoms.}.
+			\item Papildomai paskirta: \textbf{16GB} \enquote{Swap} atminties\footnote{\enquote{Swap} atmintis -- tai pastoviojoje atmintyje paskirta atminties dalis virtualiai operatyviajai atminčiai, kuri yra naudojama, kai vykdomoms operacijoms trūksta fizinės operatyviosios atminties.}.
 		\end{enumerate}
 		\item Pastovioji atmintis -- \enquote{\textbf{Western Digital}} (\textbf{1TB}).
 	\end{enumerate}
@@ -646,7 +882,7 @@ Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 		\item Paketų ir aplinkų valdymo sistema - \enquote{\textbf{Anaconda}}  (versija: \textbf{2020.02}).
 		\item Programavimo kalba -- \enquote{\textbf{Python}} (versija: \textbf{3.7.6}).
 		\item Atviro kodo programa kintančio kodo, matematinių funkcijų, teksto bei duomenų vizualizavimui -- \enquote{\textbf{Jupyter Notebook}}  (versija: \textbf{6.0.3}).
-		\item ML atviro kodo platforma su lanksčia įrankių ir bibliotekų ekosistema skirta kurti ir gerinti šiuolaikinius ML sprendimus -- \enquote{\textbf{TensorFlow}} (versija: \textbf{1.14.0}).
+		\item Atviro kodo ML platforma su lanksčia įrankių ir bibliotekų ekosistema skirta šiuolaikinių ML sprendimų kūrimui ir gerinimui -- \enquote{\textbf{TensorFlow}} (versija: \textbf{1.14.0}).
 		\item \enquote{TensorFlow} vizualizavimo įrankis -- \enquote{\textbf{TensorBoard}} (versija: \textbf{1.14.0}).
 		\item RL algoritmų kūrimo ir vertinimo įrankių rinkinys -- \enquote{\textbf{OpenAI Gym}} (versija: \textbf{0.17.1}).
 		\item Modernių RL algoritmų implementacijų rinkinys (\textit{angl. state-of-art}) -- \enquote{\textbf{Stable Baselines}} (versija: \textbf{2.10.1a0}).
@@ -675,6 +911,7 @@ Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 		\item \textbf{A3C} -- (\textit{angl. Asynchronous Advantage Actor-Critic}) Asinchroninis Pranašumo Aktoriaus-Kritiko algoritmas.
 		\item \textbf{ACER} -- (\textit{angl. Actor-Critic with Experience Replay}) Aktorius-Kritiko su patirties pakartojimu algoritmas.
 		\item \textbf{ANN} -- (\textit{angl. Artificial Neural Network}) dirbtinis neuroninis tinklas.
+		\item \textbf{API} -- (\textit{angl. Application Programming Interface}) aplikacijų programavimo sąsaja.
 		\item \textbf{CNN} -- (\textit{angl. Convolutional Neural Network}) konvoliucinis neuroninis tinklas.
 		\item \textbf{CPU} -- (\textit{angl. Central Processing Unit}) centrinis procesorius.
 		\item \textbf{DNN} -- (\textit{angl. Deep Neural Network}) gilusis neuroninis tinklas.
@@ -686,6 +923,7 @@ Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 		\item \textbf{MLP} -- (\textit{angl. Multi-Layer Perceptrons}) daugiasluoksnis perceptronas.
 		\item \textbf{PG} -- (\textit{angl. Policy Gradient}) strategijos gradientas.
 		\item \textbf{PPO2} -- (\textit{angl. Proximal Policy Optimization}) Proksimalinis Strategijos Optimizavimo algoritmas.
+		\item \textbf{RGB} -- (\textit{angl. Red Green Blue}) raudona, žalia, mėlyna spalvos.
 		\item \textbf{RL} -- (\textit{angl. Reinforcement Learning}) skatinamasis mokymas.
 		\item \textbf{RNN} -- (\textit{angl. Recurrent Neural Network}) pasikartojantis neuroninis tinklas.
 		\item \textbf{VSC} -- (\textit{angl. Version-Control System}) versijų tvarkymo sistema.
