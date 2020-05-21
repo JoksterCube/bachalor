@@ -31,6 +31,7 @@
 \usepackage{pifont}
 \usepackage{amssymb}
 \usepackage{array}
+\usepackage{hhline}
 
 \gappto{\UrlBreaks}{\UrlOrds}
 
@@ -276,7 +277,7 @@ TODO: summary
 		\item Apskaičiuojamas visų galutinių gradientų vektorių vidurkis ir yra atliekamas Gradientų nusileidimo (\textit{angl. Gradient Descent}) žingsnis.
 	\end{enumerate}
 }
-\subsubsection{Aktoriaus-kritiko principas}
+\subsubsection{Aktoriaus-kritiko principas}\label{subsubsec:actor-critic}
 {
 	Aktoriaus-kritiko (\textit{angl. actor-critic}) algoritmai yra algoritmų kategorija, kuri apjungia verte pagrįstus ir strategija pagrįstus algoritmus. Šios algoritmų kategorijos tikslas yra pasinaudoti abiejų principų pranašumais ir pašalinti jų trūkumus. Pagrindinė idėja yra padalinti modelį į dvi dalis: viena atsakinga už veiksmo suradimą duotajai būsenai, kita už veiksmo vertės įvertinimą \cite{rl_intro_book}.\par
 	
@@ -807,7 +808,7 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 {
 	Stable Baselines turi standartizuotą algortmų naudojimo būdą. Pagrindiniai modelių metodai:
 	\begin{itemize}
-		\item \textbf{\textit{Konstruktorius}} -- konstruktoriui yra paduodami algoritmo ir strategijos hiperparametrai bei aplinka. Grąžinamas paruoštas mokymui modelis.
+		\item \textbf{\textit{Konstruktorius}} -- konstruktoriui yra paduodami algoritmo ir strategijos hiper-parametrai bei aplinka. Grąžinamas paruoštas mokymui modelis.
 		
 		\item \textbf{\code{learn(total\_timesteps, \(\cdots\))}} -- grąžina nurodytą laiko žingsnių kiekį apmokytą modelį. Taip pat, galima nurodyti ankstesnio atšaukimo ar kitas taisykles bei loginimo vardą ar dažnumą.
 		
@@ -834,17 +835,73 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 	Stable Baselines turi trijų rūšių CNN paremtas strategijas: paprastą CNN, LSTM (papunktis~\ref{subsubsubsec:lstm}) su CNN požymių išskyrimu, normalizuotą LSTM su CNN požymių išskyrimu. Toliau, šiame punkte bus aprašomos šios trys strategijos.
 }
 \subsubsubsection{CnnPolicy strategijos aprašymas}\label{subsubsubsec:cnnpolicy}
+{	
+	\code{CnnPolicy} yra viena iš Stable Baselines bibliotekos numatytųjų strategijų. Ši strategija naudoja CNN (punktas~\ref{subsubsec:cnn}) požymių išskyrimui ir dėl to yra geriausiai pritaikoma aplinkoms, kurių būsenos yra paduodamos aplinkos kadrų pikselių masyvais.\par
+	
+	Strategijos DNN architektūra yra sudaryta iš trijų konvoliucinių sluoksnių (papunktis~\ref{subsubsubsec:convolution_layer}) ir vieno paslėpto pilnai sujungto sluoksnio (lentelė~\ref{tab:cnnpolicy}). Visi šie sluoksniai naudoja ReLU aktyvavimo funkcijas (punktas~\ref{subsubsec:mlp}), tačiau išvesties aktyvavimo funkcija priklauso nuo aplinkos veiksmo tipo (lentelė~\ref{tab:stable-baselines_algorithms}). Bakalauro darbui parinkta Sokoban aplinka (papunktis~\ref{subsubsubsec:gym-sokoban}) naudoja \code{Discrete} tipo veiksmus, tokiu atveju išvesčiai naudojama bendra minkštojo maksimumo aktyvavimo funkcija.\par
+	
+	\begin{table}[H]
+		\centering
+		\caption{\code{CnnPolicy} strategijos ANN architektūrą sudarančių sluoksnių parametrai}
+		\label{tab:cnnpolicy}
+		\begin{tabular}{llcccc}
+			\toprule
+			\multicolumn{1}{c}{\textbf{Pavadinimas}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Sluoksnio\\ tipas\end{tabular}}} & \textbf{\begin{tabular}[c]{@{}c@{}}FIltrų\\ skaičius\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Filtrų\\ dydis\end{tabular}} & \textbf{Žingsnis} & \textbf{\begin{tabular}[c]{@{}c@{}}Neuronų\\ skaičius\end{tabular}} \\
+			\midrule
+			c1 & Konvoliucinis & 32 & 8 & 4 & -- \\
+			\rowcolor[HTML]{EFEFEF} 
+			c2 & Konvoliucinis & 64 & 4 & 2 & -- \\
+			c3 & Konvoliucinis & 64 & 3 & 1 & -- \\
+			\rowcolor[HTML]{EFEFEF} 
+			fc1 & Pilnai sujungtas & -- & -- & -- & 512 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+}
 \subsubsubsection{CnnLstmPolicy strategijos aprašymas}\label{subsubsubsec:cnnlstmpolicy}
+{
+	\code{CnnLstmPolicy} strategija yra labai panaši \code{CnnPolicy} strategijai (papunktis~\ref{subsubsubsec:cnnpolicy}). Tačiau šios strategijos architektūra yra RNN (punktas~\ref{subsubsec:rnn}) ir tie patys \code{CnnPolicy} sluoksniai yra naudojami LSTM atminties ląstelės (papunktis~\ref{subsubsubsec:lstm}) įvesčiai. LSTM ląstelė yra standartinė, su keturiais pilnai sujungtais sluoksniais, kurių kiekvieno dydis yra \(256\) neuronai. Išvestis yra valdoma identiškai \code{CnnPolicy} strategijai, priklausomai nuo aplinkos veiksmų tipo. Bakalauro darbo aplinkos atveju -- minkštojo maksimumo bendra aktyvavimo funkcija. 
+}
 \subsubsubsection{CnnLnLstmPolicy strategijos aprašymas}\label{subsubsubsec:cnnlnlstmpolicy}
+{
+	\code{CnnLnLstmPolicy} strategija naudoja tą pačią \code{CnnLstmPolicy} strategijos (papunktis~\ref{subsubsubsec:cnnlstmpolicy}) architektūrą su vienu skirtumu: LSTM ląstelės sluoksniai yra normalizuoti naudojant sluoksnių normalizaciją (\textit{angl. layer normalization}). Normalizuojant RNN, efektyviai stabilizuojama paslėptoji ląstelės būsena bei pasiekiamas greitesnis mokymosi laikas \cite{ba2016layer}. Visos kitos strategijos savybės yra identiškos \code{CnnLstmPolicy} strategijai.
+}
 \subsubsection{Stable Baselines algoritmai}
 {
 	Iš Stable Baselines algoritmų rinkinio tik penki yra pritaikomi (punkte~\ref{subsubsec:stable-baselines}) pasirinktai Sokoban aplinkai (papunktis~\ref{subsubsubsec:gym-sokoban}): A2C, ACER, ACKTR, DQN ir POP2. Tačiau, darbo rašymo metu, ACKTR kode yra programinė klaida, kuri  neleidžia naudoti CnnLnLstmPolicy strategijos (papunktis~\ref{subsubsubsec:cnnlnlstmpolicy}) su bibliotekoje neapibrėžta aplinka, todėl šis algoritmas buvo atmestas. DQN taip pat buvo atmestas, tačiau dėl algoritmo vektorizuotų aplinkų (papunktis~\ref{subsubsubsec:stable-baselines_framework}) nepalaikymo, kas žymiai sulėtintų mokymosi procesą.\par
 	
 	Toliau šiame punkte bus aprašomi trys pasirinktai aplinkai pritaikomi ar kitaip neatmesti algoritmai: A2C, ACER ir POP2.
 }
-\subsubsubsection{A2C algoritmo aprašymas}
-\subsubsubsection{ACER algoritmo aprašymas}
-\subsubsubsection{POP2 algoritmo aprašymas}
+\subsubsubsection{A2C algoritmo aprašymas}\label{subsubsubsec:a2c}
+{
+	A3C \cite{a3c} yra RL algoritmas veikiantis aktoriaus-kritiko principu (papunktis~\ref{subsubsec:actor-critic}). Šis algoritmas kombinuoja kelias pagrindines idėjas:
+	\begin{itemize}
+		\item Atnaujinimo schema veikia naudojant fiksuoto ilgio patirties dalis, kurios yra naudojamos pranašumo ir rezultatų funkcijų įvertinimo apskaičiavimams.
+		
+		\item Architektūra dalijasi sluoksniais tarp strategijos ir vertės funkcijų.
+		
+		\item Asinchroniniai atnaujinimai.
+	\end{itemize}
+	
+	A3C sulaukus didelio populiarumo, buvo sukurta sinchroninė, deterministinė algoritmo implementacija, kuri laukia kol visi aktoriai pabaigia jų patirties segmentą, prieš pradedant atnaujinimus pagal visų aktorių rezultatų vidurkį. Šis algoritmas yra vadinamas A2C. Vienas papildomas sinchroninės A3C algoritmo versijos A2C yra efektyvesnis GPU panaudojimas. A2C algoritmo autoriai teigia, kad jų sinchroninė implementacija rodo geresnius rezultatus nei asinchroninė, bei yra efektivesnė\cite{wu_2019}.\par
+	
+	Stable Baselines A2C algoritmo implementacija turi originaliame darbe aprašytas numatytasias hiper-parametrų reikšmes (lentelė~\ref{tab:algorithm_defaults}). Bakalauro darbo metu, bus naudojamas algoritmas su jo numatytaisiais hiper-parametrais. 
+}
+\subsubsubsection{ACER algoritmo aprašymas}\label{subsubsubsec:acer}
+{
+	ACER \cite{acer} -- tai yra aktoriaus-kritiko principu (papunktis~\ref{subsubsec:actor-critic}) veikiantis algoritmas or naudojantis A2C pristatytas idėjas (papunktis~\ref{subsubsubsec:a2c}), tačiau į šio algoritmo implementaciją taip pat pridėtas patirties pakartojimo buferis (\textit{angl. experience replay buffer}). Papildomai, ACER naudoja: atsekamą Q-vertės įvertinimą, svarbos atranką (\textit{angl. importance sampling}) bei pasitikėjimo sritį (\textit{angl. trust region}).\par
+	
+	Dėl naudojamo patirties pakartojimo buferio, algoritmo mokymas yra efektyvesnis, ir reikalingų žingsnių skaičius konvergavimui yra daug mažesnis. Tačiau papildoma papildomi laikomi duomenys reikalauja daugiau operatyviosios bei grafinės atminties resursų.\par
+	
+	Stable Baselines ACER implementacijos numatytosios reikšmės yra paremtos originalaus tiriamojo darbo hiper-parametrais (lentelė~\ref{tab:algorithm_defaults}), kurie bus naudojami bakalauro darbo metu.
+}
+\subsubsubsection{PPO2 algoritmo aprašymas}\label{subsubsubsec:ppo2}
+{
+	PPO2 yra OpenAI \cite{baselines} PPO algoritmo \cite{ppo} implementacija pritaikyta GPU. Daugiaprocesiam veikimui PPO2 naudoja aplinkų vektorius (papunktis~\ref{subsubsubsec:stable-baselines_framework}), kai PPO1 tam naudoja OpenMPI (punktas~\ref{subsubsec:stable-baselines}). Taip pat, PPO2 autorių teigimu, veikia tris kartus greičiau nei bazinė PPO naudojant klasikinių žaidimų aplinką, Atari \cite{schulman_2019}.\par
+	PPO yra aktoriaus-kritiko principu (papunktis~\ref{subsubsec:actor-critic}) paremtas algoritmas, kombinuojantis A2C (papunktis~\ref{subsubsubsec:a2c}) kelių aktorių naudojimo ir taip pat pasitikėjimo srities idėjas.\par
+	
+	Stable Baselines pateikta PPO2 algoritmo implementacija naudoja OpenAI algoritmą ir jo pateiktas numatytąsias hiper-parametrų reikšmes (lentelė~\ref{tab:algorithm_defaults}), tačiau algoritmas turi kelis pakeitimus ir nėra identiškas originaliam algoritmo pristatymo moksliniam darbui: vertės funkcija yra apkarpyta (\textit{angl. clipped}) ir pranašumai yra normalizuoti. Bakalauro darbo metu naudojamas algoritmas su numatytomis hiper-parametrų reikšmėmis.  
+}
 \section{Eksperimentai}
 {
 	Šiame skyriuje aprašomi bakalauro darbo metu atlikti eksperimentai bei jiems paruošta eksperimentinė aplinka.
@@ -922,7 +979,7 @@ Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 		\item \textbf{ML} -- (\textit{angl. Machine Learning}) mašininis mokymasis.
 		\item \textbf{MLP} -- (\textit{angl. Multi-Layer Perceptrons}) daugiasluoksnis perceptronas.
 		\item \textbf{PG} -- (\textit{angl. Policy Gradient}) strategijos gradientas.
-		\item \textbf{PPO2} -- (\textit{angl. Proximal Policy Optimization}) Proksimalinis Strategijos Optimizavimo algoritmas.
+		\item \textbf{PPO} -- (\textit{angl. Proximal Policy Optimization}) Proksimalinis Strategijos Optimizavimo algoritmas.
 		\item \textbf{RGB} -- (\textit{angl. Red Green Blue}) raudona, žalia, mėlyna spalvos.
 		\item \textbf{RL} -- (\textit{angl. Reinforcement Learning}) skatinamasis mokymas.
 		\item \textbf{RNN} -- (\textit{angl. Recurrent Neural Network}) pasikartojantis neuroninis tinklas.
@@ -932,7 +989,56 @@ Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 
 %\appendix
 
-\section{Sokoban aplinkai parašyti OpenAI Gym principus sekantys kodas}
+\section{Stable Baselines algoritmų A2C, ACER, PPO2 implementacijų numatytosios hiper-parametrų reikšmės}
+{
+	Bakalauro darbo metu yra naudojamos Stable Baselines algoritmų implementacijos su jų autorių numatytosiomis hiper-parametrų reikšmėmis, kurios yra nurodytos lentelėje~\ref{tab:algorithm_defaults}.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Stable Baselines A2C, ACER, PPO2 algoritmų implementacijų numatytosios hiper-parametrų reikšmės}
+		\label{tab:algorithm_defaults}
+		\begin{tabular}{lccc}
+			\toprule
+			\multicolumn{1}{c}{\textbf{Hiper-parametro}} & \multicolumn{3}{c}{\textbf{Algoritmai}} \\
+			\multicolumn{1}{c}{\textbf{pavadinimai}} & \textbf{A2C} & \textbf{ACER} & \textbf{PPO2} \\
+			\midrule
+			\code{gamma} & \(0,99\) & \(0,99\) & \(0,99\) \\
+			\rowcolor[HTML]{EFEFEF} 
+			\code{n\_steps} & \(5\) & \(20\) & \(128\) \\
+			\code{vf\_coef} & \(0,25\) & -- & \(0,5\) \\
+			\rowcolor[HTML]{EFEFEF} 
+			\code{q\_coef} & -- & \(0,5\) & -- \\
+			\code{ent\_coef} & \(0,01\) & \(0,01\) & \(0,01\) \\
+			\rowcolor[HTML]{EFEFEF} 
+			\code{max\_grad\_norm} & \(0,5\) & \(10\) & \(0,5\) \\
+			\code{learning\_rate} & \(7 \cdot 10^{-4}\) & \(7 \cdot 10^{-4}\) & \(2,5 \cdot 10^{-4}\) \\
+			\rowcolor[HTML]{EFEFEF} 
+			\code{alpha} & \(0,99\) & \(0,99\) & -- \\
+			\code{momentum} & \(0,0\) & -- & -- \\
+			\rowcolor[HTML]{EFEFEF} 
+			\code{epsilon} & \(10^{-5}\) & -- & -- \\
+			\code{lr\_schedule} & -- & \code{'linear'} & -- \\
+			\rowcolor[HTML]{EFEFEF} 
+			\code{rprop\_alpha} & -- & \(0,99\) & -- \\
+			\code{rprop\_epsilon} & -- & \(10^{-5}\) & -- \\
+			\rowcolor[HTML]{EFEFEF} 
+			\code{buffer\_size} & -- & \(5000\) & -- \\
+			\code{replay\_ratio} & -- & \(4\) & -- \\
+			\rowcolor[HTML]{EFEFEF} 
+			\code{replay\_start} & -- & \(1000\) & -- \\
+			\code{correction\_term} & -- & \(10,0\) & -- \\
+			\rowcolor[HTML]{EFEFEF} 
+			\code{lam} & -- & -- & \(0,95\) \\
+			\code{nminibatches} & -- & -- & \(4\) \\
+			\rowcolor[HTML]{EFEFEF} 
+			\code{noptepochs} & -- & -- & \(4\) \\
+			\code{cliprange} & -- & -- & \(0,2\) \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+}
+\section{Sokoban aplinkai pagal OpenAI Gym principus parašytas programinis kodas}
+Čia apibrėžti trys papildomi dekoratoriai paremti OpenAI Gym \code{Wrapper} aplinkos dekoratoriaus interfeisu (papunktis~\ref{subsubsubsec:gym}). \code{ActionWrapper} limituoja leidžiamų atlikti veiksmų sritį. \code{ExposeCompletedEnvironments} naudojamas su bakalauro darbo metu parašytomis per-kvietimo funkcijomis. Šis dekoratorius, padaro sėkmingai užbaigtų aplinkų skaitinę reikšmę pasiekiamą iš išorės. \code{CombinedWrappers} pagalbinis dekoratorius, leidžiantis lengvai sukurti aplinkos objektą su keliais dekoratoriais iš karto.
 \lstinputlisting[language=Python]{code/my_wrappers.py}
 
 \end{document}
