@@ -32,6 +32,7 @@
 \usepackage{amssymb}
 \usepackage{array}
 \usepackage{hhline}
+\usepackage{lscape}
 
 \gappto{\UrlBreaks}{\UrlOrds}
 
@@ -97,14 +98,12 @@ Dėkoju šeimai ir draugams, už meilę ir nuolatinį palaikymą bei darbo vadov
 
 
 \sectionnonumnocontent{Santrauka}
-TODO: Santrauka
-% Nurodomi iki 5 svarbiausių temos raktinių žodžių (terminų).
-% Vienas terminas gali susidėti iš kelių žodžių.
-\raktiniaizodziai{Skatinamasis mokymas, Sokoban žaidimas, aktorius-kritikas based metodai, raktinis žodis 4, raktinis žodis 5}   
+Šiame darbe buvo tiriamas Skatinamojo mokymosi agento pritaikymas Sokoban žaidimui. Darbe, aprašoma skatinamojo mokymosi teorija, pagrindiniai principai ir taikymo technikos. Taip pat, aprašomi skirtingi neuroniniai tinklai, dėl jų naudojimo skatinamojo mokymosi strategijų architektūroje. Darbe apžvelgiamos Sokoban žaidimo aplinkos ir modernios skatinamojo mokymosi bibliotekos, karkasai. Darbe lyginamos skirtingų skatinamojo mokymosi algoritmų implementacijos ir skirtingos strategijos Sokoban žaidimo aplinkoje. Darbe pritaikomas žinių perdavimo principas apmokant skatinamojo mokymosi agentus žaisti sudėtingesnes Sokoban žaidimo aplinkas. Gauti žinių perdavimo rezultatai yra palyginami su agentu apmokytu vienodo sudėtingumo aplinkoje be žinių perdavimo. Gauti rezultatai analizuoti ir pateikti pagerinimų pasiūlymai.
+\raktiniaizodziai{Skatinamasis mokymas, Sokoban žaidimas, aktoriumi-kritiku paremti metodai, mokymo žinių perdavimas}   
 
 \sectionnonumnocontent{Summary}
-TODO: summary
-\keywords{Reinforcement learning, Sokoban game, actor-critic based methods, keyword 4, keyword 5}
+In this thesis, the application of the reinforcement learning agent to the Sokoban game was investigated. The paper describes the theory, basic principles and application techniques of reinforcement learning.Also, different neural networks are described, due to their use in the architecture of reinforcement learning strategies. Thesis reviews Sokoban game environments and state-of-art reinforcement learning libraries, frameworks. The paper compares implementations of different reinforcement learning algorithms and different strategies in the Sokoban game environment. The obtained results of transfer learning are compared to those of an agent trained in an environment of equal complexity without transfer learning. The obtained results were analyzed and improvement suggestions were made.
+\keywords{Reinforcement learning, Sokoban game, actor-critic based methods, transfer learning}
 
 \tableofcontents
 
@@ -118,9 +117,11 @@ TODO: summary
 	
 	Šiais laikais kompiuteriai gali simuliuoti atominius sprogimus, nuspėti orus ir atlikti kitas didžiulių skaičiavimo išteklių reikalaujančias užduotis \cite{supercomputers}. Tačiau užduoties sudėtingumą gali lemti ne tik milžiniškų išteklių skaičiaus reikalavimas. 2016 metais matėme, kaip \enquote{Google’s AlphaGo} nugalėjo pasaulio aukščiausio lygio \enquote{Go} žaidėją ir čempioną Ke Jie \cite{go}. Autonominiai gatvėmis važinėjantys automobiliai neišvengiamai artėja, o \enquote{Boston Dynamics} robotai stebina savo galimybėmis \cite{bostondynamics}.\par
 	
-	Šie uždaviniai nėra trivialiai aprašomi ar išsprendžiami, jiems gali net neegzistuoti sprendimas. Tokiems uždaviniams spręsti yra naudojami mašininio mokymosi metodai (pvz. neuroniniai tinklai). Viena šių metodų paradigmų yra skatinamasis mokymas -- agento atliekami veiksmai yra reguliariai vertinami ir atitinkamai agentas yra apdovanojamas arba baudžiamas.
+	Šie uždaviniai nėra trivialiai aprašomi ar išsprendžiami, jiems gali net neegzistuoti sprendimas. Tokiems uždaviniams spręsti yra naudojami mašininio mokymosi metodai (pvz. neuroniniai tinklai). Viena šių metodų paradigmų yra skatinamasis mokymas -- agento atliekami veiksmai yra reguliariai vertinami ir atitinkamai agentas yra apdovanojamas arba baudžiamas.\par
 	
-	..Kažką apie sokoban...
+	Žaidimai dėl lengvai išskiriamų gerų ir blogų veiksmų, natūraliai, tampa pagrindine skatinamojo mokymosi algoritmų treniravimosi ir žaidimų aikštele. Klasikiniai Atari žaidimai yra dažnas tyrimų objektas \cite{mnih2013playing}. Tačiau žaidimų sudėtingumas varijuoja ir ne visus žaidimus kompiuteriai gali išmokti ar mokosi vienodai. Egzistuoja žaidimų ir uždavinių kategorijų, kurios skatinamojo mokymosi agentams yra ypatingai sudėtingos. Galimybė padaryti nepataisomą klaidą arba poreikis mąstyti į priekį yra tai, ko trūksta dažnam skatinamojo mokymosi agentui.\par
+	
+	Sokoban žaidimas būtent ir priklauso sudėtingų išmokti kompiuteriui žaidimų kategorijai. Tai yra senas ir savo laiku dažnas mokslinių tyrimų objektas \cite{culberson1997sokoban, dor1999sokoban, junghanns1998sokoban, schaul2005evolving}. Tačiau nepaisant galvosūkio amžiaus, tai vis dar yra iššūkio verta skatinamojo mokymosi aplinka.	\par
 }
 \subsectionnonum{Darbo tikslas}\label{subsec:tikslas}
 {
@@ -133,7 +134,7 @@ TODO: summary
 		\item Atlikti skatinamojo mokymosi algoritmų analizę ir atrinkti keletą potencialiausių algoritmų Sokoban žaidimo agento mokymui.
 		\item Paruošti eksperimentinę aplinką Sokoban žaidimui.
 		\item Atlikti eksperimentą, siekiant nustatyti, kuri Sokoban žaidimo agento valdymo strategija yra geriausia.
-		\item Eksperimentiškai palyginti sustiprinto mokymosi algoritmus: A2C, ACER, POP naudojant mažiausią įmanomą Sokoban žaidimo aplinką.
+		\item Eksperimentiškai palyginti sustiprinto mokymosi algoritmus: A2C, ACER, PPO naudojant mažiausią įmanomą Sokoban žaidimo aplinką.
 		\item Panaudoti žinių perdavimą, siekiant Sokoban žaidimo agentą apmokyti veikti sudėtingesnėse aplinkose.
 	\end{enumerate}
 }
@@ -806,29 +807,29 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 }
 \subsubsubsection{Stable Baselines Karkasas}\label{subsubsubsec:stable-baselines_framework}
 {
-	Stable Baselines turi standartizuotą algortmų naudojimo būdą. Pagrindiniai modelių metodai:
+	Stable Baselines turi standartizuotą algoritmų naudojimo būdą. Pagrindiniai modelių metodai:
 	\begin{itemize}
 		\item \textbf{\textit{Konstruktorius}} -- konstruktoriui yra paduodami algoritmo ir strategijos hiper-parametrai bei aplinka. Grąžinamas paruoštas mokymui modelis.
 		
-		\item \textbf{\code{learn(total\_timesteps, \(\cdots\))}} -- grąžina nurodytą laiko žingsnių kiekį apmokytą modelį. Taip pat, galima nurodyti ankstesnio atšaukimo ar kitas taisykles bei loginimo vardą ar dažnumą.
+		\item \textbf{\code{learn(total\_timesteps, \(\cdots\))}} -- grąžina nurodytą laiko žingsnių kiekį apmokytą modelį. Taip pat, galima nurodyti ankstesnio atšaukimo ar kitas taisykles bei duomenų registravimo vardą ar dažnumą.
 		
 		\item  \textbf{\code{save(save\_path, \(\cdots\))}} -- išsaugo modelį į nurodyto adreso failą.
 		
 		\item  \textbf{\code{load(load\_path, env=None, \(\cdots\))}} -- užkrauna modelį iš failo arba iš \code{Dictionary} tipo objekto. Jei naudojama tik veiksmų progrnozėms, aplinkos nurodyti nereikia, tačiau jei bus mokoma toliau, reikia nurodyti aplinką.
 		
-		\item \textbf{\code{predict(observation, \(\cdots\))}} -- padavaus aplinkos būseną, modelis atlieką progrnozės apskaičiavimą ir grąžina geriausią veiksmą. Galima papildomai nurodyti ar naudoti deterministinį principą ar ne.
+		\item \textbf{\code{predict(observation, \(\cdots\))}} -- padavus aplinkos būseną, modelis atlieką prognozės apskaičiavimą ir grąžina geriausią veiksmą. Galima papildomai nurodyti ar naudoti determinuotą principą ar ne.
 	\end{itemize}
 	
-	Stable Baselines turi būdą sudėti kelias aplinkas į vieną vektorių. Šie aplinkų veiktoriai yra pritaikomi daugeliui bibliotekos algoritmų ir leidžia vienu metu treniruoti modelį su keliom aplinkom. Jei naudojamos vektorizuotos aplinkos, vietoje būsenos ir veiksmų, modeliui yra paduodami aplinkų būsenų ir veiksmų vektoriai. Karkase yra apibrėžtos dviejų rūšių vektorizuotos aplinkos:
+	Stable Baselines turi būdą sudėti kelias aplinkas į vieną vektorių. Šie aplinkų vektoriai yra pritaikomi daugeliui bibliotekos algoritmų ir leidžia vienu metu treniruoti modelį su keliomis aplinkomis. Jei naudojamos vektorinės aplinkos, vietoje būsenos ir veiksmų, modeliui yra paduodami aplinkų būsenų ir veiksmų vektoriai. Karkase yra apibrėžtos dviejų rūšių vektorinės aplinkos:
 	\begin{itemize}
-		\item \textbf{\code{DummyVecEnv}} -- paprastas vektorizuotas adapteris, kviečiantis visas aplinkas iš eilės.
-		\item \textbf{\code{SubprocVecEnv}} -- daugiaprocesinis vektorizuotas adapteris, kur kiekviena aplinka turi savo procesą ir kviečiant aplinkos metodą, visos aplinkos yra išlygiagretintos ir atlieką skaičiavimus vienu metu.
+		\item \textbf{\code{DummyVecEnv}} -- paprastas vektorinis adapteris, kviečiantis visas aplinkas iš eilės.
+		\item \textbf{\code{SubprocVecEnv}} -- daugiaprocesis vektorinis adapteris, kur kiekviena aplinka turi savo procesą ir kviečiant aplinkos funkciją, kadangi visos aplinkos veikia lygiagrečiai, atlieką skaičiavimus vienu metu.
 	\end{itemize}
 
-	Mokymo metu galima modeliui paduoti perkvietimo (\textit{angl. callback}) funkcijas, kurios priklausomai nuo funkcijos gali būti iškviečiamos nurodytą mokymo proceso etapą. Naudojant šias funkcijas, galima pasiekti vidines modelio būsenas bei nutraukti mokymo procesą anksčiau. Perkvietimo funkcijų rašymui yra apibrėžtas \code{BaseCallback} interfeisas. Taip pat, yra kelios jau implementuotos funkcijos, kurias galima panaudoti skirtingų užduočių atlikimui: periodiniam saugojimui, modelio tarpiniam vertinimui, išankstinio modelio mokymo stabdymui pasiekus nurodytą slenkstinį atligį ir panašiai.
+	Mokymo metu galima modeliui paduoti per-kvietimo (\textit{angl. callback}) funkcijas, kurios priklausomai nuo funkcijos gali būti iškviečiamos nurodytą mokymo proceso etapą. Naudojant šias funkcijas, galima pasiekti vidines modelio būsenas bei nutraukti mokymo procesą anksčiau. Per-kvietimo funkcijų rašymui yra apibrėžtas \code{BaseCallback} interfeisas. Taip pat, yra kelios funkcijų implementacijos, kurias galima panaudoti skirtingų užduočių atlikimui: periodiniam saugojimui, modelio tarpiniam vertinimui, išankstinio modelio mokymo stabdymui pasiekus nurodytą slenkstinį atlygį ir panašiai.
 	
 }
-\subsubsection{Stable Baselines strategijos}
+\subsubsection{Stable Baselines strategijos}\label{subsubsec:policies}
 {
 	Stable Baselines turi rinkinį numatytųjų strategijų, paremtų ANN (poskyris~\ref{subsec:neuro}). Pagrindinės dvi kategorijos yra MLP (punktas~\ref{subsubsec:mlp}) ir CNN (punktas~\ref{subsubsec:cnn}). Tačiau, kadangi bakalauro darbui pasirinktos aplinkos būsenos yra pateikiamos kadro pikselių masyvais (papunktis~\ref{subsubsubsec:gym-sokoban}), mokymo metu bus naudojamos tik CNN strategijos.\par
 	
@@ -866,7 +867,7 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 {
 	\code{CnnLnLstmPolicy} strategija naudoja tą pačią \code{CnnLstmPolicy} strategijos (papunktis~\ref{subsubsubsec:cnnlstmpolicy}) architektūrą su vienu skirtumu: LSTM ląstelės sluoksniai yra normalizuoti naudojant sluoksnių normalizaciją (\textit{angl. layer normalization}). Normalizuojant RNN, efektyviai stabilizuojama paslėptoji ląstelės būsena bei pasiekiamas greitesnis mokymosi laikas \cite{ba2016layer}. Visos kitos strategijos savybės yra identiškos \code{CnnLstmPolicy} strategijai.
 }
-\subsubsection{Stable Baselines algoritmai}
+\subsubsection{Stable Baselines algoritmai}\label{subsubsec:algorithms}
 {
 	Iš Stable Baselines algoritmų rinkinio tik penki yra pritaikomi (punkte~\ref{subsubsec:stable-baselines}) pasirinktai Sokoban aplinkai (papunktis~\ref{subsubsubsec:gym-sokoban}): A2C, ACER, ACKTR, DQN ir POP2. Tačiau, darbo rašymo metu, ACKTR kode yra programinė klaida, kuri  neleidžia naudoti CnnLnLstmPolicy strategijos (papunktis~\ref{subsubsubsec:cnnlnlstmpolicy}) su bibliotekoje neapibrėžta aplinka, todėl šis algoritmas buvo atmestas. DQN taip pat buvo atmestas, tačiau dėl algoritmo vektorizuotų aplinkų (papunktis~\ref{subsubsubsec:stable-baselines_framework}) nepalaikymo, kas žymiai sulėtintų mokymosi procesą.\par
 	
@@ -885,7 +886,7 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 	
 	A3C sulaukus didelio populiarumo, buvo sukurta sinchroninė, deterministinė algoritmo implementacija, kuri laukia kol visi aktoriai pabaigia jų patirties segmentą, prieš pradedant atnaujinimus pagal visų aktorių rezultatų vidurkį. Šis algoritmas yra vadinamas A2C. Vienas papildomas sinchroninės A3C algoritmo versijos A2C yra efektyvesnis GPU panaudojimas. A2C algoritmo autoriai teigia, kad jų sinchroninė implementacija rodo geresnius rezultatus nei asinchroninė, bei yra efektivesnė\cite{wu_2019}.\par
 	
-	Stable Baselines A2C algoritmo implementacija turi originaliame darbe aprašytas numatytasias hiper-parametrų reikšmes (lentelė~\ref{tab:algorithm_defaults}). Bakalauro darbo metu, bus naudojamas algoritmas su jo numatytaisiais hiper-parametrais. 
+	Stable Baselines A2C algoritmo implementacija turi originaliame darbe aprašytas numatytasias hiper-parametrų reikšmes (priedas~\ref{app:algorithms}). Bakalauro darbo metu, bus naudojamas algoritmas su jo numatytaisiais hiper-parametrais. 
 }
 \subsubsubsection{ACER algoritmo aprašymas}\label{subsubsubsec:acer}
 {
@@ -893,71 +894,285 @@ Toliau šiame skyriuje bus rašoma apie ANN ir jų variacijas bei susijusias tec
 	
 	Dėl naudojamo patirties pakartojimo buferio, algoritmo mokymas yra efektyvesnis, ir reikalingų žingsnių skaičius konvergavimui yra daug mažesnis. Tačiau papildoma papildomi laikomi duomenys reikalauja daugiau operatyviosios bei grafinės atminties resursų.\par
 	
-	Stable Baselines ACER implementacijos numatytosios reikšmės yra paremtos originalaus tiriamojo darbo hiper-parametrais (lentelė~\ref{tab:algorithm_defaults}), kurie bus naudojami bakalauro darbo metu.
+	Stable Baselines ACER implementacijos numatytosios reikšmės yra paremtos originalaus tiriamojo darbo hiper-parametrais (priedas~\ref{app:algorithms}), kurie bus naudojami bakalauro darbo metu.
 }
 \subsubsubsection{PPO2 algoritmo aprašymas}\label{subsubsubsec:ppo2}
 {
 	PPO2 yra OpenAI \cite{baselines} PPO algoritmo \cite{ppo} implementacija pritaikyta GPU. Daugiaprocesiam veikimui PPO2 naudoja aplinkų vektorius (papunktis~\ref{subsubsubsec:stable-baselines_framework}), kai PPO1 tam naudoja OpenMPI (punktas~\ref{subsubsec:stable-baselines}). Taip pat, PPO2 autorių teigimu, veikia tris kartus greičiau nei bazinė PPO naudojant klasikinių žaidimų aplinką, Atari \cite{schulman_2019}.\par
 	PPO yra aktoriaus-kritiko principu (papunktis~\ref{subsubsec:actor-critic}) paremtas algoritmas, kombinuojantis A2C (papunktis~\ref{subsubsubsec:a2c}) kelių aktorių naudojimo ir taip pat pasitikėjimo srities idėjas.\par
 	
-	Stable Baselines pateikta PPO2 algoritmo implementacija naudoja OpenAI algoritmą ir jo pateiktas numatytąsias hiper-parametrų reikšmes (lentelė~\ref{tab:algorithm_defaults}), tačiau algoritmas turi kelis pakeitimus ir nėra identiškas originaliam algoritmo pristatymo moksliniam darbui: vertės funkcija yra apkarpyta (\textit{angl. clipped}) ir pranašumai yra normalizuoti. Bakalauro darbo metu naudojamas algoritmas su numatytomis hiper-parametrų reikšmėmis.  
+	Stable Baselines pateikta PPO2 algoritmo implementacija naudoja OpenAI algoritmą ir jo pateiktas numatytąsias hiper-parametrų reikšmes (priedas~\ref{app:algorithms}), tačiau algoritmas turi kelis pakeitimus ir nėra identiškas originaliam algoritmo pristatymo moksliniam darbui: vertės funkcija yra apkarpyta (\textit{angl. clipped}) ir pranašumai yra normalizuoti. Bakalauro darbo metu naudojamas algoritmas su numatytomis hiper-parametrų reikšmėmis.  
 }
 \section{Eksperimentai}
 {
 	Šiame skyriuje aprašomi bakalauro darbo metu atlikti eksperimentai bei jiems paruošta eksperimentinė aplinka.
 }
-\subsection{Sokoban aplinkos paruošimas}
+\subsection{Eksperimentinės aplinkos paruošimas}
 {
-	Šiame poskyryje yra aprašomas metodas eksperimento metu tiriamos Sokoban aplinkos paruošimui.
-}
-\subsubsection{}
-
-
-\subsection{Eksperimentinė aplinka}
-{
-	Eksperimentai atlikti naudojantis realia mašina su \enquote{Ubuntu} OS. Minėtoje mašinoje įdiegta \enquote{Anaconda} paketų valdymo ir dislokavimo sistema, naudojama aplinkų atskyrimui. Didžioji programinė dalis eksperimento atliekama \enquote{Jupyter Notebook} programavimo aplinkoje naudojantis \enquote{Python} kalba.
+	Eksperimentai atlikti naudojantis kompiuteriu su \enquote{Ubuntu} OS. Minėtame kompiuteryje įdiegta \enquote{Anaconda} paketų valdymo ir dislokavimo sistema, naudojama aplinkų atskyrimui. Didžioji programinė dalis eksperimento atliekama \enquote{Jupyter Notebook} programavimo aplinkoje naudojantis \enquote{Python} kalba.
 }
 \subsubsection{Eksperimentinės aplinkos specifikacijos}
 {
-Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
-
-\begin{enumerate}
-	\item Kompiuterio techninė specifikacija:
+	Eksperimentas atliekamas naudojantis kompiuteriu su \enquote{Ubuntu} OS.
+	
 	\begin{enumerate}
-		\item Procesorius (CPU) -- \enquote{\textbf{Intel Core i5-9600K}} (6 branduoliai, bazinis greitis 3.70 GHz).
-		\item Grafinė vaizdo plokštė (GPU) -- \enquote{\textbf{Nvidia GeForce RTX 2070 Super}} (\textbf{8GB} GDDR6, 1770 MHz).
-		\item Operatyvioji atmintis -- \enquote{\textbf{HyperX Predator Black}} (\textbf{32GB}, 3200MHz, DDR4, CL16).
+		\item Kompiuterio techninė specifikacija:
 		\begin{enumerate}
-			\item Papildomai paskirta: \textbf{16GB} \enquote{Swap} atminties\footnote{\enquote{Swap} atmintis -- tai pastoviojoje atmintyje paskirta atminties dalis virtualiai operatyviajai atminčiai, kuri yra naudojama, kai vykdomoms operacijoms trūksta fizinės operatyviosios atminties.}.
+			\item Procesorius (CPU) -- \enquote{\textbf{Intel Core i5-9600K}} (6 branduoliai, bazinis greitis 3.70 GHz).
+			\item Grafinė vaizdo plokštė (GPU) -- \enquote{\textbf{Nvidia GeForce RTX 2070 Super}} (\textbf{8GB} GDDR6, 1770 MHz).
+			\item Operatyvioji atmintis -- \enquote{\textbf{HyperX Predator Black}} (\textbf{32GB}, 3200MHz, DDR4, CL16).
+			\begin{enumerate}
+				\item Papildomai paskirta: \textbf{16GB} \enquote{Swap} atminties\footnote{\enquote{Swap} atmintis -- tai pastoviojoje atmintyje paskirta atminties dalis virtualiai operatyviajai atminčiai, kuri yra naudojama, kai vykdomoms operacijoms trūksta fizinės operatyviosios atminties.}.
+			\end{enumerate}
+			\item Pastovioji atmintis -- \enquote{\textbf{Western Digital}} (\textbf{1TB}).
 		\end{enumerate}
-		\item Pastovioji atmintis -- \enquote{\textbf{Western Digital}} (\textbf{1TB}).
+	
+		\item Kompiuterio programinė įranga:
+		\begin{enumerate}
+			\item Operacinė sistema -- \enquote{\textbf{Ubuntu 18.04 LTS}} (versija: \textbf{18.04.4 LTS}).
+			\item Paketų ir aplinkų valdymo sistema - \enquote{\textbf{Anaconda}}  (versija: \textbf{2020.02}).
+			\item Programavimo kalba -- \enquote{\textbf{Python}} (versija: \textbf{3.7.6}).
+			\item Atviro kodo programa kintančio kodo, matematinių funkcijų, teksto bei duomenų vizualizavimui -- \enquote{\textbf{Jupyter Notebook}}  (versija: \textbf{6.0.3}).
+			\item Atviro kodo ML platforma su lanksčia įrankių ir bibliotekų ekosistema skirta šiuolaikinių ML sprendimų kūrimui ir gerinimui -- \enquote{\textbf{TensorFlow}} (versija: \textbf{1.14.0}).
+			\item \enquote{TensorFlow} vizualizavimo įrankis -- \enquote{\textbf{TensorBoard}} (versija: \textbf{1.14.0}).
+			\item RL algoritmų kūrimo ir vertinimo įrankių rinkinys -- \enquote{\textbf{OpenAI Gym}} (versija: \textbf{0.17.1}).
+			\item Modernių RL algoritmų implementacijų rinkinys (\textit{angl. state-of-art}) -- \enquote{\textbf{Stable Baselines}} (versija: \textbf{2.10.1a0}).
+			\item Išskirstyta VSC sistema pakeitimų sekimui programiniame kode -- \enquote{\textbf{Git}} (versija: \textbf{2.23.0}) 
+		\end{enumerate}
 	\end{enumerate}
-
-	\item Kompiuterio programinė įranga:
-	\begin{enumerate}
-		\item Operacinė sistema -- \enquote{\textbf{Ubuntu 18.04 LTS}} (versija: \textbf{18.04.4 LTS}).
-		\item Paketų ir aplinkų valdymo sistema - \enquote{\textbf{Anaconda}}  (versija: \textbf{2020.02}).
-		\item Programavimo kalba -- \enquote{\textbf{Python}} (versija: \textbf{3.7.6}).
-		\item Atviro kodo programa kintančio kodo, matematinių funkcijų, teksto bei duomenų vizualizavimui -- \enquote{\textbf{Jupyter Notebook}}  (versija: \textbf{6.0.3}).
-		\item Atviro kodo ML platforma su lanksčia įrankių ir bibliotekų ekosistema skirta šiuolaikinių ML sprendimų kūrimui ir gerinimui -- \enquote{\textbf{TensorFlow}} (versija: \textbf{1.14.0}).
-		\item \enquote{TensorFlow} vizualizavimo įrankis -- \enquote{\textbf{TensorBoard}} (versija: \textbf{1.14.0}).
-		\item RL algoritmų kūrimo ir vertinimo įrankių rinkinys -- \enquote{\textbf{OpenAI Gym}} (versija: \textbf{0.17.1}).
-		\item Modernių RL algoritmų implementacijų rinkinys (\textit{angl. state-of-art}) -- \enquote{\textbf{Stable Baselines}} (versija: \textbf{2.10.1a0}).
-		\item Išskirstyta VSC sistema pakeitimų sekimui kode -- \enquote{\textbf{Git}} (versija: \textbf{2.23.0}) 
-	\end{enumerate}
-\end{enumerate}
 }
-\subsubsection{Ekseperimentinės aplinkos paruošimas}
-
-\subsection{Eksperimento planas}
+\subsubsection{Skatinamojo mokymo modelio paruošimas}
 {
-	Darbo metu atliktas eksperimentas susideda iš trijų dalių. Šiame skyriuje yra aprašomi šių trijų eksperimentų planai: kaip bus atliekamas eksperimentas, kokia bus naudojama aplinka, kokių rezultatų yra tikimasi ir pan.
+	Šiame punkte aprašomi Sokoban aplinkai padaryti pakeitimai bei mokymo modelio paruošimo procesas.
 }
-\subsubsection{Pirmo eksperimento planas: Geriausios strategijos ieškojimas}
+\subsubsubsection{Sokoban aplinkos paruošimas}\label{subsubsubsec:sokoban_prepare}
+{
+	Gym-Sokoban (papunktis~\ref{subsubsubsec:gym-sokoban}) veiksmų aibė susideda iš devynių skirtingų veiksmų, tačiau dėl eksperimentinės aplinkos ribotų resursų ir mokymui skirto laiko, aibė buvo sumažinta iki penkių. Viena iš veiksmų kieko mažinimo priežąsčių: stūmimo ir paprasto paėjimo veiksmų persiliejimas. Atliekant pastūmimo veiksmą, jei atitinkama kryptimi yra dėžė -- ji yra pastumiama, tačiau, jei dėžės ar kitokios kliūties nėra -- vykdomas paprasto paėjimo veiksmas. Dėl šios priežąsties, paprasto pastūmimo veiksmai agentui nėra būtini ir buvo išmesti, taip supaprastinant modelį. Aplinkos veiksmų sumažinimui buvo parašytas dekoratorius (priedas~\ref{app:wrappers}) pagal \code{gym.Wrapper} interfeisą (papunktis~\ref{subsubsubsec:gym}).\par
+	
+	Tradiciškai, Sokoban žaidimo agento kokybė yra vertinama pagal išspręstų galvosukių procentą, o ne pagal atlygį. Iš Stable Baselines (punktas~\ref{subsubsec:stable-baselines}) TensorBoard integracijoje stebimų kintamųjų nėra būdo išvesti tokios reikšmės. Tam buvo sukurtas dar vienas aplinkos dekoratorius (priedas~\ref{app:wrappers}), renkantis sėkmingai išspręstų ir neišspręstų aplinkų skaičius, kuriuos yra leidžiama pasiekti kitiems objektams. Tai yra ypač aktualų, mokant aplinkas su daugiau nei viena dėže, kur neužtenka patikrinti ar galutinis agento, aplinkoje surinktas, atligis yra virš minimalios reikšmės, nes žaidėjas gali būti užstūmęs dėžę ant tikslo laukelio ir gavęs tam tikrą atlygį. 
+}
+\subsubsubsection{Mokymo aplinkos paruošimas}
+{
+	Eksperimentui buvo paruoštos dvi mokymo aplinkos: viena skirtingų algoritmų ir strategijų apmokymui naudojant paprastas Sokoban žaidimo aplinkas (priedas~\ref{app:strategies}) jų palyginimui, kita mokymo žinių perdavimui su sudėtingesne Sokoban žaidimo aplinka (priedas~\ref{app:curriculum}). Žinių perdavimui buvo sukurtas papildoma per-kvietimo funkcija (papunktis~\ref{subsubsubsec:stable-baselines_framework}), kuri vizualizuoja sėkmingai išspręstų kambarių dalį Tensorboard įrankyje.\par
+}
+\subsection{Eksperimento planas}\label{subsubsec:plan}
+{
+	Bakalauro darbo metu atliktas eksperimentas susideda iš trijų dalių. Kiekvienai daliai sudarytas planas: kaip bus atliekamas eksperimentas, kokia bus naudojama aplinka ir kokių rezultatų yra tikimasi.
+	\begin{enumerate}
+		\item Pirma eksperimento dalis: \textbf{geriausios strategijos ieškojimas}.
+		\begin{enumerate}
+			\item \textbf{Tikslas}: palyginti Sokoban žaidimo agento mokymosi efektyvumą paprastoje aplinkoje su skirtingomis tiriamomis strategijomis ir geriausiai pasirodžiusią taikyti tolimesniuose tyrimuose. 
+			
+			\item \textbf{Aplinka}: Sokoban žaidimo aplinka iš \(7 \times 7\) dydžio kambarių su viena dėže per kambarį. 
+			
+			\item \textbf{Atlikimo procesas}: atsitiktinai parenkamas ir apmokomas vienas tiriamasis algoritmas (punktas~\ref{subsubsec:algorithms}). Mokymas atliekamas kelis kartus, su visomis tiriamomis strategijomis (punktas~\ref{subsubsec:policies}).
+			
+			\item \textbf{Tikėtini rezultatai}: sudėtingesnė strategija, naudojanti LSTM atminties ląstelės modelį (papunktis~\ref{subsubsubsec:lstm}) mokysis efektyviau. Taip pat tikimasi, jog normalizuota LSTM strategijos variacija mokysis greičiau nei nenormalizuota.
+		\end{enumerate}
 
-
-\subsection{Eksperimentas}
-
+		\item Antra eksperimento dalis: \textbf{geriausio algoritmo ieškojimas}.
+		\begin{enumerate}
+			\item \textbf{Tikslas}: palyginti Sokoban žaidimo agento mokymosi efektyvumą paprastoje aplinkoje su skirtingais tiriamaisiais algoritmais.
+			
+			\item \textbf{Aplinka}: ta pati, kaip ir pirmoje dalyje.
+			
+			\item \textbf{Atlikimo procesas}: apmokomi visi tiriamieji algoritmai naudojantis tuos pačius mokymo kriterijus ir aplinką kaip pirmoje dalyje. Mokymui pritaikoma pirmoje dalyje geriausiai pasirodžiusi strategija.
+			
+			\item \textbf{Tikėtini rezultatai}: visų algoritmų panašus efektyvumas, tačiau ACER turėtų pasiekti patenkinamus rezultatus per mažesni žingsnių skaičių nei A2C, dėl patirties pakartojimo buferio. Taip pat, A2C laiko atžvilgiu turėtų baigti mokymosi procesą daug greičiau nei kiti algoritmai, dėl paprastesnės architektūros. Galiausiai, PPO2 yra paremtas A2C su pridėtais pagerinimais, tikimasi jog PPO2 mokysis greičiau nei A2C laiko žingsnių atžvilgiu.
+		\end{enumerate}		
+	
+		\item Trečia eksperimento dalis: \textbf{mokymo žinių perdavimo naudos tyrimas}.
+		\begin{enumerate}
+			\item \textbf{Tikslas}: palyginti Sokoban žaidimo agento mokymo efektyvumą sudėtingesnėje aplinkoje, tarp apmokymo nuo pradžių ir apmokymo naudojant žinių perdavimo principą, pirmiausiai agentą apmokius paprastesnėje aplinkoje, tada sudėtingesnėje.
+			
+			\item \textbf{Aplinka}: Sokoban žaidimo aplinka iš \(10 \times 10\) dydžio kambarių su dviem dėžėm per kambarį.
+			
+			\item \textbf{Atlikimo procesas}: bus apmokomi du agentai, vienas bazinis, atramos taško nustatymui, kitas naudojantis žinių perdavimą. Sokoban žaidimo mokymui naudojami, pirmos ir antros eksperimentų dalių pagrįsti, algoritmas ir strategija. Abiejų mokymų atveju, agentai mokomi iki parinktų mokymo nutraukimo kriterijų.
+			
+			\item \textbf{Tikėtini rezultatai}: panaudoju žinių perdavimą Sokoban žaidimo agentui, modelį galima apmokyti iki aukštesnių išsprendimo rezultatų. Taip pat tikimasi, pasiekti bazinio modelio rezultatus per mažesnį laiko žingsnių kiekį ir laiką.
+		\end{enumerate}		
+	\end{enumerate}
+}
+\subsection{Eksperimento eiga}\label{subsubsec:experiment}
+{
+	Remiantis eksperimento planu (punktas~\ref{subsubsec:plan}), buvo atliktas eksperimentas. Toliau aprašoma kiekvienos eksperimento dalies eiga:
+	\begin{enumerate}
+		\item Pirma eksperimento dalis: \textbf{geriausios strategijos ieškojimas}.
+		\begin{enumerate}
+			\item Atsitiktinai parinktas A2C algoritmas (papunktis~\ref{subsubsubsec:a2c}).
+			\item Plane aprašytai Sokoban žaidimo aplinkai uždėtas \(200\) žingsnių limitas per kambarį ir sudarytas \(64\) aplinkų dydžio paprastasis vektorius (papunktis~\ref{subsubsubsec:stable-baselines_framework}) efektyvesniam mokymui pasiekti.
+			\item Apmokymui paruošta ir naudota mokymo programa (priedas~\ref{app:strategies}).
+			\item Mokymai atlikti su trimis strategijomis (punktas~\ref{subsubsec:policies}): \code{CnnPolicy}, \code{CnnLstmPolicy} ir \code{CnnLnLstmPolicy}.
+			\item Mokymo eigoje rezultatai registruoti naudojantis TensorBoard.
+			\item Galutiniai modeliai išsaugoti į ZIP failus.
+		\end{enumerate}
+		\item Antra eksperimento dalis: \textbf{geriausio algoritmo ieškojimas}.
+		\begin{enumerate}
+			\item Mokymams naudota \code{CnnLnLstmPolicy} strategija.
+			\item Mokymo metu naudota ta pati aplinka ir mokymo programa kaip ir pirmos eksperimento dalies metu.
+			\item Apmokyti trys Sokoban žaidimo agentai su skirtingais algoritmais (punktas~\ref{subsubsec:algorithms}): A2C, ACER ir PPO2.
+			\item Mokymo eigoje rezultatai registruoti naudojantis TensorBoard.
+			\item Galutiniai modeliai išsaugoti į ZIP failus.
+		\end{enumerate}
+		\item Trečia eksperimento dalis: \textbf{mokymo žinių perdavimo naudos tyrimas}.
+		\begin{enumerate}
+			\item Mokymams naudota \code{CnnLnLstmPolicy} strategija.
+			\item Plane aprašytai Sokoban žaidimo aplinkai uždėtas \(100\) žingsnių limitas per kambarį ir sudarytas aplinkų vektorius. Dėl atminties limito ir didesnių kambarių (lyginant su pirma ir antra eksperimento dalimis), aplinkos vektoriaus dydis sumažintas iki \(16\) aplinkų bei naudojama daugiaprocesė variacija efektyvesniam resursų išnaudojimui pasiekti. 
+			\item Apmokymui paruošta ir naudota mokymo programa (priedas~\ref{app:curriculum}).
+			\item Parinkti mokymo nutraukimo kriterijai: mokymas nutraukiamas apmokius bent penkias iteracijas (iteracijos dydis \(10^6\) laiko žingsnių), jei paskutinėje iteracijoje išspręstų kambarių dalis yra didesnė nei \(50\%\) bei absoliutus skirtumas tarp paskutinių penkių iteracijų išspręstų kambarių dalies ir paskutinės iteracijos yra mažiau nei \(1\%\), arba paskutinės iteracijos išspręstų kambarių dalis didesnė nei \(90\%\). Šie kriterijai padėjo nustatyti modelio mokymosi sulėtėjimą ir stabilumą, taip nutraukiant mokymą, kai tolimesnis mokymas tampa lėtas ir brangus resursų atžvilgiu.
+			\item Apmokyti modeliai su visais tiriamaisiais algoritmais su sudėtinga aplinka, atramos taškom nustatymui.
+			\item Apmokyti Sokoban žaidimo agentai, su paprastesne aplinka -- viena dėže.
+			\item Sukurti nauji Sokoban žaidimo agentai, kuriems perduotos paprastos aplinkos apmokymo žinios ir mokymas tęstas sudėtingesnėje aplinkoje.
+			\item Mokymo eigoje rezultatai registruoti naudojantis TensorBoard.
+			\item Galutiniai ir tarpiniai modeliai išsaugoti į ZIP failus.
+		\end{enumerate}
+	\end{enumerate}
+}
+\subsection{Eksperimento rezultatų analizė}\label{subsubsec:rezults}
+{
+	Šiame poskyryje aprašoma eksperimento metu gautų duomenų analizė. Eksperimentas atliktas iš trijų dalių.
+}
+\subsubsection{Pirmos eksperimento dalies: geriausios strategijos ieškojimo rezultatai}
+{
+	Paveikslėlyje~\ref{img:policies_graph} atvaizduoti agentų mokymo procesų su A2C algoritmu ir skirtingomis strategijomis rezultatai. Pastebėta, kad \code{CnnPolicy} ir \code{CnnLnLstmPolicy} strategijos mokymasis pagreitėja panašiame \(2,5\cdot10^6\) žingsnių taške, tačiau \code{CnnLstmPolicy} nepradeda mokytis iki \(7\cdot10^6\). Kadangi mokymas buvo apribotas iki \(10^7\) laiko žingsnių, \code{CnnLstmPolicy} nepasiekė geriausių galimų rezultatų. Todėl planavimo metu padaryta prognozė, kad sudėtingesnės LSTM atminties ląstelės modelio strategijos mokysis greičiau, nepasitvirtino.\par
+	
+	Vienas iš tyrimo tikslų buvo išrinkti strategiją tolimesniems tyrimams. \code{CnnLnLstmPolicy} strategija parodė geriausius rezultatus testavimo ribose, todėl buvo toliau naudota ir kituose tyrimuose.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/graphs/policies}
+		\caption{Agento mokymosi procesas su skirtingomis strategijomis (Y-ašis reprezentuoją atlygį, x-ašis reprezentuoja laiko žingsnius). Mėlyna linija -- \code{CnnPolicy}; oranžinė linija -- \code{CnnLstmPolicy}; raudona linija -- \code{CnnLnLstmPolicy}}.
+		\label{img:policies_graph}
+	\end{figure}
+}
+\subsubsection{Antros eksperimento dalies: geriausio algoritmo ieškojimo rezultatai}
+{
+	Paveikslėlyje~\ref{img:algorithms_graph} atvaizduoti agentų mokymo procesų su skirtingais algoritmais rezultatai. Kaip ir prognozuota, visi trys algoritmai pasiekia panašaus efektyvumo rezultatus, tačiau visiems šiems algoritmams prireikė skirtingo laiko žingsnių skaičiaus. ACER pasiekia optimalius rezultatus po \(3\cdot10^6\) žingsnių, PPO2 panašius rezultatus pasiekia apie \(4\cdot10^6\) žingsnyje, o A2C prireikia viso testavimo laiko \(10^7\) pasiekti tuos pačius rezultatus.\par
+	Nors ACER mokėsi efektyviausiai žingsnių atžvilgiu, mokymui nustatyti \(10^7\) žingsnių užtruko  beveik \(10\) valandų, kai PPO2 užtrunka \(8\), o A2C -- \(6\) valandas.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/graphs/algorithms}
+		\caption{Agento mokymosi procesas su skirtingais algoritmais (Y-ašis reprezentuoją atlygį, x-ašis reprezentuoja laiko žingsnius). Rožinė linija -- ACER; žydra linija -- PPO2; raudona linija -- A2C}.
+		\label{img:algorithms_graph}
+	\end{figure}
+}
+\subsubsection{Trečios eksperimento dalies: mokymo žinių perdavimo naudos tyrimo rezultatai}
+{
+	Paveikslėlyje~\ref{img:a2c_completions} atvaizduoti A2C agentų mokymo procesų rezultatai. Bazinio modelio mokymas buvo nutrauktas po \(4,5 \cdot 10^7\) žingsnių ir \(50\) valandų, dėl mokymosi progreso nebuvimo. Tokie pat rezultatai buvo užfiksuoti su ACER algoritmu (paveikslėlis~\ref{img:acer_completions}), kurio bazinio modelio mokymas buvo nutrauktas po \(3,5 \cdot 10^7\) ir \(48\) valandų. PPO2 (paveikslėlis~\ref{img:ppo2_completions}) kita vertus, mokėsi ir su sudėtinga aplinka, tačiau mokymas buvo nutrauktas po \(4,8 \cdot 10^7\) žingsnių ir \(70\) valandų, dėl nuolatos lėtėjančio mokymo proceso.\par
+	
+	Nutraukus bazinių modelių mokymą, buvo pradėta mokyti modelius su paprastesne Sokoban žaidimo aplinka, tačiau didesnio (nei pirmoje ir antroje eksperimento dalyse) ploto kambariais. Pastebėta, kad ACER algoritmas, nors rodė gerus rezultatus antroje eksperimento dalyje, naujame teste laiko atžvilgiu pasirodė labai panašiai kaip A2C. Abu algoritmai apmokant agentą užtruko apie \(37\) valandas, o PPO2 užtruko tik \(22\) valandas, iki kol buvo pasiekta \(90\%\) iteracijos išspręstų kambarių dalis.\par
+	
+	Apmokius agentus su Sokoban aplinkomis, kuriose žaidėjas turėjo išspręsti galvosūkį tik su viena dėže, agento svoriai buvo perkelti į naują agentą, kuris tęsė mokymą ant sudėtingesnės aplinkos, su dviem dėžėmis. Pradžioje, visų naujų agentų išspręstų kambarių kiekis, natūraliai, nukrito iki beveik nulio. Tačiau PPO2 ir A2C pakankamai greitai pradėjo mokytis naujoje aplinkoje ir pasiekė eigoje minėtus kriterijus per \(30\) ir \(68\) valandas atitinkamai (A2C lėtesnis). ACER nepradėjo mokytis ir po \(36\) valandų, mokymas buvo nutrauktas. PPO2 agentas pradėjo mokytis anksčiau, bet reliatyviai greitai sulėtėjo iki stabdymo kriterijaus reikšmės ir pasiekė tik apie \(55\%\) kambarių išsprendimo dalį, kita vertus, A2C nors mokėsi lėčiau, tačiau tai atliko stabiliau ir pasiekė virš \(70\%\) galvosūkių su dviem dėžėmis išsprendimo dalį.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/graphs/a2c_completions}
+		\caption{Agento mokymosi procesas su A2C algoritmu ir žinių perdavimu (Y-ašis reprezentuoją sėkmingai išspręstus kambarius, x-ašis reprezentuoja laiko žingsnius). Oranžinė linija -- A2C algoritmas mokytas su sudėtinga aplinka nuo pradžių; mėlyna linija -- A2C algoritmas apmokytas su paprastesne aplinka; žydra linija -- A2C algoritmas apmokytas su žynių perdavimu ir sudėtinga aplinka}.
+		\label{img:a2c_completions}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/graphs/acer_completions}
+		\caption{Agento mokymosi procesas su ACER algoritmu ir žinių perdavimu (Y-ašis reprezentuoją sėkmingai išspręstus kambarius, x-ašis reprezentuoja laiko žingsnius). Žydra linija -- ACER algoritmas mokytas su sudėtinga aplinka nuo pradžių; raudona linija -- ACER algoritmas apmokytas su paprastesne aplinka; rožinė linija -- ACER algoritmas apmokytas su žynių perdavimu ir sudėtinga aplinka}.
+		\label{img:acer_completions}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{img/graphs/ppo2_completions}
+		\caption{Agento mokymosi procesas su PPO2 algoritmu ir žinių perdavimu (Y-ašis reprezentuoją sėkmingai išspręstus kambarius, x-ašis reprezentuoja laiko žingsnius). Rožinė linija -- PPO2 algoritmas mokytas su sudėtinga aplinka nuo pradžių; oranžinė linija -- PPO2 algoritmas apmokytas su paprastesne aplinka; žalia linija -- PPO2 algoritmas apmokytas su žynių perdavimu ir sudėtinga aplinka}.
+		\label{img:ppo2_completions}
+	\end{figure}
+}
+\subsection{Eksperimento apibendrinimas ir išvados}
+{
+	Eksperimentas parodė, kad pritaikant Stable Baselines (punktas~\ref{subsubsec:stable-baselines}) algoritmų (A2C, ACER ir PPO2) implementacijas su numatytaisiais hiper-parametrais ir kitais nustatymais, Sokoban žaidimo agento mokymui, geriausias pasirinkimas iš tirtųjų  yra \code{CnnLnLstmPolicy} strategija (lentelė~\ref{tab:all_results}). Kadangi tyrimai atlikti su mažu (\(7 \time 7\)) Sokoban žaidimo aplinkos kambariu ir paprastomis sąlygomis (1 dėžė per kambarį), yra tikimybė, jog kitokios kambario specifikacijos rodytų kitokius rezultatus. Tačiau, jei mokomas paprastas Sokoban žaidimo agentas, \code{CnnPolicy} ir \code{CnnLnLstmPolicy} yra geros strategijos.\par
+	
+	Algoritmų mokymo palyginimas naudojant paprastą Sokoban žaidimo aplinką parodė, kad ACER ir PPO2 algoritmai mokosi greičiau nei A2C algoritmas žingsnių atžvilgiu. Tačiau šis tyrimas buvo atliktas su paprasta aplinka. Vėlesniuose tyrimuose buvo pastebėta, kad ACER algoritmas, kuris pasirodė geriausiai paprastos aplinkos mokyme, visiškai nesimoko sudėtingesnėje ir didesnėje aplinkoje, bent su autorių numatytaisiais nustatymais ir testuota Sokoban aplinka. Todėl, jei yra mokomas agentas paprastoje Sokoban žaidimo aplinkoje, ACER algoritmas yra geriausias pasirinkimas.\par
+	
+	Sokoban žaidimo agentas naudojantis PPO2 algoritmą parodė gerus rezultatus tiek paprastos aplinkos apmokyme, tiek sudėtingos. Taip pat, PPO2 buvo vienintelis algoritmas, kuris (nors ir lėtai), bet mokėsi sudėtingoje Sokoban žaidimo aplinkoje be žinių perdavimo. PPO2 agentas, lyginant su kitais tirtais, greičiausiai pasiekė mokymo kriterijus (daugiau nei \(90\%\) išspręstų kambarių dalis) sudėtingoje aplinkoje. Dėl to, mokant Sokoban žaidimo agentą be žinių perdavimo su didesniais (\(10 \times 10\)) ar sudėtingesniais (dvi dėžės) kambariais, geriausias pasirinkimas yra PPO2 algoritmas. \par
+	 
+	Labiausiai eksperimento metu pasižymėjo Sokoban žaidimo agentai su A2C algoritmu. Nors šie agentai neparodė geriausių rezultatų lyginant su ACER ir PPO2 algoritmu paprastoje Sokoban žaidimo aplinkoje, jų mokymosi rezultatai buvo stabiliausi sudėtingoje aplinkoje. A2C agentai, iš visų tirtų algoritmų, pasiekė aukščiausią Sokoban galvosūkių su dviem dėžėm išsprendimo procentą (\(72\%\)) prieš pasiekdami sustabdymo kriterijus. Nors bandant apmokyti su ta pačia aplinka nuo pradžių, agentas nerodė jokio progreso. Tai parodė, kad žinių perdavimas Sokoban žaidimo agentui paremtu A2C algoritmu, yra naudingas ir padeda agentui pasiekti aukštesnių išsprendimo rezultatų.\par
+	
+	Žinių perdavimas padėjo ne tik A2C, bet ir PPO2 algoritmui. PPO2 algoritmo Sokoban žaidimo agentas su žinių perdavimu pasiekė aukštesnius rezultatus ir daug greičiau nei be: agentas be žinių perdavimo užtruko \(70\) valandų ir pasiekė \(44\%\), agentai apmokyti su paprastesne aplinka ir perduotomis žiniomis užtruko bendrai \(53\) valandas ir pasiekė \(56\%\) išsprendimo procentą.
+	
+	\begin{longtable}[H]{ccccccccc}
+		\caption{Eksperimento metu atlikti mokymai}
+		\label{tab:all_results} \\
+		\toprule
+		\multicolumn{1}{c}{\rotatebox[origin=l]{90}{\textbf{\begin{tabular}[l]{@{}l@{}}Agento\\ pavadinimas\end{tabular}}}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{\textbf{Algoritmas}}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{\textbf{Strategija}}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{\textbf{\begin{tabular}[l]{@{}l@{}}Kambario\\ dydis\end{tabular}}}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{\textbf{Dėžių skaičius}}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{\textbf{Mokymo laikas}}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{\textbf{\begin{tabular}[l]{@{}l@{}}Mokymo\\ žingsniai\end{tabular}}}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{\textbf{\begin{tabular}[l]{@{}l@{}}Apytikslis galutinis\\ mokymo atlygis\end{tabular}}}} & \multicolumn{1}{c}{\rotatebox[origin=l]{90}{\textbf{\begin{tabular}[l]{@{}l@{}}Apytikslė galutinė\\ išsprendimo dalis\end{tabular}}}} \\
+		\midrule
+		\endhead
+		%
+		\begin{tabular}[l]{@{}c@{}}Strategijos \\ ieškojimas 1 \end{tabular} & A2C & CNN & \(7 \times 7\) & 1 & \begin{tabular}[l]{@{}c@{}} 5 val. \\ 18 min. \end{tabular} & \(10^7\) & \(8,02\) & -- \\
+		\rowcolor[HTML]{EFEFEF} 
+		\begin{tabular}[l]{@{}c@{}}Strategijos \\ ieškojimas 2 \end{tabular} & A2C & \begin{tabular}[c]{@{}c@{}}CNN \\ LSTM \end{tabular} & \(7 \times 7\) & 1 & \begin{tabular}[l]{@{}c@{}} 4 val. \\ 41 min. \end{tabular} & \(10^7\) & \(3,67\) & -- \\
+		\begin{tabular}[l]{@{}c@{}}Strategijos \\ ieškojimas 3 \end{tabular} & A2C & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(7 \times 7\) & 1 & \begin{tabular}[l]{@{}c@{}} 6 val. \\ 8 min. \end{tabular} & \(10^7\) & \(9,49\) & -- \\
+		\rowcolor[HTML]{EFEFEF} 
+		\begin{tabular}[l]{@{}c@{}}Algoritmo \\ ieškojimas 1 \end{tabular} & ACER & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(7 \times 7\) & 1 & \begin{tabular}[l]{@{}c@{}} 9 val. \\ 39 min.\end{tabular}  & \(10^7\) & \(10,06\) & -- \\
+		\begin{tabular}[l]{@{}c@{}}Algoritmo \\ ieškojimas 2 \end{tabular} & PPO2 & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(7 \times 7\) & 1 & \begin{tabular}[l]{@{}c@{}} 7 val. \\ 38 min. \end{tabular} & \(10^7\) & \(-9,60\) & -- \\
+		\rowcolor[HTML]{EFEFEF} 
+		\begin{tabular}[l]{@{}c@{}}Bazinis \\ agentas 1 \end{tabular} & A2C & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(10 \times 10\) & 2 & \begin{tabular}[l]{@{}c@{}} 50 val. \\ 12 min. \end{tabular} & \(4,6 \cdot 10^7\) & \(10,32\) & \(1\%\) \\
+		\begin{tabular}[l]{@{}c@{}}Pradinis \\ agentas 1 \end{tabular} & A2C & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(10 \times 10\) & 1 & \begin{tabular}[l]{@{}c@{}} 67 val. \\ 18 min. \end{tabular} & \(4,7 \cdot 10^7\) & \(8,52\) & \(92\%\) \\
+		\rowcolor[HTML]{EFEFEF} 
+		\begin{tabular}[l]{@{}c@{}}Perduotas \\ agentas 1 \end{tabular} & A2C & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(10 \times 10\) & 2 & \begin{tabular}[l]{@{}c@{}} 37 val. \\ 4 min. \end{tabular} & \(3,5 \cdot 10^7\) & \(4,43\) & \(72\%\) \\
+		\begin{tabular}[l]{@{}c@{}}Bazinis \\ agentas 2 \end{tabular} & ACER & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(10 \times 10\) & 2 & \begin{tabular}[l]{@{}c@{}} 35 val. \\ 47 min. \end{tabular} & \(2,5 \cdot 10^7\) & \(-9,64\) & \(2\%\) \\
+		\rowcolor[HTML]{EFEFEF} 
+		\begin{tabular}[l]{@{}c@{}}Pradinis \\ agentas 2 \end{tabular} & ACER & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(10 \times 10\) & 1 & \begin{tabular}[l]{@{}c@{}} 38 val. \\ 27 min. \end{tabular} & \(3,3 \cdot 10^7\) & \(8,74\) & \(92\%\) \\
+		\begin{tabular}[l]{@{}c@{}}Perduotas \\ agentas 2 \end{tabular} & ACER & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(10 \times 10\) & 2 & \begin{tabular}[l]{@{}c@{}} 48 val. \\ 5 min. \end{tabular} & \(3,5 \cdot 10^7\) & \(-9,85\) & \(0\%\) \\
+		\rowcolor[HTML]{EFEFEF} 
+		\begin{tabular}[l]{@{}c@{}}Bazinis \\ agentas 3 \end{tabular} & PPO2 & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(10 \times 10\) & 2 & \begin{tabular}[l]{@{}c@{}} 69 val. \\ 48 min. \end{tabular} & \(4,6 \cdot 10^7\) & \(-0,34\) & \(44\%\) \\
+		\begin{tabular}[l]{@{}c@{}}Pradinis \\ agentas 3 \end{tabular} & PPO2 & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(10 \times 10\) & 1 & \begin{tabular}[l]{@{}c@{}} 22 val. \\ 58 min. \end{tabular} & \(4,6 \cdot 10^7\) & \(8,38\) & \(91\%\) \\
+		\rowcolor[HTML]{EFEFEF} 
+		\begin{tabular}[l]{@{}c@{}}Perduotas \\ agentas 3 \end{tabular} & PPO2 & \begin{tabular}[c]{@{}c@{}}CNN LN \\ LSTM \end{tabular} & \(10 \times 10\) & 2 & \begin{tabular}[l]{@{}c@{}} 29 val. \\ 27 min. \end{tabular} & \(4,6 \cdot 10^7\) & \(0,16\) & \(56\%\) \\
+		\bottomrule
+	\end{longtable}
+}
+\sectionnonum{Rezultatai}
+{
+	Šio darbo metu buvo pasiektas \textbf{tikslas} -- palyginti skatinamojo mokymosi algoritmai, nustatyti efektyviausi algoritmai ir strategijos Sokoban žaidimui skirtingose situacijose.
+	
+	Įgyvendinti darbui iškelti \textbf{uždainiai}:
+	\begin{enumerate}
+		\item Atlikta skatinamojo mokymosi algoritmų analizė, parinkta Stable Baselines RL biblioteka ir atrinkti trys potencialūs algoritmai Sokoban žaidimo agento mokymui: A2C, ACER ir PPO2.
+		
+		\item Paruošta eksperimentinė Sokoban žaidimo aplinka. Gym-Sokoban OpenAI Gym aplinkai suprogramuoti pagalbiniai dekoratoriai. Mokymui paruoštos programos ir per-kvietimo funkcijos, mokymosi stebėjimui.
+		
+		\item Atliktas eksperimentas, nustatyta, kad Sokoban žaidimo agento valdymui geriausia, naudotos RL bibliotekos, strategija yra \code{CnnLnLstmPolicy}. Tačiau taip pat, pastebėta, kad naudojant CNN architektūra paremta strategija be LSTM atminties ląstelės modelio, galima apmokyti agentą panašiai efektyviai.
+		
+		\item Eksperimentiškai palygintos Stable Baselines RL algoritmų implementacijos su numatytaisiais nustatymais: A2C, ACER ir PPO2. Palyginimui naudota mažiausia įmanoma Sokoban žaidimo aplinka: \(7 \times 7\) kambario dydis su viena dėže per kambarį. Sokoban žaidimo agentas, naudojantis ACER algoritmą, buvo nustatytas kaip geriausiai besimokantis mažiausioje Sokoban žaidimo aplinkoje.
+		
+		\item Panaudotas žinių perdavimas, apmokyti Sokoban žaidimo agentai veikti sudėtingesnėse aplinkose. Sokoban žaidimo agentas naudojantis A2C algoritmą su žinių perdavimu parodė geriausius rezultatus ir pasiekė \(72\%\) kambarių išsprendimo procentą sudėtingesnėje aplinkoje. A2C agentas be žinių perdavimo nesimokė ir per priimtiną mokymosi laiką nepakilo aukščiau \(1\%\). PPO2 algoritmo agentas, taip pat gavo daug naudos iš žinių perdavimo pritaikymo. Nors PPO2 agentas mokėsi sudėtingoje aplinkoje be žinių perdavimo, agentas su žinių perdavimu pasiekė aukštesnius rezultatus per trumpesnį bendrą (pirminio agento ir perėmusio žinias agento) mokymosi laiką.
+	\end{enumerate}
+}
+\sectionnonum{Išvados}
+{
+	Iš šio bakalauro darbo rezultatų, gautos išvados ir rekomendacijos:
+	\begin{enumerate}
+		\item Apmokant Sokoban žaidimo agentą paprastoje (mažo kambario dydžio ir mažo dėžių skaičiaus) aplinkoje, galima pasiekti gerų mokymosi rezultatų reliatyviai greitai su bet kuriu iš tirtų algoritmų. Tačiau yra galimi patobulinimai rezultatų pagerinimui.
+		\begin{enumerate}
+			\item Eksperimento metu naudotos numatytosios algoritmų ir strategijų reikšmės. Pritaikius hiper-parametrų ir kitas reikšmes Sokoban aplinkai, galimai būtų gaunami efektyvesni mokymosi rezultatai.
+			\item Eksperimentui naudojant kompiuterinę įrangą su geresnėmis specifikacijomis, galimai būtų pasiekiami didesni skaičiavimo greičiai. Tokiu atveju, būtų galima naudoti didesnius daugiaprocesių aplinkų vektorius ir daugiau agentų, taip efektyviau išnaudojant resursus.
+		\end{enumerate}
+		\item Apmokant Sokoban žaidimo agentą didesnių kambarių aplinkose, pasiekti gerus rezultatus su viena dėže nėra sudėtinga su numatytaisiais algoritmų nustatymais. Tačiau, bandant apmokyti didelio kambario aplinką su daugiau nei viena dėže, žinių perdavimas yra beveik reikalingas. Galimi pasiūlymai šios problemos sprendimui.  
+		\begin{enumerate}
+			\item Naudoti ne numatytuosius algoritmų nustatymus. Pritaikyti algoritmų parametrus Sokoban žaidimo aplinkai.
+			\item Eksperimentai atlikti su viena strategija, galima būtų ištirti skirtingų strategijų įtaką mokymosi procesui.
+			\item Suprastinti Sokoban žaidimo aplinkos būseną, pavyzdžiui, algoritmui duoti juodai-baltą kadrą, vietoje RGB. Arba skirtingus kambario langelius padaryti vienos spalvos (be detalių).
+		\end{enumerate}
+		\item Atliekant žinių perdavimą su Sokoban žaidimo agentais galima pasiekti geresnių rezultatų, nei be žinių perdavimo. Tačiau yra svarbu, kada nutraukti žinių donoro mokymą, ir pradėti recipiento mokymą.
+		\begin{enumerate}
+			\item Žinių perdavimo eksperimento metu, buvo nustatyti mokymo stabdymo kriterijai, tačiau šie kriterijai buvo parinkti atsižvelgiant į limituotų resursų ir laiko kiekį. Naudojant kompiuterinę įrangą su geresnėmis specifikacijomis ir skiriant mokymosi procesui daugiau laiko, būtų galima mokymo stabdymo kriterijus padaryti toliau mokymo procese. Pavyzdžiui, vietoje paskutinių penkių, imti paskutinių dešimt ar daugiau vidurkį palyginimui.
+			\item Naudoti pritaikytus Sokoban aplinkai algoritmų parametrus, ne algoritmų numatytuosius.
+		\end{enumerate}
+		\item Eksperimentai atlikti naudojant Sokoban žaidimo agentus, mokomus su aplinkų vektoriais, sudarytais iš vienodų aplinkų.
+		\begin{enumerate}
+			\item Agento mokymosi aplinkų vektorius, galėtų būti sudėtas iš skirtingo sudėtingumo aplinkų (pavyzdžiui, kelios aplinkos su viena dėže, kelios su dviem ir t.t.).
+			\item Naudojant skirtingo sudėtingumo aplinkų vektorių, galima būtų atlikti žinių perdavimą, kur naujas Sokoban žaidimo agentas mokytųsi aplinkoje, su didesniu pasiskirstymų sudėtingų aplinkų. Pavyzdžiui, jei mokoma su keturiomis aplinkomis, pirmas aplinkų vektorius galėtų susidėti iš vienos aplinkos su dviem dėžėm ir trimis su viena. Kai agentas pasiektų gerus rezultatus, galima būtų padaryti dvi aplinkas su dviem ir dvi su viena dėže. Ir taip tęsti, dažniau keičiant aplinkas.
+			\item Bakalauro darbe, netirta ar agentas apmokytas su paprastesne aplinka, perdavęs žinias ir apmokytas su sudėtingesne, vis dar sugeba išspręsti aplinkas su viena dėže. Gal aplinkos apmokytos su skirtingo sudėtingumo aplinkomis turėtų papildomą pranašumą -- gebėjimą spręsti įvairaus sudėtingumo Sokoban galvosūkius vienu metu.
+		\end{enumerate}
+	\end{enumerate}
+}
 \printbibliography[heading=bibintoc] 
 
 \sectionnonum{Santrumpos}
@@ -987,9 +1202,9 @@ Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 	\end{itemize}
 }
 
-%\appendix
+\appendix
 
-\section{Stable Baselines algoritmų A2C, ACER, PPO2 implementacijų numatytosios hiper-parametrų reikšmės}
+\section{Stable Baselines algoritmų A2C, ACER, PPO2 implementacijų numatytosios hiper-parametrų reikšmės}\label{app:algorithms}
 {
 	Bakalauro darbo metu yra naudojamos Stable Baselines algoritmų implementacijos su jų autorių numatytosiomis hiper-parametrų reikšmėmis, kurios yra nurodytos lentelėje~\ref{tab:algorithm_defaults}.
 	
@@ -1037,8 +1252,19 @@ Eksperimentas atliekamas naudojantis realią \enquote{Ubuntu} mašiną.
 		\end{tabular}
 	\end{table}
 }
-\section{Sokoban aplinkai pagal OpenAI Gym principus parašytas programinis kodas}
-Čia apibrėžti trys papildomi dekoratoriai paremti OpenAI Gym \code{Wrapper} aplinkos dekoratoriaus interfeisu (papunktis~\ref{subsubsubsec:gym}). \code{ActionWrapper} limituoja leidžiamų atlikti veiksmų sritį. \code{ExposeCompletedEnvironments} naudojamas su bakalauro darbo metu parašytomis per-kvietimo funkcijomis. Šis dekoratorius, padaro sėkmingai užbaigtų aplinkų skaitinę reikšmę pasiekiamą iš išorės. \code{CombinedWrappers} pagalbinis dekoratorius, leidžiantis lengvai sukurti aplinkos objektą su keliais dekoratoriais iš karto.
-\lstinputlisting[language=Python]{code/my_wrappers.py}
-
+\section{Sokoban aplinkai pagal OpenAI Gym principus parašytas programinis kodas}\label{app:wrappers}
+{
+	Čia apibrėžti trys papildomi dekoratoriai paremti OpenAI Gym \code{Wrapper} aplinkos dekoratoriaus interfeisu (papunktis~\ref{subsubsubsec:gym}). \code{ActionWrapper} limituoja leidžiamų atlikti veiksmų sritį. \code{ExposeCompletedEnvironments} naudojamas su bakalauro darbo metu parašytomis per-kvietimo funkcijomis. Šis dekoratorius, padaro sėkmingai užbaigtų aplinkų skaitinę reikšmę pasiekiamą iš išorės. \code{CombinedWrappers} pagalbinis dekoratorius, leidžiantis lengvai sukurti aplinkos objektą su keliais dekoratoriais iš karto.
+	\lstinputlisting[language=Python]{code/my_wrappers.py}
+}
+\section{Modelio mokymo programinis kodas A2C, ACER ir PPO2 algoritmams bei CnnPolicy, CnnLstmPolicy ir CnnLnLstmPolicy strategijoms}\label{app:strategies}
+{
+	Originaliai, programa parašyta naudojantis Jupyter Notebook aplinka. Čia pateikiamas programos atitikmuo Python skripto failu. Programa leidžia nurodyti tiriamą algoritmą (punktas~\ref{subsubsec:algorithms}) bei strategiją (punktas~\ref{subsubsec:policies}). Nustatoma modelio aplinka: \(7 \times 7\) dydžio kambarys, viena dėžė bei penki galimi veiksmai. Nurodytas modelis yra apmokomas \(10^7\) žingsnių ir išsaugomas į failą. Mokymosi procesas yra stebimas naudojantis TensorBoard, iš kurio yra gaunami duomenys analizei.
+	\lstinputlisting[language=Python]{code/strategies.py}
+}
+\section{Modelio mokymo su žinių perdavimu programinis kodas}\label{app:curriculum}
+{
+	Python programa apmokanti nurodyto algoritmo (punktas~\ref{subsubsec:algorithms}) ir \code{CnnLnLstmPolicy} strategijos (papunktis~\ref{subsubsubsec:cnnlnlstmpolicy}) modelį su nurodytais pradiniais aplinkos sudėtingumo nustatymais:  \(10 \times 10\) dydžio kambarys, viena dėžė bei penki galimi veiksmai. Mokoma iki kol nurodyti mokymo kriterijai yra pasiekiami: mokymas trunka bent \(5\) iteracijas, paskutinės iteracijos išspręstų kambarių dalis yra bent \(50\%\), paskutinių \(5\) iteracijų vidurkio ir paskutinės iteracijos išspręstų kambarių absoliutus skirtumas yra žemiau \(1\%\) arba paskutinės iteracijos išspręstų kambarių dalis yra daugiau nei \(90\%\). Kai kriterijai pasiekiami, modeliui duodama sudėtingesnė aplinka ir mokymas yra kartojamas iki nurodyto sudėtingumo.
+	\lstinputlisting[language=Python]{code/curriculum_learning.py}
+}
 \end{document}

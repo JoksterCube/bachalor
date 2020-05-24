@@ -1,13 +1,13 @@
 import gym
 import numpy as np
+from gym.spaces.discrete import Discrete
 
 class ActionWrapper(gym.Wrapper):
     def __init__(self, env, new_action_space=None, **kvars):
         super(ActionWrapper, self).__init__(env)
-        from gym.spaces.discrete import Discrete
         if new_action_space is not None:
-            self.env.action_space = Discrete(new_action_space)     
-           
+            self.env.action_space = Discrete(new_action_space)  
+            
 class ExposeCompletedEnvironments(gym.Wrapper):
     def __init__(self, env, done_info_keyword=None, **kvars):
         super(ExposeCompletedEnvironments, self).__init__(env)
@@ -15,14 +15,11 @@ class ExposeCompletedEnvironments(gym.Wrapper):
         self.env_done = False
         self.env_completed = False
         self.cleaned = True
-        
         self.reset_totals()
-    
     def reset(self, **kwargs):
         observation = super(ExposeCompletedEnvironments, self).reset(**kwargs)
         self.cleaned = True
         return observation
-    
     def step(self, action):
         observation, reward, done, info = super(ExposeCompletedEnvironments, self).step(action)
         if self.cleaned:
@@ -33,26 +30,21 @@ class ExposeCompletedEnvironments(gym.Wrapper):
                 self.env_completed = info[self.done_info_keyword]
             else:
                 self.env_completed = False; 
-            info['puzzle_completed'] = self.env_completed
-            
+            info['puzzle_completed'] = self.env_completed  
             self.total_completed_num += int(self.env_completed)
             self.total_done_num += 1
         return observation, reward, done, info
-    
     def completed_ratio(self):
         if self.total_done_num > 0:
             return self.total_completed_num / self.total_done_num
         return np.nan
-    
     def _clean_env(self):
         self.env_done = False
         self.env_completed = False
         self.cleaned = False 
-    
     def reset_totals(self):
         self.total_completed_num = 0
         self.total_done_num = 0
-        
     def __getattr__(self, name):
         if name is "completed_ratio":
             return self.completed_ratio
@@ -71,5 +63,3 @@ class CombinedWrappers(gym.Wrapper):
         for wrapper in wrappers:
             env = wrapper(env, **kvars)
         super(CombinedWrappers, self).__init__(env)
-            
-            
