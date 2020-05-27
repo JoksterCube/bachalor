@@ -1,0 +1,24 @@
+\begin{enumerate}
+		\item Apmokant Sokoban žaidimo agentą paprastoje (mažo kambario dydžio ir mažo dėžių skaičiaus) aplinkoje, galima pasiekti gerų mokymosi rezultatų reliatyviai greitai su bet kuriu iš tirtų algoritmų. Tačiau yra galimi patobulinimai rezultatų pagerinimui.
+		\begin{enumerate}
+			\item Eksperimento metu naudotos numatytosios algoritmų ir strategijų reikšmės. Pritaikius hiper-parametrų paieškos metodus Sokoban aplinkai, galimai būtų gaunami geresni mokymosi rezultatai.
+			\item Eksperimentui naudojant kompiuterinę įrangą su geresnėmis specifikacijomis, galimai būtų pasiekiami didesni skaičiavimo greičiai. Tokiu atveju, būtų galima naudoti didesnius daugiaprocesių aplinkų vektorius ir daugiau agentų, taip efektyviau išnaudojant resursus.
+		\end{enumerate}
+		\item Apmokant Sokoban žaidimo agentą didesnių kambarių aplinkose, pasiekti gerus rezultatus su viena dėže nėra sudėtinga su numatytaisiais algoritmų nustatymais. Tačiau, bandant apmokyti didelio kambario aplinką su daugiau nei viena dėže, žinių perdavimas yra beveik reikalingas. Galimi pasiūlymai šios problemos sprendimui.  
+		\begin{enumerate}
+			\item Naudoti ne numatytuosius algoritmų nustatymus. Pritaikyti algoritmų parametrus Sokoban žaidimo aplinkai.
+			\item Eksperimentai atlikti su viena strategija, galima būtų ištirti skirtingų strategijų įtaką mokymosi procesui.
+			\item Suprastinti Sokoban žaidimo aplinkos būseną, pavyzdžiui, algoritmui duoti juodai-baltą kadrą, vietoje RGB. Arba skirtingus kambario langelius padaryti vienos spalvos (be detalių).
+		\end{enumerate}
+		\item Atliekant žinių perdavimą su Sokoban žaidimo agentais galima pasiekti geresnių rezultatų, nei be žinių perdavimo. Tačiau yra svarbu, kada nutraukti žinių donoro mokymą, ir pradėti recipiento mokymą.
+		\begin{enumerate}
+			\item Žinių perdavimo eksperimento metu, buvo nustatyti mokymo stabdymo kriterijai, tačiau šie kriterijai buvo parinkti atsižvelgiant į limituotų resursų ir laiko kiekį. Naudojant kompiuterinę įrangą su geresnėmis specifikacijomis ir skiriant mokymosi procesui daugiau laiko, būtų galima mokymo stabdymo kriterijus padaryti toliau mokymo procese. Pavyzdžiui, vietoje paskutinių penkių, imti paskutinių dešimt ar daugiau vidurkį palyginimui.
+			\item Naudoti pritaikytus Sokoban aplinkai algoritmų parametrus, ne algoritmų numatytuosius.
+		\end{enumerate}
+		\item Eksperimentai atlikti naudojant Sokoban žaidimo agentus, mokomus su aplinkų vektoriais, sudarytais iš vienodų aplinkų.
+		\begin{enumerate}
+			\item Agento mokymosi aplinkų vektorius, galėtų būti sudėtas iš skirtingo sudėtingumo aplinkų (pavyzdžiui, kelios aplinkos su viena dėže, kelios su dviem ir t.t.).
+			\item Naudojant skirtingo sudėtingumo aplinkų vektorių, galima būtų atlikti žinių perdavimą, kur naujas Sokoban žaidimo agentas mokytųsi aplinkoje, su didesniu pasiskirstymų sudėtingų aplinkų. Pavyzdžiui, jei mokoma su keturiomis aplinkomis, pirmas aplinkų vektorius galėtų susidėti iš vienos aplinkos su dviem dėžėm ir trimis su viena. Kai agentas pasiektų gerus rezultatus, galima būtų padaryti dvi aplinkas su dviem ir dvi su viena dėže. Ir taip tęsti, dažniau keičiant aplinkas.
+			\item Bakalauro darbe, netirta ar agentas apmokytas su paprastesne aplinka, perdavęs žinias ir apmokytas su sudėtingesne, vis dar sugeba išspręsti aplinkas su viena dėže. Gal aplinkos apmokytos su skirtingo sudėtingumo aplinkomis turėtų papildomą pranašumą -- gebėjimą spręsti įvairaus sudėtingumo Sokoban galvosūkius vienu metu.
+		\end{enumerate}
+	\end{enumerate}
